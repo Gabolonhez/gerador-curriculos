@@ -58,7 +58,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({ data, updateData, langu
       {data.map(exp => (
         <div key={exp.id} className="p-4 border rounded-lg bg-gray-50">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium">{t.experience} {exp.id}</h3>
+            <h3 className="font-medium">{t.experience}</h3>
             <button
               onClick={() => removeExperience(exp.id)}
               className="cursor-pointer text-red-500 hover:text-red-700"

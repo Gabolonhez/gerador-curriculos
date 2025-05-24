@@ -55,7 +55,7 @@ const CertificationsForm: React.FC<CertificationsFormProps> = ({ data, updateDat
       {data.map(cert => (
         <div key={cert.id} className="p-4 border rounded-lg bg-gray-50">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium">{t.certification} {cert.id}</h3>
+            <h3 className="font-medium">{t.certification}</h3>
             <button
               onClick={() => removeCertification(cert.id)}
               className="cursor-pointer text-red-500 hover:text-red-700"

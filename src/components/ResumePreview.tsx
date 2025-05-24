@@ -16,7 +16,19 @@ const translations = {
     languages: 'Idiomas',
     certifications: 'Certificações e Cursos',
     present: 'Presente',
-    inProgress: 'Em andamento'
+    inProgress: 'Em andamento',
+    skillLevels: {
+      basic: 'Básico',
+      intermediate: 'Intermediário',
+      advanced: 'Avançado'
+    },
+    proficiencyLevels: {
+      basic: 'Básico',
+      intermediate: 'Intermediário',
+      advanced: 'Avançado',
+      fluent: 'Fluente',
+      native: 'Nativo'
+    }
   },
   en: {
     professionalSummary: 'Professional Summary',
@@ -26,7 +38,19 @@ const translations = {
     languages: 'Languages',
     certifications: 'Certifications and Courses',
     present: 'Present',
-    inProgress: 'In Progress'
+    inProgress: 'In Progress',
+    skillLevels: {
+      basic: 'Basic',
+      intermediate: 'Intermediate',
+      advanced: 'Advanced'
+    },
+    proficiencyLevels: {
+      basic: 'Basic',
+      intermediate: 'Intermediate',
+      advanced: 'Advanced',
+      fluent: 'Fluent',
+      native: 'Native'
+    }
   }
 };
 
@@ -50,6 +74,14 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
       year: 'numeric',
       month: 'long'
     });
+  };
+
+  const getSkillLevel = (level: string) => {
+    return t.skillLevels[level as keyof typeof t.skillLevels] || level;
+  };
+
+  const getLanguageLevel = (level: string) => {
+    return t.proficiencyLevels[level as keyof typeof t.proficiencyLevels] || level;
   };
 
   return (
@@ -173,7 +205,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
                 key={skill.id}
                 className="bg-gray-100 px-3 py-1 rounded-full text-sm"
               >
-                {skill.name} ({skill.level})
+                {skill.name} ({getSkillLevel(skill.level)})
               </div>
             ))}
           </div>
@@ -187,7 +219,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {languageSkills.map((lang: any) => (
               <div key={lang.id} className="text-sm sm:text-base">
-                <span className="font-medium">{lang.name}:</span> {lang.level}
+                <span className="font-medium">{lang.name}:</span> {getLanguageLevel(lang.level)}
               </div>
             ))}
           </div>

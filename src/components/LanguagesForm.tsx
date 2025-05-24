@@ -49,7 +49,7 @@ const LanguagesForm: React.FC<LanguagesFormProps> = ({ data, updateData, languag
       {data.map(lang => (
         <div key={lang.id} className="p-4 border rounded-lg bg-gray-50">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium">{t.language} {lang.id}</h3>
+            <h3 className="font-medium">{t.language}</h3>
             <button
               onClick={() => removeLanguage(lang.id)}
               className="cursor-pointer text-red-500 hover:text-red-700"
