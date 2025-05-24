@@ -2,13 +2,48 @@ import React from 'react';
 import { User, Mail, Phone, MapPin, Globe, Linkedin, Github } from 'lucide-react';
 import { LanguageCode } from '../translations/formTranslations';
 
+interface PersonalInfo {
+  name?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  website?: string;
+  linkedin?: string;
+  github?: string;
+}
+
 interface PersonalInfoFormProps {
-  data: any;
-  updateData: (data: any) => void;
+  data: PersonalInfo;
+  updateData: (data: PersonalInfo) => void;
   language: LanguageCode;
 }
 
-const translations = {
+interface TranslationStrings {
+  title: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  website: string;
+  linkedin: string;
+  github: string;
+  placeholders: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    website: string;
+    linkedin: string;
+    github: string;
+  };
+}
+
+interface Translations {
+  pt: TranslationStrings;
+  en: TranslationStrings;
+}
+
+const translations: Translations = {
   pt: {
     title: 'Informações Pessoais',
     fullName: 'Nome Completo',
@@ -56,7 +91,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
 }) => {
   const t = translations[language];
 
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (field: keyof PersonalInfo, value: string) => {
     updateData({
       ...data,
       [field]: value
@@ -127,8 +162,8 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           </div>
         </div>
 
-        {/* Endereço - Full width */}
-        <div className="md:col-span-2">
+        {/* Endereço */}
+        <div>
           <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
             {t.address}
           </label>
