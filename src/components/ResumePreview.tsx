@@ -2,8 +2,70 @@ import React from 'react';
 import { PhoneIcon, MailIcon, MapPinIcon, GlobeIcon } from 'lucide-react';
 import { LanguageCode } from '../translations/formTranslations';
 
+interface PersonalInfo {
+  name?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  website?: string;
+  linkedin?: string;
+  github?: string;
+}
+
+interface Experience {
+  id: string;
+  company: string;
+  position: string;
+  startDate: string;
+  endDate: string;
+  current: boolean;
+  description: string;
+}
+
+interface Education {
+  id: string;
+  institution: string;
+  degree: string;
+  field: string;
+  startDate: string;
+  endDate: string;
+  current: boolean;
+  description: string;
+}
+
+interface Skill {
+  id: string;
+  name: string;
+  level: string;
+}
+
+interface Language {
+  id: string;
+  name: string;
+  level: string;
+}
+
+interface Certification {
+  id: string;
+  name: string;
+  issuer: string;
+  date: string;
+  url?: string;
+  description: string;
+}
+
+interface ResumeData {
+  personal: PersonalInfo;
+  summary: string;
+  experience: Experience[];
+  education: Education[];
+  skills: Skill[];
+  languages: Language[];
+  certifications: Certification[];
+}
+
 interface ResumePreviewProps {
-  data: any;
+  data: ResumeData;
   language: LanguageCode;
 }
 
@@ -146,7 +208,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
         <div className="mb-6">
           <h2 className="text-lg sm:text-xl font-medium mb-4">{t.workExperience}</h2>
           <div className="space-y-4">
-            {experience.map((exp: any) => (
+            {experience.map((exp) => (
               <div key={exp.id}>
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
                   <div>
@@ -172,7 +234,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
         <div className="mb-6">
           <h2 className="text-lg sm:text-xl font-medium mb-4">{t.education}</h2>
           <div className="space-y-4">
-            {education.map((edu: any) => (
+            {education.map((edu) => (
               <div key={edu.id}>
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
                   <div>
@@ -200,7 +262,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
         <div className="mb-6">
           <h2 className="text-lg sm:text-xl font-medium mb-4">{t.technicalSkills}</h2>
           <div className="flex flex-wrap gap-2">
-            {skills.map((skill: any) => (
+            {skills.map((skill) => (
               <div
                 key={skill.id}
                 className="bg-gray-100 px-3 py-1 rounded-full text-sm"
@@ -217,7 +279,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
         <div className="mb-6">
           <h2 className="text-lg sm:text-xl font-medium mb-4">{t.languages}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {languageSkills.map((lang: any) => (
+            {languageSkills.map((lang) => (
               <div key={lang.id} className="text-sm sm:text-base">
                 <span className="font-medium">{lang.name}:</span> {getLanguageLevel(lang.level)}
               </div>
@@ -231,7 +293,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
         <div className="mb-6">
           <h2 className="text-lg sm:text-xl font-medium mb-4">{t.certifications}</h2>
           <div className="space-y-4">
-            {certifications.map((cert: any) => (
+            {certifications.map((cert) => (
               <div key={cert.id}>
                 <h3 className="text-base sm:text-lg font-medium">{cert.name}</h3>
                 <div className="text-sm text-gray-600">

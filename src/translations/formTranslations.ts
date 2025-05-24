@@ -1,6 +1,97 @@
 export type LanguageCode = 'pt' | 'en';
 
-export const formTranslations = {
+interface DegreeOptions {
+  highSchool: string;
+  technical: string;
+  bachelor: string;
+  postgraduate: string;
+  master: string;
+  doctorate: string;
+}
+
+interface SkillLevels {
+  basic: string;
+  intermediate: string;
+  advanced: string;
+  expert: string;
+}
+
+interface ProficiencyLevels {
+  basic: string;
+  intermediate: string;
+  advanced: string;
+  fluent: string;
+  native: string;
+}
+
+interface FormTranslations {
+  // Personal Info
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  website: string;
+  linkedin: string;
+  github: string;
+
+  // Professional Summary
+  summaryPlaceholder: string;
+
+  // Experience
+  addExperience: string;
+  experience: string;
+  company: string;
+  position: string;
+  startDate: string;
+  endDate: string;
+  current: string;
+  description: string;
+  jobDescription: string;
+  remove: string;
+
+  // Education
+  addEducation: string;
+  education: string;
+  institution: string;
+  degree: string;
+  field: string;
+  educationDescription: string;
+  inProgress: string;
+  degreeOptions: DegreeOptions;
+
+  // Skills
+  addSkill: string;
+  skill: string;
+  skillPlaceholder: string;
+  level: string;
+  skillLevels: SkillLevels;
+
+  // Languages
+  addLanguage: string;
+  language: string;
+  languagePlaceholder: string;
+  proficiency: string;
+  proficiencyLevels: ProficiencyLevels;
+
+  // Certifications
+  addCertification: string;
+  certification: string;
+  certificationName: string;
+  certificationPlaceholder: string;
+  issuer: string;
+  issuerPlaceholder: string;
+  date: string;
+  certificationUrl: string;
+  urlPlaceholder: string;
+  certificationDescription: string;
+}
+
+interface Translations {
+  pt: FormTranslations;
+  en: FormTranslations;
+}
+
+export const formTranslations: Translations = {
   pt: {
     // Personal Info
     name: 'Nome Completo',
