@@ -60,7 +60,7 @@ const EducationForm: React.FC<EducationFormProps> = ({ data, updateData, languag
       {data.map(edu => (
         <div key={edu.id} className="p-4 border rounded-lg bg-gray-50">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium">{t.education} {edu.id}</h3>
+            <h3 className="font-medium">{t.education}</h3>
             <button
               onClick={() => removeEducation(edu.id)}
               className="cursor-pointer text-red-500 hover:text-red-700"

@@ -49,7 +49,7 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
       {data.map(skill => (
         <div key={skill.id} className="p-4 border rounded-lg bg-gray-50">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium">{t.skill} {skill.id}</h3>
+            <h3 className="font-medium">{t.skill}</h3>
             <button
               onClick={() => removeSkill(skill.id)}
               className="cursor-pointer text-red-500 hover:text-red-700"
@@ -80,7 +80,6 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
                 onChange={e => handleChange(skill.id, 'level', e.target.value)}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
               >
-                <option value="">{t.level}</option>
                 <option value="basic">{t.skillLevels.basic}</option>
                 <option value="intermediate">{t.skillLevels.intermediate}</option>
                 <option value="advanced">{t.skillLevels.advanced}</option>
