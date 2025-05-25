@@ -1,6 +1,7 @@
 import React from 'react';
 
-type TabType = 'personal' | 'summary' | 'experience' | 'education' | 'skills' | 'languages' | 'certifications';
+type TabType = 'informacoes-pessoais' | 'resumo-profissional' | 'experiencia-profissional' | 
+               'formacao-academica' | 'habilidades-tecnicas' | 'idiomas' | 'certificacoes-cursos';
 
 interface Tab {
   id: TabType;
@@ -14,31 +15,31 @@ interface TabNavigationProps {
 
 const tabs: Tab[] = [
   {
-    id: 'personal',
+    id: 'informacoes-pessoais',
     label: 'Informações Pessoais'
   },
   {
-    id: 'summary',
+    id: 'resumo-profissional',
     label: 'Resumo Profissional'
   },
   {
-    id: 'experience',
+    id: 'experiencia-profissional',
     label: 'Experiência Profissional'
   },
   {
-    id: 'education',
+    id: 'formacao-academica',
     label: 'Formação Acadêmica'
   },
   {
-    id: 'skills',
+    id: 'habilidades-tecnicas',
     label: 'Habilidades Técnicas'
   },
   {
-    id: 'languages',
+    id: 'idiomas',
     label: 'Idiomas'
   },
   {
-    id: 'certifications',
+    id: 'certificacoes-cursos',
     label: 'Certificações/Cursos'
   }
 ];

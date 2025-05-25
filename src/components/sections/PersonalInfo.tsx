@@ -1,5 +1,5 @@
 import React from 'react';
-import { LanguageCode } from '../../translations/formTranslations';
+import { LanguageCode, formTranslations } from '../../translations/formTranslations';
 
 interface PersonalInfoData {
   name: string;
@@ -18,6 +18,8 @@ interface PersonalInfoProps {
 }
 
 const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData, language }) => {
+  const t = formTranslations[language];
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     updateData({
@@ -28,12 +30,11 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData, language 
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium">Informações Pessoais</h3>
-      <p className="text-gray-500">Preencha suas informações de contato.</p>
+      <h3 className="text-lg font-medium">{t.personalInfo}</h3>
       <div className="grid grid-cols-1 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Nome
+            {t.name}
           </label>
           <input
             type="text"
@@ -41,11 +42,12 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData, language 
             value={data.name}
             onChange={handleChange}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            title={t.name}
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Email
+            {t.email}
           </label>
           <input
             type="email"
@@ -53,11 +55,12 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData, language 
             value={data.email}
             onChange={handleChange}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            title={t.email}
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Telefone
+            {t.phone}
           </label>
           <input
             type="tel"
@@ -65,11 +68,12 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData, language 
             value={data.phone}
             onChange={handleChange}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            title={t.phone}
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Endereço
+            {t.address}
           </label>
           <input
             type="text"
@@ -77,11 +81,12 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData, language 
             value={data.address}
             onChange={handleChange}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            title={t.address}
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Website
+            {t.website}
           </label>
           <input
             type="url"
@@ -89,11 +94,12 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData, language 
             value={data.website || ''}
             onChange={handleChange}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            title={t.website}
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            LinkedIn
+            {t.linkedin}
           </label>
           <input
             type="url"
@@ -101,11 +107,12 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData, language 
             value={data.linkedin || ''}
             onChange={handleChange}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            title={t.linkedin}
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            GitHub
+            {t.github}
           </label>
           <input
             type="url"
@@ -113,6 +120,7 @@ const PersonalInfo: React.FC<PersonalInfoProps> = ({ data, updateData, language 
             value={data.github || ''}
             onChange={handleChange}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            title={t.github}
           />
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LanguageCode } from '../../translations/formTranslations';
+import { LanguageCode, formTranslations } from '../../translations/formTranslations';
 
 interface LanguageItem {
   id: string;
@@ -14,6 +14,8 @@ interface LanguagesProps {
 }
 
 const Languages: React.FC<LanguagesProps> = ({ data, updateData, language }) => {
+  const t = formTranslations[language];
+
   const addLanguage = () => {
     updateData([
       ...data,
@@ -43,27 +45,27 @@ const Languages: React.FC<LanguagesProps> = ({ data, updateData, language }) => 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-medium">Idiomas</h3>
+        <h3 className="text-lg font-medium">{t.language}</h3>
         <button
           type="button"
           onClick={addLanguage}
           className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
-          Adicionar Idioma
+          {t.addLanguage}
         </button>
       </div>
 
       {data.map((lang, index) => (
         <div key={lang.id} className="bg-gray-50 p-4 rounded-lg space-y-4">
           <div className="flex justify-between items-center">
-            <h4 className="text-md font-medium">Idioma {index + 1}</h4>
+            <h4 className="text-md font-medium">{t.language} {index + 1}</h4>
             {data.length > 1 && (
               <button
                 type="button"
                 onClick={() => removeLanguage(index)}
                 className="text-red-600 hover:text-red-800"
               >
-                Remover
+                {t.remove}
               </button>
             )}
           </div>
@@ -71,31 +73,33 @@ const Languages: React.FC<LanguagesProps> = ({ data, updateData, language }) => 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Nome do Idioma
+                {t.language}
               </label>
               <input
                 type="text"
                 value={lang.name}
                 onChange={(e) => updateLanguage(index, 'name', e.target.value)}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Ex: Inglês, Espanhol, Francês..."
+                placeholder={t.languagePlaceholder}
+                title={t.language}
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Nível
+                {t.proficiency}
               </label>
               <select
                 value={lang.level}
                 onChange={(e) => updateLanguage(index, 'level', e.target.value)}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                title={t.proficiency}
               >
-                <option value="">Selecione</option>
-                <option value="basic">Básico</option>
-                <option value="intermediate">Intermediário</option>
-                <option value="advanced">Avançado</option>
-                <option value="fluent">Fluente</option>
-                <option value="native">Nativo</option>
+                <option value="">{t.proficiency}</option>
+                <option value="basic">{t.proficiencyLevels.basic}</option>
+                <option value="intermediate">{t.proficiencyLevels.intermediate}</option>
+                <option value="advanced">{t.proficiencyLevels.advanced}</option>
+                <option value="fluent">{t.proficiencyLevels.fluent}</option>
+                <option value="native">{t.proficiencyLevels.native}</option>
               </select>
             </div>
           </div>

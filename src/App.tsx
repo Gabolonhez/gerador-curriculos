@@ -73,7 +73,8 @@ interface ResumeData {
   certifications: Certification[];
 }
 
-type TabType = 'personal' | 'summary' | 'experience' | 'education' | 'skills' | 'languages' | 'certifications';
+type TabType = 'informacoes-pessoais' | 'resumo-profissional' | 'experiencia-profissional' | 
+               'formacao-academica' | 'habilidades-tecnicas' | 'idiomas' | 'certificacoes-cursos';
 
 interface TranslationStrings {
   title: string;
@@ -138,7 +139,7 @@ const translations: Translations = {
 };
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('personal');
+  const [activeTab, setActiveTab] = useState<TabType>('informacoes-pessoais');
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>('pt');
   const [resumeData, setResumeData] = useState<ResumeData>({
     personal: {},
@@ -192,7 +193,15 @@ const App: React.FC = () => {
   };
 
   const handleNextPage = (): void => {
-    const tabOrder: TabType[] = ['personal', 'summary', 'experience', 'education', 'skills', 'languages', 'certifications'];
+    const tabOrder: TabType[] = [
+      'informacoes-pessoais',
+      'resumo-profissional',
+      'experiencia-profissional',
+      'formacao-academica',
+      'habilidades-tecnicas',
+      'idiomas',
+      'certificacoes-cursos'
+    ];
     const currentIndex = tabOrder.indexOf(activeTab);
     if (currentIndex < tabOrder.length - 1) {
       setActiveTab(tabOrder[currentIndex + 1]);
@@ -200,7 +209,15 @@ const App: React.FC = () => {
   };
 
   const handlePreviousPage = (): void => {
-    const tabOrder: TabType[] = ['personal', 'summary', 'experience', 'education', 'skills', 'languages', 'certifications'];
+    const tabOrder: TabType[] = [
+      'informacoes-pessoais',
+      'resumo-profissional',
+      'experiencia-profissional',
+      'formacao-academica',
+      'habilidades-tecnicas',
+      'idiomas',
+      'certificacoes-cursos'
+    ];
     const currentIndex = tabOrder.indexOf(activeTab);
     if (currentIndex > 0) {
       setActiveTab(tabOrder[currentIndex - 1]);
@@ -327,43 +344,43 @@ const App: React.FC = () => {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'personal':
+      case 'informacoes-pessoais':
         return <PersonalInfoForm 
           data={resumeData.personal} 
           updateData={(data: PersonalInfo) => updateResumeData('personal', data)} 
           language={currentLanguage}
         />;
-      case 'summary':
+      case 'resumo-profissional':
         return <ProfessionalSummaryForm 
           data={resumeData.summary} 
           updateData={(data: string) => updateResumeData('summary', data)} 
           language={currentLanguage}
         />;
-      case 'experience':
+      case 'experiencia-profissional':
         return <ExperienceForm 
           data={resumeData.experience} 
           updateData={(data: Experience[]) => updateResumeData('experience', data)} 
           language={currentLanguage}
         />;
-      case 'education':
+      case 'formacao-academica':
         return <EducationForm 
           data={resumeData.education} 
           updateData={(data: Education[]) => updateResumeData('education', data)} 
           language={currentLanguage}
         />;
-      case 'skills':
+      case 'habilidades-tecnicas':
         return <SkillsForm 
           data={resumeData.skills} 
           updateData={(data: Skill[]) => updateResumeData('skills', data)} 
           language={currentLanguage}
         />;
-      case 'languages':
+      case 'idiomas':
         return <LanguagesForm 
           data={resumeData.languages} 
           updateData={(data: Language[]) => updateResumeData('languages', data)} 
           language={currentLanguage}
         />;
-      case 'certifications':
+      case 'certificacoes-cursos':
         return <CertificationsForm 
           data={resumeData.certifications} 
           updateData={(data: Certification[]) => updateResumeData('certifications', data)} 
@@ -427,13 +444,13 @@ const App: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex space-x-8 whitespace-nowrap">
               {[
-                { id: 'personal', label: t.personalInfo },
-                { id: 'summary', label: t.summary },
-                { id: 'experience', label: t.experience },
-                { id: 'education', label: t.education },
-                { id: 'skills', label: t.skills },
-                { id: 'languages', label: t.languages },
-                { id: 'certifications', label: t.certifications },
+                { id: 'informacoes-pessoais', label: t.personalInfo },
+                { id: 'resumo-profissional', label: t.summary },
+                { id: 'experiencia-profissional', label: t.experience },
+                { id: 'formacao-academica', label: t.education },
+                { id: 'habilidades-tecnicas', label: t.skills },
+                { id: 'idiomas', label: t.languages },
+                { id: 'certificacoes-cursos', label: t.certifications },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -462,11 +479,11 @@ const App: React.FC = () => {
                   <button
                     onClick={handlePreviousPage}
                     className={`flex items-center justify-center px-4 py-2 rounded-md transition-colors w-full sm:w-auto ${
-                      activeTab === 'personal'
+                      activeTab === 'informacoes-pessoais'
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         : 'bg-blue-600 hover:bg-blue-700 text-white'
                     }`}
-                    disabled={activeTab === 'personal'}
+                    disabled={activeTab === 'informacoes-pessoais'}
                   >
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     {t.previous}
@@ -474,11 +491,11 @@ const App: React.FC = () => {
                   <button
                     onClick={handleNextPage}
                     className={`flex items-center justify-center px-4 py-2 rounded-md transition-colors w-full sm:w-auto ${
-                      activeTab === 'certifications'
+                      activeTab === 'certificacoes-cursos'
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         : 'bg-blue-600 hover:bg-blue-700 text-white'
                     }`}
-                    disabled={activeTab === 'certifications'}
+                    disabled={activeTab === 'certificacoes-cursos'}
                   >
                     {t.next}
                     <ArrowRight className="w-4 h-4 ml-2" />
