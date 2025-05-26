@@ -1,16 +1,7 @@
 import React from 'react';
 import { User, Mail, Phone, MapPin, Globe, Linkedin, Github } from 'lucide-react';
 import { LanguageCode } from '../translations/formTranslations';
-
-interface PersonalInfo {
-  name?: string;
-  email?: string;
-  phone?: string;
-  address?: string;
-  website?: string;
-  linkedin?: string;
-  github?: string;
-}
+import { PersonalInfo } from '../types/resume';
 
 interface PersonalInfoFormProps {
   data: PersonalInfo;

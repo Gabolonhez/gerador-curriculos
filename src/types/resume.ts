@@ -32,13 +32,13 @@ export interface Education {
 export interface Skill {
   id: string;
   name: string;
-  level: string;
+  level: 'basic' | 'intermediate' | 'advanced' | 'expert';
 }
 
 export interface Language {
   id: string;
   name: string;
-  level: string;
+  level: 'basic' | 'intermediate' | 'advanced' | 'fluent' | 'native';
 }
 
 export interface Certification {
@@ -46,8 +46,8 @@ export interface Certification {
   name: string;
   issuer: string;
   date: string;
-  url?: string;
   description: string;
+  url?: string;
 }
 
 export interface ResumeData {

@@ -1,12 +1,7 @@
 import React from 'react';
 import { PlusIcon, TrashIcon } from 'lucide-react';
 import { LanguageCode, formTranslations } from '../translations/formTranslations';
-
-interface Language {
-  id: string;
-  name: string;
-  level: string;
-}
+import { Language } from '../types/resume';
 
 interface LanguagesFormProps {
   data: Language[];
@@ -21,7 +16,7 @@ const LanguagesForm: React.FC<LanguagesFormProps> = ({ data, updateData, languag
     const newLanguage: Language = {
       id: Date.now().toString(),
       name: '',
-      level: ''
+      level: 'basic'
     };
     updateData([...data, newLanguage]);
   };
@@ -36,7 +31,7 @@ const LanguagesForm: React.FC<LanguagesFormProps> = ({ data, updateData, languag
         if (lang.id === id) {
           return {
             ...lang,
-            [field]: value
+            [field]: field === 'level' ? value as Language['level'] : value
           };
         }
         return lang;
@@ -54,6 +49,7 @@ const LanguagesForm: React.FC<LanguagesFormProps> = ({ data, updateData, languag
               onClick={() => removeLanguage(lang.id)}
               className="cursor-pointer text-red-500 hover:text-red-700"
               disabled={data.length <= 1}
+              aria-label={t.removeLanguage}
             >
               <TrashIcon className="h-5 w-5" />
             </button>
@@ -72,15 +68,15 @@ const LanguagesForm: React.FC<LanguagesFormProps> = ({ data, updateData, languag
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor={`language-level-${lang.id}`} className="block text-sm font-medium text-gray-700 mb-1">
                 {t.proficiency}
               </label>
               <select
+                id={`language-level-${lang.id}`}
                 value={lang.level}
                 onChange={e => handleChange(lang.id, 'level', e.target.value)}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
               >
-
                 <option value="basic">{t.proficiencyLevels.basic}</option>
                 <option value="intermediate">{t.proficiencyLevels.intermediate}</option>
                 <option value="advanced">{t.proficiencyLevels.advanced}</option>

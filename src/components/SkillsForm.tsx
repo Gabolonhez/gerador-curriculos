@@ -1,12 +1,7 @@
 import React from 'react';
 import { PlusIcon, TrashIcon } from 'lucide-react';
 import { LanguageCode, formTranslations } from '../translations/formTranslations';
-
-interface Skill {
-  id: string;
-  name: string;
-  level: string;
-}
+import { Skill } from '../types/resume';
 
 interface SkillsFormProps {
   data: Skill[];
@@ -21,7 +16,7 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
     const newSkill: Skill = {
       id: Date.now().toString(),
       name: '',
-      level: ''
+      level: 'basic'
     };
     updateData([...data, newSkill]);
   };
@@ -36,7 +31,7 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
         if (skill.id === id) {
           return {
             ...skill,
-            [field]: value
+            [field]: field === 'level' ? value as Skill['level'] : value
           };
         }
         return skill;
@@ -54,6 +49,7 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
               onClick={() => removeSkill(skill.id)}
               className="cursor-pointer text-red-500 hover:text-red-700"
               disabled={data.length <= 1}
+              aria-label={t.removeSkill}
             >
               <TrashIcon className="h-5 w-5" />
             </button>
@@ -72,10 +68,11 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor={`skill-level-${skill.id}`} className="block text-sm font-medium text-gray-700 mb-1">
                 {t.level}
               </label>
               <select
+                id={`skill-level-${skill.id}`}
                 value={skill.level}
                 onChange={e => handleChange(skill.id, 'level', e.target.value)}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
@@ -83,6 +80,7 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
                 <option value="basic">{t.skillLevels.basic}</option>
                 <option value="intermediate">{t.skillLevels.intermediate}</option>
                 <option value="advanced">{t.skillLevels.advanced}</option>
+                <option value="expert">{t.skillLevels.expert}</option>
               </select>
             </div>
           </div>

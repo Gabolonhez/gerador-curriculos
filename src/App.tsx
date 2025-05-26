@@ -74,13 +74,13 @@ const App: React.FC = () => {
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>('pt');
   const [resumeData, setResumeData] = useState<ResumeData>({
     personal: {
-      name: 'Your Name',
-      email: 'your.email@example.com',
-      phone: '(00) 00000-0000',
-      address: 'Your Address',
-      website: '',
-      linkedin: '',
-      github: ''
+      name: 'Your Name',      // Required field
+      email: 'your.email@example.com',     // Required field
+      phone: '(00) 00000-0000',     // Required field
+      address: 'Your Address',   // Required field
+      website: '',   // Optional field
+      linkedin: '',  // Optional field
+      github: ''    // Optional field
     },
     summary: '',
     experience: [],

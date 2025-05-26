@@ -67,6 +67,7 @@ interface FormTranslations {
   skillPlaceholder: string;
   level: string;
   skillLevels: SkillLevels;
+  removeSkill: string;
 
   // Languages
   addLanguage: string;
@@ -74,6 +75,7 @@ interface FormTranslations {
   languagePlaceholder: string;
   proficiency: string;
   proficiencyLevels: ProficiencyLevels;
+  removeLanguage: string;
 
   // Certifications
   addCertification: string;
@@ -149,6 +151,7 @@ export const formTranslations: Translations = {
       advanced: 'Avançado',
       expert: 'Especialista'
     },
+    removeSkill: 'Remover Habilidade',
 
     // Languages
     addLanguage: 'Adicionar Idioma',
@@ -162,6 +165,7 @@ export const formTranslations: Translations = {
       fluent: 'Fluente',
       native: 'Nativo'
     },
+    removeLanguage: 'Remover Idioma',
 
     // Certifications
     addCertification: 'Adicionar Certificação/Curso',
@@ -230,11 +234,12 @@ export const formTranslations: Translations = {
       advanced: 'Advanced',
       expert: 'Expert'
     },
+    removeSkill: 'Remove Skill',
 
     // Languages
     addLanguage: 'Add Language',
     language: 'Language',
-    languagePlaceholder: 'English, Portuguese, Spanish...',
+    languagePlaceholder: 'English, Spanish, Portuguese...',
     proficiency: 'Proficiency',
     proficiencyLevels: {
       basic: 'Basic',
@@ -243,6 +248,7 @@ export const formTranslations: Translations = {
       fluent: 'Fluent',
       native: 'Native'
     },
+    removeLanguage: 'Remove Language',
 
     // Certifications
     addCertification: 'Add Certification/Course',

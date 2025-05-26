@@ -1,15 +1,10 @@
 import React from 'react';
 import { LanguageCode, formTranslations } from '../../translations/formTranslations';
-
-interface LanguageItem {
-  id: string;
-  name: string;
-  level: string;
-}
+import { Language } from '../../types/resume';
 
 interface LanguagesProps {
-  data: LanguageItem[];
-  updateData: (data: LanguageItem[]) => void;
+  data: Language[];
+  updateData: (data: Language[]) => void;
   language: LanguageCode;
 }
 
@@ -22,7 +17,7 @@ const Languages: React.FC<LanguagesProps> = ({ data, updateData, language }) => 
       {
         id: Date.now().toString(),
         name: '',
-        level: ''
+        level: 'basic'
       }
     ]);
   };
@@ -33,11 +28,11 @@ const Languages: React.FC<LanguagesProps> = ({ data, updateData, language }) => 
     updateData(newData);
   };
 
-  const updateLanguage = (index: number, field: keyof LanguageItem, value: string) => {
+  const updateLanguage = (index: number, field: keyof Language, value: string) => {
     const newData = [...data];
     newData[index] = {
       ...newData[index],
-      [field]: value
+      [field]: field === 'level' ? value as Language['level'] : value
     };
     updateData(newData);
   };
@@ -94,7 +89,6 @@ const Languages: React.FC<LanguagesProps> = ({ data, updateData, language }) => 
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 title={t.proficiency}
               >
-                <option value="">{t.proficiency}</option>
                 <option value="basic">{t.proficiencyLevels.basic}</option>
                 <option value="intermediate">{t.proficiencyLevels.intermediate}</option>
                 <option value="advanced">{t.proficiencyLevels.advanced}</option>
