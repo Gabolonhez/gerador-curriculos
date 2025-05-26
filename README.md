@@ -20,7 +20,11 @@ Projeto responsivo para facilitar a criação de currículos, permitindo gerar e
 - `Vite`
 - `Tailwind`
 
-## Como baixar e rodar
+## 🌐 Link do projeto
+
+https://gerador-curriculos.vercel.app/ 
+
+## 🛠️ Como abrir e rodar o projeto
 
 1. Run `npm install`
 2. Run `npm run dev`
