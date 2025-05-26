@@ -1,10 +1,10 @@
 import { LanguageCode } from '../translations/formTranslations';
 
 export interface PersonalInfo {
-  name?: string;
-  email?: string;
-  phone?: string;
-  address?: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
   website?: string;
   linkedin?: string;
   github?: string;

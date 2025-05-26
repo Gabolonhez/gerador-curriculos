@@ -26,6 +26,7 @@ interface ProficiencyLevels {
 
 interface FormTranslations {
   // Personal Info
+  personalInfo: string;
   name: string;
   email: string;
   phone: string;
@@ -35,6 +36,7 @@ interface FormTranslations {
   github: string;
 
   // Professional Summary
+  summary: string;
   summaryPlaceholder: string;
 
   // Experience
@@ -94,6 +96,7 @@ interface Translations {
 export const formTranslations: Translations = {
   pt: {
     // Personal Info
+    personalInfo: 'Informações Pessoais',
     name: 'Nome Completo',
     email: 'Email',
     phone: 'Telefone',
@@ -103,6 +106,7 @@ export const formTranslations: Translations = {
     github: 'GitHub',
 
     // Professional Summary
+    summary: 'Resumo Profissional',
     summaryPlaceholder: 'Escreva um breve resumo sobre sua experiência profissional e objetivos...',
 
     // Experience
@@ -173,6 +177,7 @@ export const formTranslations: Translations = {
   },
   en: {
     // Personal Info
+    personalInfo: 'Personal Information',
     name: 'Full Name',
     email: 'Email',
     phone: 'Phone',
@@ -182,6 +187,7 @@ export const formTranslations: Translations = {
     github: 'GitHub',
 
     // Professional Summary
+    summary: 'Professional Summary',
     summaryPlaceholder: 'Write a brief summary about your professional experience and goals...',
 
     // Experience

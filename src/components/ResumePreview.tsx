@@ -1,6 +1,8 @@
 import React from 'react';
 import { PhoneIcon, MailIcon, MapPinIcon, GlobeIcon } from 'lucide-react';
 import { LanguageCode } from '../translations/formTranslations';
+import { ResumeData } from '../types/resume';
+import { ComponentProps } from '../types';
 
 interface PersonalInfo {
   name?: string;
@@ -54,19 +56,8 @@ interface Certification {
   description: string;
 }
 
-interface ResumeData {
-  personal: PersonalInfo;
-  summary: string;
-  experience: Experience[];
-  education: Education[];
-  skills: Skill[];
-  languages: Language[];
-  certifications: Certification[];
-}
-
-interface ResumePreviewProps {
+interface ResumePreviewProps extends ComponentProps {
   data: ResumeData;
-  language: LanguageCode;
 }
 
 const translations = {

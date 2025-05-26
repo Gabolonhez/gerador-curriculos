@@ -9,72 +9,8 @@ import LanguagesForm from './components/LanguagesForm';
 import CertificationsForm from './components/CertificationsForm';
 import ResumePreview from './components/ResumePreview';
 import { LanguageCode } from './translations/formTranslations';
+import { ResumeData } from './types/resume';
 import './styles/resume.css';
-
-interface PersonalInfo {
-  name?: string;
-  email?: string;
-  phone?: string;
-  address?: string;
-  website?: string;
-  linkedin?: string;
-  github?: string;
-}
-
-interface Experience {
-  id: string;
-  company: string;
-  position: string;
-  startDate: string;
-  endDate: string;
-  current: boolean;
-  description: string;
-}
-
-interface Education {
-  id: string;
-  institution: string;
-  degree: string;
-  field: string;
-  startDate: string;
-  endDate: string;
-  current: boolean;
-  description: string;
-}
-
-interface Skill {
-  id: string;
-  name: string;
-  level: string;
-}
-
-interface Language {
-  id: string;
-  name: string;
-  level: string;
-}
-
-interface Certification {
-  id: string;
-  name: string;
-  issuer: string;
-  date: string;
-  url?: string;
-  description: string;
-}
-
-interface ResumeData {
-  personal: PersonalInfo;
-  summary: string;
-  experience: Experience[];
-  education: Education[];
-  skills: Skill[];
-  languages: Language[];
-  certifications: Certification[];
-}
-
-type TabType = 'informacoes-pessoais' | 'resumo-profissional' | 'experiencia-profissional' | 
-               'formacao-academica' | 'habilidades-tecnicas' | 'idiomas' | 'certificacoes-cursos';
 
 interface TranslationStrings {
   title: string;
@@ -96,11 +32,6 @@ interface TranslationStrings {
 interface Translations {
   pt: TranslationStrings;
   en: TranslationStrings;
-}
-
-interface ResumePreviewProps {
-  data: ResumeData;
-  language: LanguageCode;
 }
 
 const translations: Translations = {
@@ -142,45 +73,21 @@ const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('informacoes-pessoais');
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>('pt');
   const [resumeData, setResumeData] = useState<ResumeData>({
-    personal: {},
+    personal: {
+      name: 'Your Name',
+      email: 'your.email@example.com',
+      phone: '(00) 00000-0000',
+      address: 'Your Address',
+      website: '',
+      linkedin: '',
+      github: ''
+    },
     summary: '',
-    experience: [{
-      id: Date.now().toString(),
-      company: '',
-      position: '',
-      startDate: '',
-      endDate: '',
-      current: false,
-      description: ''
-    }],
-    education: [{
-      id: Date.now().toString(),
-      institution: '',
-      degree: '',
-      field: '',
-      startDate: '',
-      endDate: '',
-      current: false,
-      description: ''
-    }],
-    skills: [{
-      id: Date.now().toString(),
-      name: '',
-      level: ''
-    }],
-    languages: [{
-      id: Date.now().toString(),
-      name: '',
-      level: ''
-    }],
-    certifications: [{
-      id: Date.now().toString(),
-      name: '',
-      issuer: '',
-      date: '',
-      url: '',
-      description: ''
-    }]
+    experience: [],
+    education: [],
+    skills: [],
+    languages: [],
+    certifications: []
   });
 
   const t = translations[currentLanguage];
