@@ -9,7 +9,7 @@ Projeto responsivo para facilitar a criação de currículos, permitindo gerar e
 - [X] : Geração de currículo em PDF.
 - [X] : Mudança de menu.
 - [X] : Interação com botões.
-- [X] : Tradução em português e inglês. 
+- [X] : Tradução em português e inglês.
 
 ## 💻 Tecnologias
 - `React`
@@ -20,7 +20,7 @@ Projeto responsivo para facilitar a criação de currículos, permitindo gerar e
 - `Vite`
 - `Tailwind`
 
-## Getting Started
+## Como baixar e rodar
 
 1. Run `npm install`
 2. Run `npm run dev`
