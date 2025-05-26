@@ -9,7 +9,7 @@ import LanguagesForm from './components/LanguagesForm';
 import CertificationsForm from './components/CertificationsForm';
 import ResumePreview from './components/ResumePreview';
 import { LanguageCode } from './translations/formTranslations';
-import { ResumeData } from './types/resume';
+import { ResumeData, TabType, PersonalInfo, Experience, Education, Skill, Language, Certification } from './types/resume';
 import './styles/resume.css';
 
 interface TranslationStrings {
