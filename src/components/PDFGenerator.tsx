@@ -1,6 +1,7 @@
 import React from 'react';
 import ResumePreview from './ResumePreview';
 import { LanguageCode } from '../translations/formTranslations';
+import { ResumeData } from '../types/resume';
 
 interface PersonalInfo {
   name?: string;

@@ -9,99 +9,25 @@ import Languages from './sections/Languages';
 import Certifications from './sections/Certifications';
 import PDFGenerator from './PDFGenerator';
 import { LanguageCode } from '../translations/formTranslations';
-
-interface PersonalInfoData {
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  website?: string;
-  linkedin?: string;
-  github?: string;
-}
-
-interface ExperienceItem {
-  company: string;
-  position: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-}
-
-interface EducationItem {
-  institution: string;
-  degree: string;
-  field: string;
-  startDate: string;
-  endDate: string;
-}
-
-interface Skill {
-  name: string;
-  level: string;
-}
-
-interface LanguageItem {
-  language: string;
-  proficiency: string;
-}
-
-interface Certification {
-  name: string;
-  issuer: string;
-  date: string;
-  description: string;
-}
-
-interface ResumeData {
-  personalInfo: PersonalInfoData;
-  professionalSummary: string;
-  workExperience: ExperienceItem[];
-  education: EducationItem[];
-  technicalSkills: Skill[];
-  languages: LanguageItem[];
-  certifications: Certification[];
-}
+import { ResumeData, TabType, PersonalInfo as PersonalInfoType, Experience, Education as EducationType, Skill, Language, Certification } from '../types/resume';
 
 const initialResumeData: ResumeData = {
-  personalInfo: {
+  personal: {
     name: '',
     email: '',
     phone: '',
     address: '',
+    website: '',
     linkedin: '',
     github: ''
   },
-  professionalSummary: '',
-  workExperience: [{
-    company: '',
-    position: '',
-    startDate: '',
-    endDate: '',
-    description: ''
-  }],
-  education: [{
-    institution: '',
-    degree: '',
-    field: '',
-    startDate: '',
-    endDate: ''
-  }],
-  technicalSkills: [],
-  languages: [{
-    language: '',
-    proficiency: ''
-  }],
-  certifications: [{
-    name: '',
-    issuer: '',
-    date: '',
-    description: ''
-  }]
+  summary: '',
+  experience: [],
+  education: [],
+  skills: [],
+  languages: [],
+  certifications: []
 };
-
-type TabType = 'informacoes-pessoais' | 'resumo-profissional' | 'experiencia-profissional' | 
-               'formacao-academica' | 'habilidades-tecnicas' | 'idiomas' | 'certificacoes-cursos';
 
 const ResumeBuilder: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('informacoes-pessoais');
@@ -109,7 +35,7 @@ const ResumeBuilder: React.FC = () => {
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
   const language: LanguageCode = 'pt'; // Default to Portuguese
 
-  const updateResumeData = (section: keyof ResumeData, data: any) => {
+  const updateResumeData = <T extends keyof ResumeData>(section: T, data: ResumeData[T]) => {
     setResumeData(prev => ({
       ...prev,
       [section]: data
@@ -119,21 +45,21 @@ const ResumeBuilder: React.FC = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'informacoes-pessoais':
-        return <PersonalInfo data={resumeData.personalInfo} updateData={data => updateResumeData('personalInfo', data)} language={language} />;
+        return <PersonalInfo data={resumeData.personal} updateData={(data: PersonalInfoType) => updateResumeData('personal', data)} language={language} />;
       case 'resumo-profissional':
-        return <ProfessionalSummary data={resumeData.professionalSummary} updateData={data => updateResumeData('professionalSummary', data)} language={language} />;
+        return <ProfessionalSummary data={resumeData.summary} updateData={(data: string) => updateResumeData('summary', data)} language={language} />;
       case 'experiencia-profissional':
-        return <WorkExperience data={resumeData.workExperience} updateData={data => updateResumeData('workExperience', data)} language={language} />;
+        return <WorkExperience data={resumeData.experience} updateData={(data: Experience[]) => updateResumeData('experience', data)} language={language} />;
       case 'formacao-academica':
-        return <Education data={resumeData.education} updateData={data => updateResumeData('education', data)} language={language} />;
+        return <Education data={resumeData.education} updateData={(data: EducationType[]) => updateResumeData('education', data)} language={language} />;
       case 'habilidades-tecnicas':
-        return <TechnicalSkills data={resumeData.technicalSkills} updateData={data => updateResumeData('technicalSkills', data)} language={language} />;
+        return <TechnicalSkills data={resumeData.skills} updateData={(data: Skill[]) => updateResumeData('skills', data)} language={language} />;
       case 'idiomas':
-        return <Languages data={resumeData.languages} updateData={data => updateResumeData('languages', data)} language={language} />;
+        return <Languages data={resumeData.languages} updateData={(data: Language[]) => updateResumeData('languages', data)} language={language} />;
       case 'certificacoes-cursos':
-        return <Certifications data={resumeData.certifications} updateData={data => updateResumeData('certifications', data)} language={language} />;
+        return <Certifications data={resumeData.certifications} updateData={(data: Certification[]) => updateResumeData('certifications', data)} language={language} />;
       default:
-        return <PersonalInfo data={resumeData.personalInfo} updateData={data => updateResumeData('personalInfo', data)} language={language} />;
+        return <PersonalInfo data={resumeData.personal} updateData={(data: PersonalInfoType) => updateResumeData('personal', data)} language={language} />;
     }
   };
 
