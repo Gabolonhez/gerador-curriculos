@@ -1,5 +1,5 @@
 # Gerador de currículos
-![image](https://github.com/user-attachments/assets/39ff14cc-4d25-4c44-bd9f-3d0da418d66f)
+![image](https://github.com/user-attachments/assets/3052f122-e3a2-4941-8b11-6a9d998e8033)
 
 ## 📑 Descrição
 Projeto responsivo para facilitar a criação de currículos, permitindo gerar em PDF.
