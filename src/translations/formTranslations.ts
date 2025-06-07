@@ -139,6 +139,7 @@ export const formTranslations: Translations = {
       master: 'Mestrado',
       doctorate: 'Doutorado'
     },
+    
 
     // Skills
     addSkill: 'Adicionar Habilidade',

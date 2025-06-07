@@ -90,7 +90,6 @@ const EducationForm: React.FC<EducationFormProps> = ({ data, updateData, languag
                 onChange={e => handleChange(edu.id, 'degree', e.target.value)}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
               >
-                <option value="">{t.degree}</option>
                 <option value="highSchool">{t.degreeOptions.highSchool}</option>
                 <option value="technical">{t.degreeOptions.technical}</option>
                 <option value="bachelor">{t.degreeOptions.bachelor}</option>
