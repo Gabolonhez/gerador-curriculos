@@ -128,7 +128,7 @@ export const formTranslations: Translations = {
     education: 'Formação',
     institution: 'Instituição',
     degree: 'Grau',
-    field: 'Área',
+    field: 'Curso',
     educationDescription: 'Informações adicionais sobre sua formação...',
     inProgress: 'Em andamento',
     degreeOptions: {

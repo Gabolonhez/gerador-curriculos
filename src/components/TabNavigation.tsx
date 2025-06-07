@@ -32,7 +32,7 @@ const tabs: Tab[] = [
   },
   {
     id: 'habilidades-tecnicas',
-    label: 'Habilidades Técnicas'
+    label: 'Habilidades'
   },
   {
     id: 'idiomas',
