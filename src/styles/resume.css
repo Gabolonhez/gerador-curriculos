@@ -16,10 +16,10 @@
   }
 
   .resume-container {
+   width: 210mm;
     box-shadow: none;
-    padding: 20mm;
+    padding: 0;
     max-width: none;
-    width: 210mm;
   }
 
   /* Hide non-printable elements */
@@ -31,11 +31,10 @@
   .section {
     page-break-inside: avoid;
   }
-
   /* Ensure proper margins and spacing */
   @page {
-    margin: 0;
     size: A4;
+    margin: 25mm 20mm 20mm 20mm; 
   }
 }
 
