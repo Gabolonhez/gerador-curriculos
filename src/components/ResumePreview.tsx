@@ -2,7 +2,6 @@ import React from 'react';
 import { PhoneIcon, MailIcon, MapPinIcon, GlobeIcon, LinkedinIcon, GithubIcon } from 'lucide-react';
 import { LanguageCode } from '../translations/formTranslations';
 import { ResumeData } from '../types/resume';
-import { formTranslations } from '../translations/formTranslations';
 
 interface ResumePreviewProps {
   data: ResumeData;
