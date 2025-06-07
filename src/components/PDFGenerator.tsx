@@ -21,56 +21,58 @@ const PDFGenerator: React.FC<PDFGeneratorProps> = ({ resumeData, language }) => 
           <ResumePreview data={resumeData} language={language} />
         </div>
       </div>
-      <style>
-        {`
-          @media print {
-            @page {
-              size: A4;
-              margin: 1.5cm;
-            }
-            
-            body {
-              -webkit-print-color-adjust: exact;
-              print-color-adjust: exact;
-            }
+        <style>
+    {`
+      @media print {
+        @page {
+          size: A4;
+          margin: 25mm 20mm 20mm 20mm; /* Margens consistentes */
+        }
 
-            .resume-preview {
-              font-size: 11pt;
-              line-height: 1.4;
-              color: #000;
-            }
+        body {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
 
-            button, .no-print {
-              display: none !important;
-            }
+        .resume-preview {
+          font-size: 11pt;
+          line-height: 1.4;
+          color: #000;
+        }
 
-            h2 {
-              break-after: avoid;
-            }
+        button, .no-print {
+          display: none !important;
+        }
 
-            .section {
-              break-inside: avoid;
-            }
+        h2 {
+          break-after: avoid;
+        }
 
-            .text-gray-600, .text-gray-700 {
-              color: #333 !important;
-            }
+        .section {
+          break-inside: avoid;
+          margin-top: 10mm; /* Espaço entre seções */
+          margin-bottom: 10mm; /* Espaço entre seções */
+        }
 
-            a {
-              text-decoration: none;
-              color: #000;
-            }
+        .text-gray-600, .text-gray-700 {
+          color: #333 !important;
+        }
 
-            .mb-6 {
-              margin-bottom: 1.2rem;
-            }
+        a {
+          text-decoration: none;
+          color: #000;
+        }
 
-            .gap-4 {
-              gap: 0.8rem;
-            }
-          }
-        `}
-      </style>
+        .mb-6 {
+          margin-bottom: 1.2rem;
+        }
+
+        .gap-4 {
+          gap: 0.8rem;
+        }
+      }
+    `}
+  </style>
     </div>
   );
 };

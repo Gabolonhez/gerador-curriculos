@@ -13,7 +13,7 @@ const translations = {
     professionalSummary: 'Resumo Profissional',
     workExperience: 'Experiência Profissional',
     education: 'Formação Acadêmica',
-    technicalSkills: 'Habilidades Técnicas',
+    technicalSkills: 'Habilidades',
     languages: 'Idiomas',
     certifications: 'Certificações e Cursos',
     present: 'Presente',
@@ -44,7 +44,7 @@ const translations = {
     professionalSummary: 'Professional Summary',
     workExperience: 'Work Experience',
     education: 'Education',
-    technicalSkills: 'Technical Skills',
+    technicalSkills: 'Skills',
     languages: 'Languages',
     certifications: 'Certifications and Courses',
     present: 'Present',
@@ -257,19 +257,19 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
           <section className="section">
             <h2 className="text-xl font-semibold mb-4 text-gray-900 border-b pb-2">
               {t.technicalSkills}
-            </h2>
-            <div className="space-y-2">
+             </h2>
+                        <div className="skills-list">
               {skills.map((skill) => (
-                 <div 
-    key={skill.id} 
-    className="flex justify-between items-center"
-    itemProp="knowsAbout"
-  >
-    <span className="text-base text-gray-700">{skill.name}</span> <span>-</span>
-    <span className="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded" style={{ marginLeft: 8 }}>
-      {t.skillLevels[skill.level as keyof typeof t.skillLevels]}
-    </span>
-  </div>
+                <div 
+                  key={skill.id} 
+                  className="skill-item flex justify-between items-center"
+                  itemProp="knowsAbout"
+                >
+                  <span className="text-base text-gray-700">{skill.name}</span> <span>-</span>
+                  <span className="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded" style={{ marginLeft: 8 }}>
+                    {t.skillLevels[skill.level as keyof typeof t.skillLevels]}
+                  </span>
+                </div>
               ))}
             </div>
           </section>
