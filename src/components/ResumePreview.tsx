@@ -1,5 +1,4 @@
 import React from 'react';
-import { PhoneIcon, MailIcon, MapPinIcon, GlobeIcon, LinkedinIcon, GithubIcon } from 'lucide-react';
 import { LanguageCode } from '../translations/formTranslations';
 import { ResumeData } from '../types/resume';
 
@@ -99,73 +98,32 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
     <article className="pdf-page max-w-4xl mx-auto font-sans">
       {/* Header / Personal Info */}
       <header className="mb-8 border-b pb-6">
-        <h1 
-          className="text-3xl font-bold mb-4 text-gray-900"
-          itemProp="name"
-        >
-          {personal.name}
-        </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-4">
-          {personal.phone && (
-            <div className="flex items-center gap-2" itemProp="telephone">
-              <PhoneIcon className="h-4 w-4 text-gray-500"/>
-              <span style={{ marginLeft: 8 }}>{personal.phone}</span>
-            </div>
-          )}
-          {personal.email && (
-            <div className="flex items-center gap-2" itemProp="email">
-              <MailIcon className="h-4 w-4 text-gray-500 " />
-              <span style={{ marginLeft: 8 }}>{personal.email}</span>
-            </div>
-          )}
-          {personal.address && (
-            <div className="flex items-center gap-2" itemProp="address">
-              <MapPinIcon className="h-4 w-4 text-gray-500" />
-               <span style={{ marginLeft: 8 }}>{personal.address}</span>
-            </div>
-          )}
-          {personal.website && (
-            <div className="flex items-center gap-2" itemProp="url">
-              <GlobeIcon className="h-4 w-4 text-gray-500" />
-              <a
-                  href={personal.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ marginLeft: 8 }}
-                  className="hover:text-blue-600"
-                >
-                  {personal.website}
-              </a>
-            </div>
-          )}
-        </div>
-        <div className="flex flex-wrap gap-4 text-sm">
-          {personal.linkedin && (
-            <div className="flex items-center gap-2">
-              <LinkedinIcon className="h-4 w-4 text-gray-500" />
-              <a style={{ marginLeft: 8 }} href={personal.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">
-                LinkedIn
-              </a>
-            </div>
-          )}
-          {personal.github && (
-            <div className="flex items-center gap-2">
-              <GithubIcon className="h-4 w-4 text-gray-500" />
-              <a style={{ marginLeft: 8 }} href={personal.github} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">
-                GitHub
-              </a>
-            </div>
-          )}
-        </div>
+       <div className="resume-container">
+  <h1>{personal.name}</h1>
+  <div className="contact-info">
+    {personal.phone && <span>{personal.phone}</span>}
+    {personal.email && <span>{personal.email}</span>}
+    {personal.address && <span>{personal.address}</span>}
+    {personal.linkedin && (
+      <a href={personal.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    )}
+    {personal.github && (
+      <a href={personal.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+    )}
+    {personal.website && (
+      <a href={personal.website} target="_blank" rel="noopener noreferrer">Website</a>
+    )}
+  </div>
+  </div>
       </header>
 
       {/* Professional Summary */}
       {summary && (
-        <section className="mb-8 section" itemProp="description">
+     <section className="section">
           <h2 className="text-xl font-semibold mb-3 text-gray-900 border-b pb-2">
             {t.professionalSummary}
           </h2>
-          <p className="text-base text-gray-700 whitespace-pre-wrap">{summary}</p>
+        <p className="description">{summary}</p>
         </section>
       )}
 
@@ -250,53 +208,37 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
         </section>
       )}
 
-      {/* Skills and Languages in two columns */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
-        {/* Technical Skills */}
+      {/* Skills */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
         {skills && skills.length > 0 && (
-          <section className="section">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 border-b pb-2">
-              {t.technicalSkills}
-             </h2>
-                        <div className="skills-list">
-              {skills.map((skill) => (
-                <div 
-                  key={skill.id} 
-                  className="skill-item flex justify-between items-center"
-                  itemProp="knowsAbout"
-                >
-                  <span className="text-base text-gray-700">{skill.name}</span> <span>-</span>
-                  <span className="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded" style={{ marginLeft: 8 }}>
-                    {t.skillLevels[skill.level as keyof typeof t.skillLevels]}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
+        <section className="section">
+          <h2 className="text-xl font-semibold mb-4 text-gray-900 border-b pb-2">
+            {t.technicalSkills}
+          </h2>
+    <ul className="skills-list">
+      {skills.map((skill) => (
+        <li className="skill-item" key={skill.id}>
+          <span className="skill-badge">
+            {skill.name} - {t.skillLevels[skill.level as keyof typeof t.skillLevels]}
+          </span>
+        </li>
+      ))}
+    </ul>
+        </section>
+      )}
         {/* Languages */}
-        {languageSkills && languageSkills.length > 0 && (
-          <section className="section">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 border-b pb-2">
-              {t.languages}
-            </h2>
-            <div className="space-y-2">
-              {languageSkills.map((lang) => (
-                <div 
-                  key={lang.id} 
-                  className="flex justify-between items-center"
-                  itemProp="knowsLanguage"
-                >
-                  <span className="text-base text-gray-700">{lang.name}</span> <span>-</span>
-                  <span className="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded" style={{ marginLeft: 8 }}>
-                    {t.proficiencyLevels[lang.level as keyof typeof t.proficiencyLevels]}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+       {languageSkills && languageSkills.length > 0 && (
+    <section className="section">
+        <h2>Idiomas</h2>
+      <ul className="languages-list">
+        {languageSkills.map((lang) => (
+          <li className="language-item" key={lang.id}>
+            {lang.name} - {t.proficiencyLevels[lang.level as keyof typeof t.proficiencyLevels]}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
       </div>
 
       {/* Certifications */}

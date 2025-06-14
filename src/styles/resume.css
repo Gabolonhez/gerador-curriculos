@@ -1,99 +1,82 @@
-/* Resume Styles */
+/* Container principal */
 .resume-container {
   width: 100%;
-  max-width: 210mm; /* A4 width */
+  max-width: 800px;
   margin: 0 auto;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding-top: 25mm; /* Garantir espaço no topo */
-  padding-bottom: 20mm; /* Garantir espaço no final */
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 8px #e0e0e0;
+  font-family: Arial, Helvetica, Verdana, sans-serif;
+  color: #222;
+  font-size: 11pt;
+  line-height: 1.5;
 }
 
-/* Print styles */
-@media print {
-  body {
-    background-color: white;
-    margin: 0;
-    padding: 0;
-  }
-
-  .resume-container {
-    width: 210mm;
-    box-shadow: none;
-    padding: 0;
-    max-width: none;
-    padding-top: 25mm; /* Espaço no topo para todas as páginas */
-    padding-bottom: 20mm; /* Espaço no final para todas as páginas */
-  }
-
-  /* Hide non-printable elements */
-  .no-print {
-    display: none !important;
-  }
-
-  /* Ensure page breaks don't occur in the middle of sections */
-  .section {
-    page-break-inside: avoid;
-    margin-top: 10mm; /* Espaço entre seções */
-    margin-bottom: 10mm; /* Espaço entre seções */
-  }
-
-  /* Ensure proper margins and spacing */
-  @page {
-    size: A4;
-    margin: 25mm 20mm 20mm 20mm; 
-  }
-}
-
-/* Typography */
+/* Cabeçalho */
 h1 {
-  color: #1a202c;
-  margin-bottom: 1rem;
-}
-
-h2 {
-  color: #2d3748;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #e2e8f0;
-  padding-bottom: 0.25rem;
-}
-
-h3 {
-  color: #2d3748;
+  font-size: 2rem;
+  font-weight: bold;
   margin-bottom: 0.5rem;
+  color: #222;
 }
 
-p {
-  margin-bottom: 0.5rem;
-  line-height: 1.6;
-}
-
-/* Sections */
-.section {
+.contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  align-items: center;
+  font-size: 1rem;
   margin-bottom: 1.5rem;
 }
 
-/* Contact Information */
-.contact-info {
+.contact-info span,
+.contact-info a {
+  white-space: nowrap;
+  color: #222;
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+/* Seções */
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h2 {
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #d1d5db;
+  padding-bottom: 0.25rem;
+  color: #222;
+}
+
+/* Listas de skills e idiomas */
+.skills-list,
+.languages-list {
   margin-bottom: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  padding-left: 1.2rem;
+  list-style: disc outside;
 }
 
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #4a5568;
+.skill-item,
+.language-item {
+  margin-bottom: 0.5rem;
+  color: #222;
 }
 
-.contact-item svg {
-  color: #4a5568;
+/* Se quiser o visual de "balão" nas skills: */
+.skill-badge {
+  background: #f7fafc;
+  border-radius: 1rem;
+  padding: 0.25rem 0.75rem;
+  display: inline-block;
 }
-
-/* Experience and Education */
+/* Experiência, formação, certificação */
 .experience-item,
 .education-item,
 .certification-item {
@@ -107,62 +90,15 @@ p {
 .description {
   margin-top: 0.5rem;
   color: #4a5568;
+  white-space: pre-line; /* Permite quebra de linha no resumo */
 }
 
-/* Skills */
-.skills-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Duas habilidades por linha */
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.skill-item {
-  background-color: #f7fafc;
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  color: #4a5568;
-}
-
-/* Links */
-a {
-  color: #4299e1;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Utilities */
-.font-medium {
-  font-weight: 500;
-}
-
-.text-gray-600 {
-  color: #4a5568;
-}
-
-/* ATS Optimization */
-.resume-container {
-  font-family: Arial, sans-serif;
-  line-height: 1.5;
-  color: #2d3748;
-}
-
-/* Ensure proper spacing between sections for ATS readability */
-.section + .section {
-  margin-top: 1.5rem;
-}
-
-/* Make sure links are visible in print */
+/* Ajuste para impressão */
 @media print {
-  a {
-    text-decoration: underline;
-    color: #2d3748;
-  }
-  
-  .skill-item {
-    border: 1px solid #e2e8f0;
+  .resume-container {
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    max-width: 100vw;
   }
 }
