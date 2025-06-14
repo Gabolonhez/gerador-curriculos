@@ -104,15 +104,37 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
     {personal.phone && <span>{personal.phone}</span>}
     {personal.email && <span>{personal.email}</span>}
     {personal.address && <span>{personal.address}</span>}
-    {personal.linkedin && (
-      <a href={personal.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    )}
-    {personal.github && (
-      <a href={personal.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-    )}
-    {personal.website && (
-      <a href={personal.website} target="_blank" rel="noopener noreferrer">Website</a>
-    )}
+    
+   <a
+      href={
+        personal.linkedin?.startsWith('http')
+          ? personal.linkedin
+          : `https://${personal.linkedin}`
+      }
+      target="_blank"
+      rel="noopener noreferrer">
+      LinkedIn
+    </a>
+    <a
+      href={
+        personal.github?.startsWith('http')
+          ? personal.github
+          : `https://${personal.github}`
+      }
+      target="_blank"
+      rel="noopener noreferrer">
+      Github
+    </a>
+    <a
+      href={
+        personal.website?.startsWith('http')
+          ? personal.website
+          : `https://${personal.website}`
+      }
+      target="_blank"
+      rel="noopener noreferrer">
+      Website
+    </a>
   </div>
   </div>
       </header>
