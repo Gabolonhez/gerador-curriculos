@@ -37,7 +37,7 @@ interface Translations {
 const translations: Translations = {
   pt: {
     title: 'Gerador de Currículos',
-    exportPdf: 'Exportar PDF',
+    exportPdf: 'Exportar currículo em PDF',
     personalInfo: 'Informações Pessoais',
     summary: 'Resumo Profissional',
     experience: 'Experiência Profissional',
@@ -53,7 +53,7 @@ const translations: Translations = {
   },
   en: {
     title: 'Resume Generator',
-    exportPdf: 'Export PDF',
+    exportPdf: 'Export resume in PDF',
     personalInfo: 'Personal Information',
     summary: 'Professional Summary',
     experience: 'Work Experience',
@@ -74,10 +74,10 @@ const App: React.FC = () => {
   const [currentLanguage, setCurrentLanguage] = useState<LanguageCode>('pt');
   const [resumeData, setResumeData] = useState<ResumeData>({
     personal: {
-      name: 'Your Name',      // Required field
-      email: 'your.email@example.com',     // Required field
-      phone: '(00) 00000-0000',     // Required field
-      address: 'Your Address',   // Required field
+      name: '',      // Required field
+      email: '',     // Required field
+      phone: '',     // Required field
+      address: '',   // Required field
       website: '',   // Optional field
       linkedin: '',  // Optional field
       github: ''    // Optional field

@@ -100,16 +100,16 @@ export const formTranslations: Translations = {
     // Personal Info
     personalInfo: 'Informações Pessoais',
     name: 'Nome Completo',
-    email: 'Email',
+    email: 'E-mail',
     phone: 'Telefone',
     address: 'Endereço',
-    website: 'Website',
+    website: 'Site',
     linkedin: 'LinkedIn',
     github: 'GitHub',
 
     // Professional Summary
     summary: 'Resumo Profissional',
-    summaryPlaceholder: 'Escreva um breve resumo sobre sua experiência profissional e objetivos...',
+    summaryPlaceholder: 'Escreva um breve resumo sobre você, suas qualidades, interesses e objetivos profissionais...',
 
     // Experience
     addExperience: 'Adicionar Experiência',
@@ -144,7 +144,7 @@ export const formTranslations: Translations = {
     // Skills
     addSkill: 'Adicionar Habilidade',
     skill: 'Habilidade',
-    skillPlaceholder: 'React.js, Python, Design UX/UI...',
+    skillPlaceholder: 'HTML, CSS, JavaScript...',
     level: 'Nível',
     skillLevels: {
       basic: 'Básico',
@@ -193,7 +193,7 @@ export const formTranslations: Translations = {
 
     // Professional Summary
     summary: 'Professional Summary',
-    summaryPlaceholder: 'Write a brief summary about your professional experience and goals...',
+    summaryPlaceholder: 'Write a brief summary about you, your qualitities, professional interests and goals...',
 
     // Experience
     addExperience: 'Add Experience',
@@ -227,7 +227,7 @@ export const formTranslations: Translations = {
     // Skills
     addSkill: 'Add Skill',
     skill: 'Skill',
-    skillPlaceholder: 'React.js, Python, UX/UI Design...',
+    skillPlaceholder: 'HTML, CSS, JavaScript...',
     level: 'Level',
     skillLevels: {
       basic: 'Basic',
