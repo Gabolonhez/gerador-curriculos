@@ -96,8 +96,7 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
 
   return (
     <article className="pdf-page max-w-4xl mx-auto font-sans">
-      {/* Header / Personal Info */}
-      <header className="mb-8 border-b pb-6">
+      {/* Header / Personal Info */}      <header className="mb-8 border-b pb-6">
        <div className="resume-container">
   <h1>{personal.name}</h1>
   <div className="contact-info">
@@ -105,36 +104,36 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language }) => {
     {personal.email && <span>{personal.email}</span>}
     {personal.address && <span>{personal.address}</span>}
     
-   <a
-      href={
-        personal.linkedin?.startsWith('http')
+    {personal.linkedin && (
+      <a
+        href={personal.linkedin?.startsWith('http')
           ? personal.linkedin
-          : `https://${personal.linkedin}`
-      }
-      target="_blank"
-      rel="noopener noreferrer">
-      LinkedIn
-    </a>
-    <a
-      href={
-        personal.github?.startsWith('http')
+          : `https://${personal.linkedin}`}
+        target="_blank"
+        rel="noopener noreferrer">
+        LinkedIn
+      </a>
+    )}
+    {personal.github && (
+      <a
+        href={personal.github?.startsWith('http')
           ? personal.github
-          : `https://${personal.github}`
-      }
-      target="_blank"
-      rel="noopener noreferrer">
-      Github
-    </a>
-    <a
-      href={
-        personal.website?.startsWith('http')
+          : `https://${personal.github}`}
+        target="_blank"
+        rel="noopener noreferrer">
+        Github
+      </a>
+    )}
+    {personal.website && (
+      <a
+        href={personal.website?.startsWith('http')
           ? personal.website
-          : `https://${personal.website}`
-      }
-      target="_blank"
-      rel="noopener noreferrer">
-      Website
-    </a>
+          : `https://${personal.website}`}
+        target="_blank"
+        rel="noopener noreferrer">
+        Website
+      </a>
+    )}
   </div>
   </div>
       </header>

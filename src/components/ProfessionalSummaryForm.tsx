@@ -14,8 +14,6 @@ const ProfessionalSummaryForm: React.FC<ProfessionalSummaryFormProps> = ({ data,
     <div>
       <h2 className="text-lg font-medium mb-4">Resumo Profissional</h2>
       <p className="text-sm text-gray-600 mb-4">
-        Escreva um breve resumo destacando suas principais qualificações,
-        experiências e objetivos profissionais.
       </p>
       <div>
         <textarea
