@@ -1,12 +1,30 @@
-import React from 'react';
-import { User, Mail, Phone, MapPin, Globe, Linkedin, Github } from 'lucide-react';
+import React, { useState } from 'react';
+import { User, Mail, Phone, MapPin, Globe, Linkedin, Github, AlertCircle, CheckCircle } from 'lucide-react';
 import { LanguageCode } from '../translations/formTranslations';
 import { PersonalInfo } from '../types/resume';
+import { 
+  validateEmail, 
+  validatePhone, 
+  validateURL, 
+  validateLinkedIn, 
+  validateGitHub,
+  validateRequiredField 
+} from '../utils/validators/resumeValidators';
 
 interface PersonalInfoFormProps {
   data: PersonalInfo;
   updateData: (data: PersonalInfo) => void;
   language: LanguageCode;
+}
+
+interface ValidationState {
+  name: { isValid: boolean; message: string };
+  email: { isValid: boolean; message: string };
+  phone: { isValid: boolean; message: string };
+  address: { isValid: boolean; message: string };
+  linkedin: { isValid: boolean; message: string };
+  github: { isValid: boolean; message: string };
+  website: { isValid: boolean; message: string };
 }
 
 interface TranslationStrings {
@@ -81,157 +99,239 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   language
 }) => {
   const t = translations[language];
+  
+  // Estado para validação em tempo real
+  const [validation, setValidation] = useState<ValidationState>({
+    name: { isValid: true, message: '' },
+    email: { isValid: true, message: '' },
+    phone: { isValid: true, message: '' },
+    address: { isValid: true, message: '' },
+    linkedin: { isValid: true, message: '' },
+    github: { isValid: true, message: '' },
+    website: { isValid: true, message: '' }
+  });
 
   const handleChange = (field: keyof PersonalInfo, value: string) => {
+    // Atualiza os dados
     updateData({
       ...data,
       [field]: value
     });
+
+    // Valida em tempo real
+    validateField(field, value);
   };
+
+  const validateField = (field: keyof PersonalInfo, value: string) => {
+    let isValid = true;
+    let message = '';
+
+    switch (field) {
+      case 'name':
+        isValid = validateRequiredField(value);
+        message = !isValid ? (language === 'pt' ? 'Nome é obrigatório' : 'Name is required') : '';
+        break;
+      case 'email':
+        if (value) {
+          isValid = validateEmail(value);
+          message = !isValid ? (language === 'pt' ? 'Email inválido' : 'Invalid email') : '';
+        }
+        break;
+      case 'phone':
+        if (value) {
+          isValid = validatePhone(value);
+          message = !isValid ? (language === 'pt' ? 'Telefone inválido' : 'Invalid phone') : '';
+        }
+        break;
+      case 'address':
+        // Address validation is optional, always valid
+        isValid = true;
+        message = '';
+        break;
+      case 'linkedin':
+        isValid = validateLinkedIn(value);
+        message = !isValid ? (language === 'pt' ? 'LinkedIn inválido' : 'Invalid LinkedIn') : '';
+        break;
+      case 'github':
+        isValid = validateGitHub(value);
+        message = !isValid ? (language === 'pt' ? 'GitHub inválido' : 'Invalid GitHub') : '';
+        break;
+      case 'website':
+        isValid = validateURL(value);
+        message = !isValid ? (language === 'pt' ? 'URL inválida' : 'Invalid URL') : '';
+        break;
+    }
+
+    setValidation(prev => ({
+      ...prev,
+      [field]: { isValid, message }
+    }));
+  };
+
+  const renderFieldWithValidation = (
+    field: keyof PersonalInfo,
+    type: string,
+    icon: React.ReactNode,
+    label: string,
+    placeholder: string,
+    required = false,
+    helpText?: string
+  ) => (
+    <div>
+      <label htmlFor={field} className="block text-sm font-medium text-gray-700 mb-1">
+        {label} {required && <span className="text-red-500">*</span>}
+      </label>
+      <div className="relative">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          {icon}
+        </div>
+        <input
+          type={type}
+          id={field}
+          value={data[field] || ''}
+          onChange={(e) => handleChange(field, e.target.value)}
+          placeholder={placeholder}
+          className={`pl-10 pr-10 w-full px-3 py-2 border rounded-md focus:ring-1 text-sm sm:text-base ${
+            validation[field].isValid
+              ? 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+              : 'border-red-300 focus:ring-red-500 focus:border-red-500'
+          }`}
+        />
+        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+          {data[field] && (
+            validation[field].isValid ? (
+              <CheckCircle className="h-5 w-5 text-green-400" />
+            ) : (
+              <AlertCircle className="h-5 w-5 text-red-400" />
+            )
+          )}
+        </div>
+      </div>
+      {validation[field].message && (
+        <p className="mt-1 text-sm text-red-600">{validation[field].message}</p>
+      )}
+      {helpText && !validation[field].message && (
+        <p className="mt-1 text-xs text-gray-500">{helpText}</p>
+      )}
+    </div>
+  );
+
+  const atsHints = {
+    pt: {
+      name: "Use seu nome completo como aparece em documentos oficiais",
+      email: "Use um email profissional para melhor impressão",
+      phone: "Inclua DDD e país para facilitar contato",
+      linkedin: "Mantenha seu perfil atualizado - muitos recrutadores verificam",
+      github: "Importante para vagas técnicas - mostre seus projetos",
+      website: "Portfolio online impressiona recrutadores"
+    },
+    en: {
+      name: "Use your full name as it appears on official documents",
+      email: "Use a professional email for better impression",
+      phone: "Include area code and country for easy contact",
+      linkedin: "Keep your profile updated - many recruiters check",
+      github: "Important for technical roles - showcase your projects",
+      website: "Online portfolio impresses recruiters"
+    }
+  };
+
+  const hints = atsHints[language];
 
   return (
     <div className="space-y-4 sm:space-y-6">
       <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">{t.title}</h2>
+      
+      {/* ATS Tips */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <h3 className="text-sm font-medium text-blue-900 mb-2">
+          {language === 'pt' ? '💡 Dicas para ATS' : '💡 ATS Tips'}
+        </h3>
+        <p className="text-sm text-blue-700">
+          {language === 'pt' 
+            ? 'Preencha informações completas e precisas. Sistemas ATS analisam cada campo para ranquear seu currículo.'
+            : 'Fill in complete and accurate information. ATS systems analyze each field to rank your resume.'}
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Nome Completo - Full width */}
         <div className="md:col-span-2">
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-            {t.fullName}
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <User className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="text"
-              id="name"
-              value={data.name || ''}
-              onChange={(e) => handleChange('name', e.target.value)}
-              placeholder={t.placeholders.name}
-              className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
-            />
-          </div>
+          {renderFieldWithValidation(
+            'name',
+            'text',
+            <User className="h-5 w-5 text-gray-400" />,
+            t.fullName,
+            t.placeholders.name,
+            true,
+            hints.name
+          )}
         </div>
 
         {/* Email */}
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-            {t.email}
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Mail className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="email"
-              id="email"
-              value={data.email || ''}
-              onChange={(e) => handleChange('email', e.target.value)}
-              placeholder={t.placeholders.email}
-              className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
-            />
-          </div>
-        </div>
+        {renderFieldWithValidation(
+          'email',
+          'email',
+          <Mail className="h-5 w-5 text-gray-400" />,
+          t.email,
+          t.placeholders.email,
+          true,
+          hints.email
+        )}
 
         {/* Telefone */}
-        <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-            {t.phone}
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Phone className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="tel"
-              id="phone"
-              value={data.phone || ''}
-              onChange={(e) => handleChange('phone', e.target.value)}
-              placeholder={t.placeholders.phone}
-              className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
-            />
-          </div>
-        </div>
+        {renderFieldWithValidation(
+          'phone',
+          'tel',
+          <Phone className="h-5 w-5 text-gray-400" />,
+          t.phone,
+          t.placeholders.phone,
+          false,
+          hints.phone
+        )}
 
-        {/* Endereço */}
-        <div>
-          <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
-            {t.address}
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <MapPin className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="text"
-              id="address"
-              value={data.address || ''}
-              onChange={(e) => handleChange('address', e.target.value)}
-              placeholder={t.placeholders.address}
-              className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
-            />
-          </div>
+        {/* Endereço - Full width */}
+        <div className="md:col-span-2">
+          {renderFieldWithValidation(
+            'address',
+            'text',
+            <MapPin className="h-5 w-5 text-gray-400" />,
+            t.address,
+            t.placeholders.address
+          )}
         </div>
 
         {/* Website */}
-        <div>
-          <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">
-            {t.website}
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Globe className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="url"
-              id="website"
-              value={data.website || ''}
-              onChange={(e) => handleChange('website', e.target.value)}
-              placeholder={t.placeholders.website}
-              className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
-            />
-          </div>
-        </div>
+        {renderFieldWithValidation(
+          'website',
+          'url',
+          <Globe className="h-5 w-5 text-gray-400" />,
+          t.website,
+          t.placeholders.website,
+          false,
+          hints.website
+        )}
 
         {/* LinkedIn */}
-        <div>
-          <label htmlFor="linkedin" className="block text-sm font-medium text-gray-700 mb-1">
-            {t.linkedin}
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Linkedin className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="url"
-              id="linkedin"
-              value={data.linkedin || ''}
-              onChange={(e) => handleChange('linkedin', e.target.value)}
-              placeholder={t.placeholders.linkedin}
-              className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
-            />
-          </div>
-        </div>
+        {renderFieldWithValidation(
+          'linkedin',
+          'url',
+          <Linkedin className="h-5 w-5 text-gray-400" />,
+          t.linkedin,
+          t.placeholders.linkedin,
+          false,
+          hints.linkedin
+        )}
 
         {/* GitHub */}
-        <div>
-          <label htmlFor="github" className="block text-sm font-medium text-gray-700 mb-1">
-            {t.github}
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Github className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="url"
-              id="github"
-              value={data.github || ''}
-              onChange={(e) => handleChange('github', e.target.value)}
-              placeholder={t.placeholders.github}
-              className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
-            />
-          </div>
-        </div>
+        {renderFieldWithValidation(
+          'github',
+          'url',
+          <Github className="h-5 w-5 text-gray-400" />,
+          t.github,
+          t.placeholders.github,
+          false,
+          hints.github
+        )}
       </div>
     </div>
   );

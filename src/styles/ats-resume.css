@@ -1,0 +1,489 @@
+/* ===== ESTILOS OTIMIZADOS PARA ATS ===== */
+
+/* REGRA GLOBAL: NUNCA transformar o nome em caixa alta */
+.ats-resume .ats-name,
+.ats-resume h1.ats-name,
+h1.ats-name {
+  text-transform: none !important;
+  font-variant: normal !important;
+  font-variant-caps: normal !important;
+}
+
+.ats-resume {
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  font-size: 11pt;
+  line-height: 1.4;
+  color: #000000;
+  background-color: #ffffff;
+  max-width: 21cm;
+  margin: 0 auto;
+  padding: 1.5cm;
+  box-sizing: border-box;
+}
+
+/* ===== HEADER ===== */
+.ats-header {
+  margin-bottom: 1.5em;
+  border-bottom: 2px solid #000000;
+  padding-bottom: 1em;
+}
+
+.ats-name {
+  font-size: 18pt;
+  font-weight: bold;
+  color: #000000;
+  margin: 0 0 0.5em 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-transform: none !important;
+}
+
+.ats-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+.ats-contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5em;
+}
+
+.ats-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  font-size: 10pt;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+.ats-label {
+  font-weight: bold;
+  color: #333333;
+}
+
+.ats-value {
+  color: #000000;
+}
+
+/* ===== SEÇÕES ===== */
+.ats-section {
+  margin-bottom: 1.5em;
+  page-break-inside: avoid;
+}
+
+.ats-section-title {
+  font-size: 14pt;
+  font-weight: bold;
+  color: #000000;
+  text-transform: uppercase;
+  margin: 0 0 0.8em 0;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #000000;
+  letter-spacing: 0.5px;
+}
+
+/* ===== RESUMO PROFISSIONAL ===== */
+.ats-summary {
+  margin-bottom: 1em;
+}
+
+.ats-summary p {
+  margin: 0;
+  text-align: justify;
+  font-size: 11pt;
+  line-height: 1.5;
+}
+
+/* ===== COMPETÊNCIAS TÉCNICAS ===== */
+.ats-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+.ats-skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.4em 0.5em;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  text-align: center;
+  min-height: 2.5em;
+}
+
+.ats-skill-name {
+  font-weight: bold;
+  color: #000000;
+  font-size: 10pt;
+  margin-bottom: 0.2em;
+}
+
+.ats-skill-level {
+  font-size: 8pt;
+  color: #666666;
+  font-style: italic;
+}
+
+/* Responsividade para skills */
+@media (max-width: 600px) {
+  .ats-skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media print {
+  .ats-skills-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ===== EXPERIÊNCIA PROFISSIONAL ===== */
+.ats-experience-item {
+  margin-bottom: 1.5em;
+  page-break-inside: avoid;
+}
+
+.ats-experience-header {
+  margin-bottom: 0.8em;
+}
+
+.ats-job-title {
+  font-size: 12pt;
+  font-weight: bold;
+  color: #000000;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.ats-company {
+  font-size: 11pt;
+  font-weight: bold;
+  color: #333333;
+  margin: 0.2em 0;
+}
+
+.ats-date-info {
+  display: flex;
+  gap: 0.5em;
+  font-size: 10pt;
+  color: #666666;
+  margin-top: 0.3em;
+}
+
+.ats-dates {
+  font-weight: bold;
+}
+
+.ats-duration {
+  font-style: italic;
+}
+
+.ats-description {
+  margin-top: 0.8em;
+}
+
+.ats-description p {
+  margin: 0;
+  text-align: justify;
+  line-height: 1.4;
+}
+
+/* ===== FORMAÇÃO ACADÊMICA ===== */
+.ats-education-item {
+  margin-bottom: 1.2em;
+  page-break-inside: avoid;
+}
+
+.ats-education-header {
+  margin-bottom: 0.5em;
+}
+
+.ats-degree {
+  font-size: 12pt;
+  font-weight: bold;
+  color: #000000;
+  margin: 0;
+}
+
+.ats-institution {
+  font-size: 11pt;
+  font-weight: bold;
+  color: #333333;
+  margin: 0.2em 0;
+}
+
+/* ===== CERTIFICAÇÕES ===== */
+.ats-certification-item {
+  margin-bottom: 1.2em;
+  page-break-inside: avoid;
+}
+
+.ats-certification-header {
+  margin-bottom: 0.5em;
+}
+
+.ats-cert-name {
+  font-size: 11pt;
+  font-weight: bold;
+  color: #000000;
+  margin: 0;
+}
+
+.ats-cert-issuer {
+  font-size: 10pt;
+  font-weight: bold;
+  color: #333333;
+  margin: 0.2em 0;
+}
+
+.ats-cert-date {
+  font-size: 9pt;
+  color: #666666;
+  font-style: italic;
+}
+
+.ats-cert-url {
+  margin-top: 0.3em;
+  font-size: 9pt;
+  color: #666666;
+}
+
+/* ===== IDIOMAS ===== */
+.ats-languages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.5em;
+}
+
+.ats-language-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3em 0.8em;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+}
+
+.ats-language-name {
+  font-weight: bold;
+  color: #000000;
+}
+
+.ats-language-level {
+  font-size: 9pt;
+  color: #666666;
+  font-style: italic;
+}
+
+/* ===== OTIMIZAÇÕES PARA IMPRESSÃO E ATS ===== */
+@media print {
+  .ats-resume {
+    padding: 0.5cm;
+    box-shadow: none;
+    margin: 0;
+    max-width: none;
+    width: 100%;
+  }
+  
+  /* Garante que o nome não fique em caixa alta no PDF */
+  .ats-name {
+    text-transform: none !important;
+    font-size: 18pt !important;
+    font-weight: bold !important;
+    color: #000000 !important;
+    margin: 0 0 0.5em 0 !important;
+    text-align: center !important;
+    letter-spacing: 0.5px !important;
+  }
+  
+  .ats-section {
+    page-break-inside: avoid;
+  }
+  
+  .ats-experience-item,
+  .ats-education-item,
+  .ats-certification-item {
+    page-break-inside: avoid;
+  }
+  
+  /* FORÇA o layout das informações de contato para impressão */
+  .ats-contact-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5em !important;
+    margin-top: 0.5em !important;
+  }
+
+  .ats-contact-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 1.5em !important;
+  }
+
+  .ats-contact-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.3em !important;
+    font-size: 10pt !important;
+    white-space: nowrap !important;
+  }
+  
+  /* FORÇA o grid das skills para impressão */
+  .ats-skills-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0.5em !important;
+    margin-top: 0.8em !important;
+  }
+
+  .ats-skill-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 0.4em 0.5em !important;
+    background-color: transparent !important;
+    border: 1px solid #cccccc !important;
+    border-radius: 4px !important;
+    text-align: center !important;
+    min-height: 2.5em !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* Garante que cores sejam preservadas */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  /* Remove backgrounds para melhor compatibilidade */
+  .ats-language-item {
+    background-color: transparent !important;
+    border: 1px solid #cccccc !important;
+  }
+  
+  /* Força que TODOS os elementos de texto mantenham seu formato original */
+  .ats-resume * {
+    text-transform: none !important;
+  }
+  
+  /* Especificidade máxima para o nome - NUNCA em caixa alta */
+  .ats-resume .ats-header .ats-name,
+  .ats-resume h1.ats-name,
+  h1.ats-name {
+    text-transform: none !important;
+    font-variant: normal !important;
+    font-variant-caps: normal !important;
+  }
+  
+  /* Exceções específicas apenas para títulos de seções */
+  .ats-section-title {
+    text-transform: uppercase !important;
+  }
+  
+  /* Exceção para títulos de trabalho */
+  .ats-job-title {
+    text-transform: capitalize !important;
+  }
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media screen and (max-width: 768px) {
+  .ats-resume {
+    padding: 1em;
+    font-size: 10pt;
+  }
+  
+  .ats-name {
+    font-size: 16pt;
+  }
+  
+  .ats-section-title {
+    font-size: 12pt;
+  }
+  
+  .ats-contact-info {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+  }
+  
+  .ats-skills,
+  .ats-languages {
+    grid-template-columns: 1fr;
+  }
+  
+  .ats-date-info {
+    flex-direction: column;
+    gap: 0.2em;
+  }
+}
+
+/* ===== MELHORIAS VISUAIS PARA TELA ===== */
+@media screen {
+  .ats-resume {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #ffffff;
+    margin: 2em auto;
+  }
+  
+  .ats-skill-item:hover,
+  .ats-language-item:hover {
+    background-color: #e9ecef;
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+  }
+  
+  .ats-experience-item:hover,
+  .ats-education-item:hover,
+  .ats-certification-item:hover {
+    background-color: #fafbfc;
+    border-radius: 4px;
+    padding: 0.5em;
+    margin-left: -0.5em;
+    margin-right: -0.5em;
+    transition: all 0.2s ease;
+  }
+}
+
+/* ===== ACESSIBILIDADE ===== */
+.ats-resume * {
+  /* Melhora legibilidade */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== OTIMIZAÇÕES ESPECÍFICAS PARA ATS ===== */
+.ats-resume h1, 
+.ats-resume h2, 
+.ats-resume h3, 
+.ats-resume h4 {
+  /* Evita quebras de linha em títulos importantes */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ats-resume p {
+  /* Otimiza leitura por ATS */
+  -webkit-hyphens: none;
+  hyphens: none;
+  word-wrap: break-word;
+}
+
+/* Remove elementos que podem confundir ATS */
+.ats-resume *::before,
+.ats-resume *::after {
+  content: none !important;
+}
