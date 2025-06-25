@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabType } from '../../../types/resume';
-import { TAB_CONFIG } from '../../../utils/constants/tabs';
+import { TAB_CONFIG } from '../../../hooks/useTabNavigation';
 
 interface TranslationStrings {
   personalInfo: string;
