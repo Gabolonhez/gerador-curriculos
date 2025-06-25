@@ -86,7 +86,6 @@ export const useATSAnalysis = (resumeData: ResumeData, language: 'pt' | 'en' = '
 
 const analyzePersonalInfo = (personal: ResumeData['personal'], feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
   let score = 0;
-  const maxSectionScore = 20;
 
   // Nome (obrigatório) - 5 pontos
   if (personal.name && personal.name.trim().length > 0) {
@@ -169,7 +168,6 @@ const analyzePersonalInfo = (personal: ResumeData['personal'], feedback: ATSFeed
 
 const analyzeSummary = (summary: string, feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
   let score = 0;
-  const maxSectionScore = 15;
 
   if (!summary || summary.trim().length === 0) {
     feedback.push({
@@ -214,7 +212,6 @@ const analyzeSummary = (summary: string, feedback: ATSFeedback[], language: 'pt'
 
 const analyzeExperience = (experience: ResumeData['experience'], feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
   let score = 0;
-  const maxSectionScore = 25;
 
   if (!experience || experience.length === 0) {
     feedback.push({
@@ -253,7 +250,6 @@ const analyzeExperience = (experience: ResumeData['experience'], feedback: ATSFe
 
 const analyzeEducation = (education: ResumeData['education'], feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
   let score = 0;
-  const maxSectionScore = 15;
 
   if (!education || education.length === 0) {
     feedback.push({
@@ -281,7 +277,6 @@ const analyzeEducation = (education: ResumeData['education'], feedback: ATSFeedb
 
 const analyzeSkills = (skills: ResumeData['skills'], feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
   let score = 0;
-  const maxSectionScore = 15;
 
   if (!skills || skills.length === 0) {
     feedback.push({
@@ -316,7 +311,6 @@ const analyzeSkills = (skills: ResumeData['skills'], feedback: ATSFeedback[], la
 
 const analyzeKeywords = (resumeData: ResumeData, feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
   let score = 0;
-  const maxSectionScore = 10;
 
   // Combina todo o texto do currículo
   const allText = [
