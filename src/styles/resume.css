@@ -102,3 +102,8 @@ h1 {
     max-width: 100vw;
   }
 }
+
+/* Estilo específico para o preview do currículo */
+.resume-preview {
+  max-height: calc(100vh - 300px);
+}

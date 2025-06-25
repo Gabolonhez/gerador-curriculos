@@ -193,7 +193,7 @@ export const formTranslations: Translations = {
 
     // Professional Summary
     summary: 'Professional Summary',
-    summaryPlaceholder: 'Write a brief summary about you, your qualitities, professional interests and goals...',
+    summaryPlaceholder: 'Write a brief summary about you, your qualities, professional interests and goals...',
 
     // Experience
     addExperience: 'Add Experience',
