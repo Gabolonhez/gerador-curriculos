@@ -173,7 +173,7 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
             {skills.map((skill, index) => (
               <div key={skill.id || index} className="ats-skill-item">
                 <span className="ats-skill-name">{skill.name}</span>
-                <span className="ats-skill-level">({t.skillLevels[skill.level as keyof typeof t.skillLevels]})</span>
+                <span className="ats-skill-level">{t.skillLevels[skill.level as keyof typeof t.skillLevels]}</span>
               </div>
             ))}
           </div>
@@ -282,7 +282,7 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
             {languageSkills.map((lang, index) => (
               <div key={lang.id || index} className="ats-language-item">
                 <span className="ats-language-name">{lang.name}</span>
-                <span className="ats-language-level">({t.proficiencyLevels[lang.level as keyof typeof t.proficiencyLevels]})</span>
+                <span className="ats-language-level">{t.proficiencyLevels[lang.level as keyof typeof t.proficiencyLevels]}</span>
               </div>
             ))}
           </div>
