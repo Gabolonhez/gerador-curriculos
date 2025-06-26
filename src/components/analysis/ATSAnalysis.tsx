@@ -39,6 +39,7 @@ const ATSAnalysis: React.FC<ATSAnalysisProps> = ({ resumeData, language }) => {
     pt: {
       title: 'Análise ATS',
       subtitle: 'Compatibilidade com Sistemas de Rastreamento de Candidatos',
+      infoText: 'Preencha informações completas e precisas. Sistemas ATS analisam cada campo para ranquear seu currículo.',
       score: 'Pontuação ATS',
       feedback: 'Feedback Detalhado',
       recommendations: 'Recomendações',
@@ -50,6 +51,7 @@ const ATSAnalysis: React.FC<ATSAnalysisProps> = ({ resumeData, language }) => {
     en: {
       title: 'ATS Analysis',
       subtitle: 'Applicant Tracking System Compatibility',
+      infoText: 'Fill in complete and accurate information. ATS systems analyze each field to rank your resume.',
       score: 'ATS Score',
       feedback: 'Detailed Feedback',
       recommendations: 'Recommendations',
@@ -77,6 +79,13 @@ const ATSAnalysis: React.FC<ATSAnalysisProps> = ({ resumeData, language }) => {
           {t.title}
         </h3>
         <p className="text-sm text-gray-600 mt-1">{t.subtitle}</p>
+      </div>
+
+      {/* Info Text */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <p className="text-sm text-blue-700">
+          💡 {t.infoText}
+        </p>
       </div>
 
       {/* Score Display */}

@@ -28,6 +28,7 @@ interface FormTranslations {
   // Personal Info
   personalInfo: string;
   name: string;
+  desiredPosition: string;
   email: string;
   phone: string;
   address: string;
@@ -100,6 +101,7 @@ export const formTranslations: Translations = {
     // Personal Info
     personalInfo: 'Informações Pessoais',
     name: 'Nome Completo',
+    desiredPosition: 'Cargo Desejado',
     email: 'E-mail',
     phone: 'Telefone',
     address: 'Endereço',
@@ -184,6 +186,7 @@ export const formTranslations: Translations = {
     // Personal Info
     personalInfo: 'Personal Information',
     name: 'Full Name',
+    desiredPosition: 'Desired Position',
     email: 'Email',
     phone: 'Phone',
     address: 'Address',

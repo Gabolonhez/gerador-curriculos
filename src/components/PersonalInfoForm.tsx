@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Mail, Phone, MapPin, Globe, Linkedin, Github, AlertCircle, CheckCircle } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Globe, Linkedin, Github, AlertCircle, CheckCircle, Briefcase } from 'lucide-react';
 import { LanguageCode } from '../translations/formTranslations';
 import { PersonalInfo } from '../types/resume';
 import { 
@@ -19,6 +19,7 @@ interface PersonalInfoFormProps {
 
 interface ValidationState {
   name: { isValid: boolean; message: string };
+  desiredPosition: { isValid: boolean; message: string };
   email: { isValid: boolean; message: string };
   phone: { isValid: boolean; message: string };
   address: { isValid: boolean; message: string };
@@ -30,6 +31,7 @@ interface ValidationState {
 interface TranslationStrings {
   title: string;
   fullName: string;
+  desiredPosition: string;
   email: string;
   phone: string;
   address: string;
@@ -38,6 +40,7 @@ interface TranslationStrings {
   github: string;
   placeholders: {
     name: string;
+    desiredPosition: string;
     email: string;
     phone: string;
     address: string;
@@ -56,6 +59,7 @@ const translations: Translations = {
   pt: {
     title: 'Informações Pessoais',
     fullName: 'Nome Completo',
+    desiredPosition: 'Cargo Desejado (opcional)',
     email: 'Email',
     phone: 'Telefone',
     address: 'Endereço',
@@ -64,6 +68,7 @@ const translations: Translations = {
     github: 'GitHub (opcional)',
     placeholders: {
       name: 'João Silva',
+      desiredPosition: 'Desenvolvedor Full Stack',
       email: 'joao.silva@email.com',
       phone: '(11) 98765-4321',
       address: 'São Paulo, SP',
@@ -75,6 +80,7 @@ const translations: Translations = {
   en: {
     title: 'Personal Information',
     fullName: 'Full Name',
+    desiredPosition: 'Desired Position (optional)',
     email: 'Email',
     phone: 'Phone',
     address: 'Address',
@@ -83,8 +89,9 @@ const translations: Translations = {
     github: 'GitHub (optional)',
     placeholders: {
       name: 'John Smith',
+      desiredPosition: 'Full Stack Developer',
       email: 'john.smith@email.com',
-      phone: '(555) 123-4567',
+      phone: '+1 (555) 123-4567',
       address: 'New York, NY',
       website: 'www.mywebsite.com',
       linkedin: 'linkedin.com/in/johnsmith',
@@ -103,6 +110,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   // Estado para validação em tempo real
   const [validation, setValidation] = useState<ValidationState>({
     name: { isValid: true, message: '' },
+    desiredPosition: { isValid: true, message: '' },
     email: { isValid: true, message: '' },
     phone: { isValid: true, message: '' },
     address: { isValid: true, message: '' },
@@ -130,6 +138,11 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       case 'name':
         isValid = validateRequiredField(value);
         message = !isValid ? (language === 'pt' ? 'Nome é obrigatório' : 'Name is required') : '';
+        break;
+      case 'desiredPosition':
+        // Desired position is optional, always valid
+        isValid = true;
+        message = '';
         break;
       case 'email':
         if (value) {
@@ -240,18 +253,6 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   return (
     <div className="space-y-4 sm:space-y-6">
       <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">{t.title}</h2>
-      
-      {/* ATS Tips */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-        <h3 className="text-sm font-medium text-blue-900 mb-2">
-          {language === 'pt' ? '💡 Dicas para ATS' : '💡 ATS Tips'}
-        </h3>
-        <p className="text-sm text-blue-700">
-          {language === 'pt' 
-            ? 'Preencha informações completas e precisas. Sistemas ATS analisam cada campo para ranquear seu currículo.'
-            : 'Fill in complete and accurate information. ATS systems analyze each field to rank your resume.'}
-        </p>
-      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Nome Completo - Full width */}
@@ -264,6 +265,17 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             t.placeholders.name,
             true,
             hints.name
+          )}
+        </div>
+
+        {/* Cargo Desejado - Full width */}
+        <div className="md:col-span-2">
+          {renderFieldWithValidation(
+            'desiredPosition',
+            'text',
+            <Briefcase className="h-5 w-5 text-gray-400" />,
+            t.desiredPosition,
+            t.placeholders.desiredPosition
           )}
         </div>
 

@@ -1,5 +1,6 @@
 export interface PersonalInfo {
   name: string;
+  desiredPosition?: string;
   email: string;
   phone: string;
   address: string;
