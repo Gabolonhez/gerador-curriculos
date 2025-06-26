@@ -77,6 +77,9 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
       {/* Header com informações pessoais - Formato ATS otimizado */}
       <header className="ats-header">
         <h1 className="ats-name">{personal.name}</h1>
+        {personal.desiredPosition && (
+          <div className="ats-desired-position">{personal.desiredPosition}</div>
+        )}
         
         <div className="ats-contact-info">
           {/* Linha 1: Email, Telefone, Endereço */}
@@ -109,21 +112,42 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
               {personal.linkedin && (
                 <div className="ats-contact-item">
                   <span className="ats-label">LinkedIn:</span>
-                  <span className="ats-value">{formatURL(formatLinkedInURL(personal.linkedin))}</span>
+                  <a 
+                    href={formatLinkedInURL(personal.linkedin)} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ats-value ats-link"
+                  >
+                    {formatURL(formatLinkedInURL(personal.linkedin))}
+                  </a>
                 </div>
               )}
               
               {personal.github && (
                 <div className="ats-contact-item">
                   <span className="ats-label">GitHub:</span>
-                  <span className="ats-value">{formatURL(formatGitHubURL(personal.github))}</span>
+                  <a 
+                    href={formatGitHubURL(personal.github)} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ats-value ats-link"
+                  >
+                    {formatURL(formatGitHubURL(personal.github))}
+                  </a>
                 </div>
               )}
               
               {personal.website && (
                 <div className="ats-contact-item">
                   <span className="ats-label">Website:</span>
-                  <span className="ats-value">{formatURL(personal.website)}</span>
+                  <a 
+                    href={personal.website.startsWith('http') ? personal.website : `https://${personal.website}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ats-value ats-link"
+                  >
+                    {formatURL(personal.website)}
+                  </a>
                 </div>
               )}
             </div>
@@ -234,7 +258,15 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
               )}
               {cert.url && (
                 <div className="ats-cert-url">
-                  <span>Verificar em: {formatURL(cert.url)}</span>
+                  <span>Verificar em: </span>
+                  <a 
+                    href={cert.url.startsWith('http') ? cert.url : `https://${cert.url}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ats-link"
+                  >
+                    {formatURL(cert.url)}
+                  </a>
                 </div>
               )}
             </div>

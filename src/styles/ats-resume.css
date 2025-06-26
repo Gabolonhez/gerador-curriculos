@@ -38,6 +38,15 @@ h1.ats-name {
   text-transform: none !important;
 }
 
+.ats-desired-position {
+  font-size: 12pt;
+  font-weight: normal;
+  color: #444444;
+  margin: 0 0 1em 0;
+  text-align: center;
+  font-style: normal;
+}
+
 .ats-contact-info {
   display: flex;
   flex-direction: column;
@@ -67,10 +76,24 @@ h1.ats-name {
 }
 
 .ats-value {
-  color: #000000;
+  color: #333333;
+  font-weight: normal;
 }
 
-/* ===== SEÇÕES ===== */
+.ats-link {
+  color: #0066cc !important;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ats-link:hover {
+  text-decoration: underline;
+}
+
+.ats-link:visited {
+  color: #0066cc;
+}
+
 .ats-section {
   margin-bottom: 1.5em;
   page-break-inside: avoid;
