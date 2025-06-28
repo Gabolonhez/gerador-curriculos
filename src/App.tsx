@@ -89,6 +89,19 @@ const App: React.FC = () => {
   // Estado para alternar entre preview e análise ATS
   const [previewMode, setPreviewMode] = React.useState<'preview' | 'analysis'>('preview');
 
+  const handleExportPDF = () => {
+    // Se estiver na aba de análise ATS, muda automaticamente para preview
+    if (previewMode === 'analysis') {
+      setPreviewMode('preview');
+      // Pequeno delay para garantir que o DOM seja atualizado antes da exportação
+      setTimeout(() => {
+        exportToPDF();
+      }, 100);
+    } else {
+      exportToPDF();
+    }
+  };
+
   const t = translations[currentLanguage];
 
   const renderTabContent = () => {
@@ -159,7 +172,7 @@ const App: React.FC = () => {
                   currentLanguage={currentLanguage}
                   onLanguageChange={setLanguage}
                 />
-                <Button onClick={exportToPDF}>
+                <Button onClick={handleExportPDF}>
                   <SaveIcon className="w-4 h-4 mr-2" /> {t.exportPdf}
                 </Button>
               </div>
