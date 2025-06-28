@@ -1,5 +1,5 @@
 # Gerador de currículos ATS
-![image](https://github.com/user-attachments/assets/3052f122-e3a2-4941-8b11-6a9d998e8033)
+![image](https://github.com/user-attachments/assets/23466bd9-28f7-4f83-acff-65932c1ea878)
 
 ## 📑 Descrição
 Projeto responsivo para facilitar a criação de currículos completos compatíveis ATS, permitindo gerar em PDF.
@@ -10,6 +10,8 @@ Projeto responsivo para facilitar a criação de currículos completos compatív
 - [X] : Mudança de menus.
 - [X] : Interação com botões.
 - [X] : Tradução em português e inglês.
+- [X] : Pré-visualização do conteúdo.
+- [X] : Análise ATS.
 
 ## 💻 Tecnologias
 - `React`
