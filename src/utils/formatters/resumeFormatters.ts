@@ -21,6 +21,26 @@ export const formatPhoneNumber = (phone: string): string => {
 export const formatDate = (dateString: string, language: 'pt' | 'en' = 'pt'): string => {
   if (!dateString) return '';
   
+  // Se o formato é YYYY-MM (input type="month"), precisamos ajustar
+  if (dateString.match(/^\d{4}-\d{2}$/)) {
+    const [year, month] = dateString.split('-');
+    // Cria a data com o primeiro dia do mês para evitar problemas de timezone
+    const date = new Date(parseInt(year), parseInt(month) - 1, 1);
+    
+    if (language === 'pt') {
+      return date.toLocaleDateString('pt-BR', {
+        year: 'numeric',
+        month: 'long'
+      });
+    } else {
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long'
+      });
+    }
+  }
+  
+  // Para outros formatos de data
   const date = new Date(dateString);
   
   if (language === 'pt') {

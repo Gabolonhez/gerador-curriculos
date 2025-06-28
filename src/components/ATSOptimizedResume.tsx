@@ -27,6 +27,11 @@ const translations = {
     duration: 'Duração',
     contact: 'Contato',
     skills: 'Habilidades',
+    email: 'Email',
+    phone: 'Telefone',
+    address: 'Endereço',
+    checkAt: 'Verificar em',
+    degreeIn: 'em',
     proficiencyLevels: {
       basic: 'Básico',
       intermediate: 'Intermediário',
@@ -39,6 +44,14 @@ const translations = {
       intermediate: 'Intermediário',
       advanced: 'Avançado',
       expert: 'Especialista'
+    },
+    degreeOptions: {
+      highSchool: 'Ensino Médio',
+      technical: 'Técnico',
+      bachelor: 'Graduação',
+      postgraduate: 'Pós-Graduação',
+      master: 'Mestrado',
+      doctorate: 'Doutorado'
     }
   },
   en: {
@@ -52,6 +65,11 @@ const translations = {
     duration: 'Duration',
     contact: 'Contact',
     skills: 'Skills',
+    email: 'Email',
+    phone: 'Phone number',
+    address: 'Address',
+    checkAt: 'Check',
+    degreeIn: 'in',
     proficiencyLevels: {
       basic: 'Basic',
       intermediate: 'Intermediate',
@@ -64,6 +82,14 @@ const translations = {
       intermediate: 'Intermediate',
       advanced: 'Advanced',
       expert: 'Expert'
+    },
+    degreeOptions: {
+      highSchool: 'High School',
+      technical: 'Technical',
+      bachelor: 'Graduation',
+      postgraduate: 'Postgraduate',
+      master: 'Master',
+      doctorate: 'Doctorate'
     }
   }
 };
@@ -86,21 +112,21 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
           <div className="ats-contact-row">
             {personal.email && (
               <div className="ats-contact-item">
-                <span className="ats-label">Email:</span>
+                <span className="ats-label">{t.email}:</span>
                 <span className="ats-value">{personal.email}</span>
               </div>
             )}
             
             {personal.phone && (
               <div className="ats-contact-item">
-                <span className="ats-label">Telefone:</span>
+                <span className="ats-label">{t.phone}:</span>
                 <span className="ats-value">{formatPhoneNumber(personal.phone)}</span>
               </div>
             )}
             
             {personal.address && (
               <div className="ats-contact-item">
-                <span className="ats-label">Endereço:</span>
+                <span className="ats-label">{t.address}:</span>
                 <span className="ats-value">{personal.address}</span>
               </div>
             )}
@@ -215,7 +241,7 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
           {education.map((edu, index) => (
             <div key={edu.id || index} className="ats-education-item">
               <div className="ats-education-header">
-                <h3 className="ats-degree">{edu.degree} em {edu.field}</h3>
+                <h3 className="ats-degree">{t.degreeOptions[edu.degree as keyof typeof t.degreeOptions] || edu.degree} {t.degreeIn} {edu.field}</h3>
                 <h4 className="ats-institution">{edu.institution}</h4>
                 <div className="ats-date-info">
                   <span className="ats-dates">
@@ -230,6 +256,21 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
               )}
             </div>
           ))}
+        </section>
+      )}
+
+      {/* Idiomas */}
+      {languageSkills && languageSkills.length > 0 && (
+        <section className="ats-section">
+          <h2 className="ats-section-title">{t.languages}</h2>
+          <div className="ats-languages">
+            {languageSkills.map((lang, index) => (
+              <div key={lang.id || index} className="ats-language-item">
+                <span className="ats-language-name">{lang.name}</span>
+                <span className="ats-language-level">{t.proficiencyLevels[lang.level as keyof typeof t.proficiencyLevels]}</span>
+              </div>
+            ))}
+          </div>
         </section>
       )}
 
@@ -258,7 +299,7 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
               )}
               {cert.url && (
                 <div className="ats-cert-url">
-                  <span>Verificar em: </span>
+                  <span>{t.checkAt}: </span>
                   <a 
                     href={cert.url.startsWith('http') ? cert.url : `https://${cert.url}`} 
                     target="_blank" 
@@ -271,21 +312,6 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
               )}
             </div>
           ))}
-        </section>
-      )}
-
-      {/* Idiomas */}
-      {languageSkills && languageSkills.length > 0 && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.languages}</h2>
-          <div className="ats-languages">
-            {languageSkills.map((lang, index) => (
-              <div key={lang.id || index} className="ats-language-item">
-                <span className="ats-language-name">{lang.name}</span>
-                <span className="ats-language-level">{t.proficiencyLevels[lang.level as keyof typeof t.proficiencyLevels]}</span>
-              </div>
-            ))}
-          </div>
         </section>
       )}
     </div>

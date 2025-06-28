@@ -221,7 +221,7 @@ export const formTranslations: Translations = {
     degreeOptions: {
       highSchool: 'High School',
       technical: 'Technical',
-      bachelor: 'Bachelor',
+      bachelor: 'Graduation',
       postgraduate: 'Postgraduate',
       master: 'Master',
       doctorate: 'Doctorate'
