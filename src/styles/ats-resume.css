@@ -525,3 +525,232 @@ h1.ats-name {
 .ats-resume *::after {
   content: none !important;
 }
+
+/* ===== CORREÇÕES ESPECÍFICAS PARA iOS/SAFARI ===== */
+/* Correção para Safari iOS */
+@supports (-webkit-touch-callout: none) {
+  .ats-resume {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .ats-contact-row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+  }
+  
+  .ats-contact-item {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex-shrink: 1;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  
+  .ats-skills-grid {
+    display: -webkit-grid;
+    display: grid;
+    -webkit-grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+/* Melhorias específicas para iPhone */
+@media screen and (max-width: 414px) {
+  .ats-resume {
+    padding: 0.8em;
+    font-size: 10pt;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+  
+  .ats-name {
+    font-size: 15pt;
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .ats-desired-position {
+    font-size: 11pt;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .ats-contact-row {
+    flex-direction: column;
+    gap: 0.3em;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .ats-contact-item {
+    justify-content: center;
+    text-align: center;
+    flex-direction: row;
+    gap: 0.3em;
+    width: 100%;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .ats-value {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+  
+  .ats-skills-grid {
+    grid-template-columns: 1fr;
+    gap: 0.3em;
+    width: 100%;
+  }
+  
+  .ats-skill-item {
+    padding: 0.4em;
+    font-size: 9pt;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .ats-section-title {
+    font-size: 11pt;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .ats-languages {
+    grid-template-columns: 1fr;
+    gap: 0.3em;
+    width: 100%;
+  }
+  
+  .ats-language-item {
+    padding: 0.4em;
+    font-size: 9pt;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .ats-job-title, 
+  .ats-company,
+  .ats-degree,
+  .ats-institution,
+  .ats-cert-name,
+  .ats-cert-issuer {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+  
+  .ats-description p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+}
+
+/* Correção para orientação landscape no iPhone */
+@media screen and (max-width: 736px) and (orientation: landscape) {
+  .ats-resume {
+    padding: 0.5em;
+  }
+  
+  .ats-contact-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8em;
+  }
+  
+  .ats-contact-item {
+    flex-direction: row;
+    gap: 0.3em;
+  }
+}
+
+/* Correção para WebKit no iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  .ats-resume {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  .ats-contact-info,
+  .ats-contact-row {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+/* Correções específicas para diferentes tamanhos de iPhone */
+@media screen and (max-width: 375px) {
+  /* iPhone SE, iPhone 12 mini */
+  .ats-resume {
+    padding: 0.6em;
+    font-size: 9pt;
+  }
+  
+  .ats-name {
+    font-size: 14pt;
+  }
+  
+  .ats-section-title {
+    font-size: 10pt;
+  }
+}
+
+@media screen and (max-width: 390px) and (max-height: 844px) {
+  /* iPhone 12, iPhone 13, iPhone 14 */
+  .ats-resume {
+    padding: 0.7em;
+  }
+}
+
+@media screen and (max-width: 428px) and (max-height: 926px) {
+  /* iPhone 12 Pro Max, iPhone 13 Pro Max, iPhone 14 Pro Max */
+  .ats-resume {
+    padding: 0.9em;
+  }
+}
+
+/* Correções gerais para todos os dispositivos iOS */
+@media screen and (max-device-width: 480px) {
+  .ats-resume * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Permite seleção de texto apenas onde necessário */
+  .ats-name,
+  .ats-value,
+  .ats-description,
+  .ats-job-title,
+  .ats-company,
+  .ats-degree,
+  .ats-institution {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
