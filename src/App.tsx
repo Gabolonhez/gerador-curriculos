@@ -35,6 +35,8 @@ interface TranslationStrings {
   next: string;
   printError: string;
   contentError: string;
+  madeBy: string;
+  allRightsReserved: string;
 }
 
 interface Translations {
@@ -58,7 +60,9 @@ const translations: Translations = {
     previous: 'Anterior',
     next: 'Próximo',
     printError: 'Não foi possível abrir a janela de impressão. Por favor, verifique se os pop-ups estão permitidos.',
-    contentError: 'Erro ao encontrar o conteúdo para impressão.'
+    contentError: 'Erro ao encontrar o conteúdo para impressão.',
+    madeBy: 'Feito por',
+    allRightsReserved: 'Todos os direitos reservados.'
   },
   en: {
     title: 'Resume Generator',
@@ -75,7 +79,9 @@ const translations: Translations = {
     previous: 'Previous',
     next: 'Next',
     printError: 'Could not open the print window. Please check if pop-ups are allowed.',
-    contentError: 'Error finding content for printing.'
+    contentError: 'Error finding content for printing.',
+    madeBy: 'Made by',
+    allRightsReserved: 'All rights reserved.'
   }
 };
 
@@ -89,11 +95,14 @@ const App: React.FC = () => {
   // Estado para alternar entre preview e análise ATS
   const [previewMode, setPreviewMode] = React.useState<'preview' | 'analysis'>('preview');
 
+  const t = translations[currentLanguage];
+
+  // Função para lidar com exportação de PDF
   const handleExportPDF = () => {
-    // Se estiver na aba de análise ATS, muda automaticamente para preview
+    // Se estiver na análise ATS, mudar para preview primeiro
     if (previewMode === 'analysis') {
       setPreviewMode('preview');
-      // Pequeno delay para garantir que o DOM seja atualizado antes da exportação
+      // Aguardar um momento para o DOM ser atualizado
       setTimeout(() => {
         exportToPDF();
       }, 100);
@@ -101,8 +110,6 @@ const App: React.FC = () => {
       exportToPDF();
     }
   };
-
-  const t = translations[currentLanguage];
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -266,9 +273,40 @@ const App: React.FC = () => {
         {/* Footer */}
         <footer className="bg-white border-t mt-auto w-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="py-4 text-center text-sm text-gray-500">
-              © {new Date().getFullYear()} {t.title}. {currentLanguage === 'pt' ? 'Todos os direitos reservados.' : 'All rights reserved.'}
-            </p>
+            <div className="py-4 text-center text-sm text-gray-500 space-y-2">
+              <p>
+                © {new Date().getFullYear()} {t.title}. {t.allRightsReserved}
+              </p>
+              <p className="flex items-center justify-center space-x-2">
+                <span>{t.madeBy}</span>
+                <a 
+              
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800 font-medium"
+                >
+                  Gabriel Bolonhez
+                </a>
+                <span>•</span>
+                <a 
+                  href="https://github.com/gabolonhez"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800"
+                >
+                  GitHub
+                </a>
+                <span>•</span>
+                <a 
+                  href="https://linkedin.com/in/gabolonhez"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:text-blue-800"
+                >
+                  LinkedIn
+                </a>
+              </p>
+            </div>
           </div>
         </footer>
       </div>
