@@ -16,8 +16,7 @@ Projeto responsivo para facilitar a criação de currículos completos compatív
 ## 💻 Tecnologias
 - `React`
 - `Javascript`
-- `HTML`
-- `CSS`
+- `Typescript`- 
 - `Vite`
 - `Tailwind`
 
