@@ -1,5 +1,5 @@
 import React from 'react';
-import { SaveIcon, ArrowRight, ArrowLeft } from 'lucide-react';
+import { SaveIcon, ArrowRight, ArrowLeft, TrashIcon } from 'lucide-react';
 import PersonalInfoForm from './components/PersonalInfoForm';
 import ProfessionalSummaryForm from './components/ProfessionalSummaryForm';
 import ExperienceForm from './components/ExperienceForm';
@@ -37,6 +37,10 @@ interface TranslationStrings {
   contentError: string;
   madeBy: string;
   allRightsReserved: string;
+  clearData: string;
+  clearDataConfirm: string;
+  dataSaved: string;
+  dataCleared: string;
 }
 
 interface Translations {
@@ -62,7 +66,11 @@ const translations: Translations = {
     printError: 'Não foi possível abrir a janela de impressão. Por favor, verifique se os pop-ups estão permitidos.',
     contentError: 'Erro ao encontrar o conteúdo para impressão.',
     madeBy: 'Desenvolvido por',
-    allRightsReserved: 'Todos os direitos reservados.'
+    allRightsReserved: 'Todos os direitos reservados.',
+    clearData: 'Limpar Dados',
+    clearDataConfirm: 'Tem certeza que deseja limpar todos os dados salvos? Esta ação não pode ser desfeita.',
+    dataSaved: 'Dados salvos automaticamente',
+    dataCleared: 'Dados limpos com sucesso'
   },
   en: {
     title: 'Resume Generator',
@@ -81,21 +89,38 @@ const translations: Translations = {
     printError: 'Could not open the print window. Please check if pop-ups are allowed.',
     contentError: 'Error finding content for printing.',
     madeBy: 'Developed by',
-    allRightsReserved: 'All rights reserved.'
+    allRightsReserved: 'All rights reserved.',
+    clearData: 'Clear Data',
+    clearDataConfirm: 'Are you sure you want to clear all saved data? This action cannot be undone.',
+    dataSaved: 'Data saved automatically',
+    dataCleared: 'Data cleared successfully'
   }
 };
 
 const App: React.FC = () => {
   // Usando os hooks customizados
-  const { resumeData, updateResumeData } = useResumeData();
+  const { resumeData, updateResumeData, resetResumeData } = useResumeData();
   const { activeTab, setActiveTab, handleNextPage, handlePreviousPage, canGoNext, canGoPrevious } = useTabNavigation();
   const { currentLanguage, setLanguage } = useLanguage();
   const { exportToPDF } = usePDFExport({ language: currentLanguage });
 
   // Estado para alternar entre preview e análise ATS
   const [previewMode, setPreviewMode] = React.useState<'preview' | 'analysis'>('preview');
+  
+  // Estado para mostrar indicador de salvamento
+  const [showSavedIndicator, setShowSavedIndicator] = React.useState(false);
 
   const t = translations[currentLanguage];
+
+  // Efeito para mostrar indicador quando dados são alterados
+  React.useEffect(() => {
+    setShowSavedIndicator(true);
+    const timer = setTimeout(() => {
+      setShowSavedIndicator(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [resumeData]);
 
   // Função para lidar com exportação de PDF
   const handleExportPDF = () => {
@@ -109,6 +134,11 @@ const App: React.FC = () => {
     } else {
       exportToPDF();
     }
+  };
+
+  // Função para limpar dados
+  const handleClearData = () => {
+    resetResumeData();
   };
 
   const renderTabContent = () => {
@@ -171,10 +201,26 @@ const App: React.FC = () => {
         <header className="bg-white shadow-sm sticky top-0 z-50 w-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row justify-between items-center py-4 sm:h-16 space-y-4 sm:space-y-0">
-              <h1 className="text-2xl font-semibold text-gray-900">
-                {t.title}
-              </h1>
               <div className="flex items-center space-x-4">
+                <h1 className="text-2xl font-semibold text-gray-900">
+                  {t.title}
+                </h1>
+                {showSavedIndicator && (
+                  <div className="flex items-center text-green-600 text-sm animate-fade-in">
+                    <SaveIcon className="w-4 h-4 mr-1" />
+                    {t.dataSaved}
+                  </div>
+                )}
+              </div>
+              <div className="flex items-center space-x-4">
+                <Button 
+                  onClick={handleClearData}
+                  variant="secondary"
+                  className="text-red-600 hover:text-red-800"
+                >
+                  <TrashIcon className="w-4 h-4 mr-2" />
+                  {t.clearData}
+                </Button>
                 <LanguageToggle 
                   currentLanguage={currentLanguage}
                   onLanguageChange={setLanguage}
