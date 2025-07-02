@@ -12,11 +12,12 @@ Projeto responsivo para facilitar a criação de currículos completos compatív
 - [X] : Tradução em português e inglês.
 - [X] : Pré-visualização do conteúdo.
 - [X] : Análise ATS.
+- [X] : Salvamento de dados.
 
 ## 💻 Tecnologias
 - `React`
 - `Javascript`
-- `Typescript`- 
+- `Typescript`
 - `Vite`
 - `Tailwind`
 
