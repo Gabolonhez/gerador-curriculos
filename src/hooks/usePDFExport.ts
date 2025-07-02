@@ -1,6 +1,12 @@
 import { useCallback } from 'react';
 import { LanguageCode } from '../translations/formTranslations';
 
+// Função para detectar se é iOS
+const isIOS = (): boolean => {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+};
+
 export const usePDFExport = ({ language }: { language: LanguageCode }) => {
   const exportToPDF = useCallback((): void => {
     const resumePreview = document.getElementById('resume-preview');
@@ -12,6 +18,136 @@ export const usePDFExport = ({ language }: { language: LanguageCode }) => {
       return;
     }
 
+    // Se for iOS, usar uma abordagem diferente
+    if (isIOS()) {
+      handleIOSPrint(resumePreview, language);
+      return;
+    }
+
+    // Comportamento padrão para outros dispositivos
+    handleStandardPrint(language);
+  }, [language]);
+
+  const handleIOSPrint = (resumePreview: HTMLElement, language: LanguageCode) => {
+    // Criar uma nova janela com apenas o conteúdo do currículo
+    const printWindow = window.open('', '_blank', 'width=800,height=600');
+    
+    if (!printWindow) {
+      const errorMessage = language === 'pt' 
+        ? 'Não foi possível abrir a janela de impressão. Por favor, verifique se os pop-ups estão permitidos.'
+        : 'Could not open the print window. Please check if pop-ups are allowed.';
+      alert(errorMessage);
+      return;
+    }
+
+    // Obter todos os estilos CSS da página atual
+    const styles = Array.from(document.styleSheets)
+      .map(styleSheet => {
+        try {
+          return Array.from(styleSheet.cssRules)
+            .map(rule => rule.cssText)
+            .join('\n');
+        } catch (e) {
+          // Ignorar erros de CORS
+          return '';
+        }
+      })
+      .join('\n');
+
+    // Criar HTML completo para a nova janela
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html lang="${language}">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Currículo</title>
+        <style>
+          ${styles}
+          
+          /* Estilos específicos para impressão */
+          @media print {
+            @page {
+              margin: 1cm;
+              size: A4;
+            }
+            
+            body {
+              margin: 0 !important;
+              padding: 0 !important;
+              background: white !important;
+            }
+            
+            .resume-container {
+              width: 100% !important;
+              max-width: none !important;
+              margin: 0 !important;
+              padding: 20px !important;
+              box-shadow: none !important;
+              border-radius: 0 !important;
+            }
+          }
+          
+          /* Estilos para visualização na tela */
+          @media screen {
+            body {
+              font-family: Arial, sans-serif;
+              background-color: #f5f5f5;
+              margin: 0;
+              padding: 20px;
+            }
+            
+            .resume-container {
+              background: white;
+              max-width: 800px;
+              margin: 0 auto;
+              padding: 40px;
+              border-radius: 8px;
+              box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            
+            .print-button {
+              position: fixed;
+              top: 20px;
+              right: 20px;
+              background: #007AFF;
+              color: white;
+              border: none;
+              padding: 12px 24px;
+              border-radius: 8px;
+              font-size: 16px;
+              cursor: pointer;
+              z-index: 1000;
+              box-shadow: 0 2px 8px rgba(0,122,255,0.3);
+            }
+            
+            .print-button:hover {
+              background: #0056CC;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <button class="print-button" onclick="window.print()">${language === 'pt' ? 'Imprimir/Salvar PDF' : 'Print/Save PDF'}</button>
+        <div class="resume-container">
+          ${resumePreview.innerHTML}
+        </div>
+        <script>
+          // Remover elementos desnecessários que podem ter vindo do DOM original
+          document.querySelectorAll('[class*="overflow-auto"], [class*="border"], [class*="rounded-lg"]').forEach(el => {
+            el.style.overflow = 'visible';
+            el.style.border = 'none';
+            el.style.borderRadius = '0';
+          });
+        </script>
+      </body>
+      </html>
+    `;
+
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+  };
+  const handleStandardPrint = (lang: LanguageCode) => {
     // Adicionar classe de impressão temporariamente
     document.body.classList.add('printing');
     
@@ -80,14 +216,6 @@ export const usePDFExport = ({ language }: { language: LanguageCode }) => {
             max-height: none !important;
           }
 
-          /* Remove bordas e containers que podem causar scroll */
-          .border,
-          .rounded-lg,
-          .overflow-auto {
-            border: none !important;
-            border-radius: 0 !important;
-            overflow: visible !important;
-          }
           /* Remove bordas e containers que podem causar scroll */
           .border,
           .rounded-lg,
@@ -206,7 +334,7 @@ export const usePDFExport = ({ language }: { language: LanguageCode }) => {
       
     } catch (error) {
       console.error('Erro ao imprimir:', error);
-      const errorMessage = language === 'pt' 
+      const errorMessage = lang === 'pt' 
         ? 'Erro ao abrir janela de impressão. Verifique se pop-ups estão permitidos.'
         : 'Error opening print window. Please check if pop-ups are allowed.';
       alert(errorMessage);
@@ -216,7 +344,7 @@ export const usePDFExport = ({ language }: { language: LanguageCode }) => {
         document.body.classList.remove('printing');
       }, 1500);
     }
-  }, [language]);
+  };
 
   return {
     exportToPDF

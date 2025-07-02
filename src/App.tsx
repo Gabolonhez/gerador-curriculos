@@ -61,7 +61,7 @@ const translations: Translations = {
     next: 'Próximo',
     printError: 'Não foi possível abrir a janela de impressão. Por favor, verifique se os pop-ups estão permitidos.',
     contentError: 'Erro ao encontrar o conteúdo para impressão.',
-    madeBy: 'Feito por',
+    madeBy: 'Desenvolvido por',
     allRightsReserved: 'Todos os direitos reservados.'
   },
   en: {
@@ -80,7 +80,7 @@ const translations: Translations = {
     next: 'Next',
     printError: 'Could not open the print window. Please check if pop-ups are allowed.',
     contentError: 'Error finding content for printing.',
-    madeBy: 'Made by',
+    madeBy: 'Developed by',
     allRightsReserved: 'All rights reserved.'
   }
 };
@@ -277,10 +277,10 @@ const App: React.FC = () => {
               <p>
                 © {new Date().getFullYear()} {t.title}. {t.allRightsReserved}
               </p>
-              <p className="flex items-center justify-center space-x-2">
+              <p className="flex items-center justify-center space-x-2 flex-wrap">
                 <span>{t.madeBy}</span>
                 <a 
-              
+                  href="https://github.com/gabolonhez"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:text-blue-800 font-medium"
