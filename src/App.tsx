@@ -10,6 +10,7 @@ import CertificationsForm from './components/CertificationsForm';
 import ResumePreview from './components/ResumePreview';
 import ATSAnalysis from './components/analysis/ATSAnalysis';
 import LanguageToggle from './components/common/LanguageToggle';
+import TemplateSelector from './components/common/TemplateSelector';
 import Navigation from './components/common/Navigation';
 import Button from './components/ui/Button';
 import { useResumeData } from './hooks/useResumeData';
@@ -46,6 +47,7 @@ interface TranslationStrings {
 interface Translations {
   pt: TranslationStrings;
   en: TranslationStrings;
+  es: TranslationStrings;
 }
 
 const translations: Translations = {
@@ -95,6 +97,30 @@ const translations: Translations = {
     dataSaved: 'Data saved automatically',
     dataCleared: 'Data cleared successfully'
   }
+  ,
+  es: {
+    title: 'Generador de Currículums',
+    exportPdf: 'Exportar CV en PDF',
+    personalInfo: 'Información Personal',
+    summary: 'Resumen Profesional',
+    experience: 'Experiencia Profesional',
+    education: 'Formación Académica',
+    skills: 'Habilidades',
+    languages: 'Idiomas',
+    certifications: 'Certificaciones/Cursos',
+    preview: 'Previsualización',
+    atsAnalysis: 'Análisis ATS',
+    previous: 'Anterior',
+    next: 'Siguiente',
+    printError: 'No se pudo abrir la ventana de impresión. Por favor, comprueba que los pop-ups estén permitidos.',
+    contentError: 'Error al encontrar el contenido para imprimir.',
+    madeBy: 'Desarrollado por',
+    allRightsReserved: 'Todos los derechos reservados.',
+    clearData: 'Borrar Datos',
+    clearDataConfirm: '¿Seguro que deseas borrar todos los datos guardados? Esta acción no se puede deshacer.',
+    dataSaved: 'Datos guardados automáticamente',
+    dataCleared: 'Datos borrados con éxito'
+  }
 };
 
 const App: React.FC = () => {
@@ -106,6 +132,25 @@ const App: React.FC = () => {
 
   // Estado para alternar entre preview e análise ATS
   const [previewMode, setPreviewMode] = React.useState<'preview' | 'analysis'>('preview');
+  // Template selection (persisted)
+  const TEMPLATE_STORAGE_KEY = 'resume-generator-template';
+  const [templateKey, setTemplateKey] = React.useState<'optimized' | 'compact' | 'simple'>(() => {
+    try {
+      const v = localStorage.getItem(TEMPLATE_STORAGE_KEY);
+      if (v === 'compact' || v === 'simple' || v === 'optimized') return v;
+    } catch (e) {
+      console.warn('Could not read template from localStorage', e);
+    }
+    return 'optimized';
+  });
+
+  React.useEffect(() => {
+    try {
+      localStorage.setItem(TEMPLATE_STORAGE_KEY, templateKey);
+    } catch (e) {
+      console.warn('Could not persist template to localStorage', e);
+    }
+  }, [templateKey]);
   
   // Estado para mostrar indicador de salvamento
   const [showSavedIndicator, setShowSavedIndicator] = React.useState(false);
@@ -220,7 +265,7 @@ const App: React.FC = () => {
                 >
                   <TrashIcon className="w-4 h-4 mr-2" />
                   {t.clearData}
-                </Button>
+                </Button>    
                 <LanguageToggle 
                   currentLanguage={currentLanguage}
                   onLanguageChange={setLanguage}
@@ -231,15 +276,16 @@ const App: React.FC = () => {
               </div>
             </div>
           </div>
+          <div className="flex justify-self-center pb-3">
+            <TemplateSelector value={templateKey} onChange={setTemplateKey} language={currentLanguage} />
+          </div>
         </header>
-
         {/* Navigation */}
         <Navigation 
           activeTab={activeTab}
           onTabChange={setActiveTab}
           translations={t}
         />
-
         {/* Main Content */}
         <main className="flex-grow py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -267,8 +313,7 @@ const App: React.FC = () => {
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
-              </div>
-
+              </div>      
               {/* Preview Section */}
               <div className="bg-white shadow-sm rounded-lg p-4 sm:p-6">
                 <div className="flex items-center justify-between mb-4">
@@ -297,21 +342,20 @@ const App: React.FC = () => {
                       {t.atsAnalysis}
                     </button>
                   </div>
-                </div>
-                
+                </div>      
                 {previewMode === 'preview' ? (
                   <div
                     id="resume-preview"
                     className="border rounded-lg p-4 sm:p-6 overflow-auto resume-preview"
                   >
-                    <ResumePreview data={resumeData} language={currentLanguage} />
+                    <ResumePreview data={resumeData} language={currentLanguage} templateKey={templateKey} />
                   </div>
                 ) : (
                   <div className="overflow-auto">
                     <ATSAnalysis resumeData={resumeData} language={currentLanguage} />
                   </div>
                 )}
-              </div>
+              </div>  
             </div>
           </div>
         </main>
@@ -332,25 +376,7 @@ const App: React.FC = () => {
                   className="text-blue-600 hover:text-blue-800 font-medium"
                 >
                   Gabriel Bolonhez
-                </a>
-                <span>•</span>
-                <a 
-                  href="https://github.com/gabolonhez"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800"
-                >
-                  GitHub
-                </a>
-                <span>•</span>
-                <a 
-                  href="https://linkedin.com/in/gabolonhez"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800"
-                >
-                  LinkedIn
-                </a>
+                </a>   
               </p>
             </div>
           </div>

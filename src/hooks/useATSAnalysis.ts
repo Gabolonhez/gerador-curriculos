@@ -38,7 +38,7 @@ const COMMON_ATS_KEYWORDS = [
   'management', 'development', 'implementation', 'optimization'
 ];
 
-export const useATSAnalysis = (resumeData: ResumeData, language: 'pt' | 'en' = 'pt') => {
+export const useATSAnalysis = (resumeData: ResumeData, language: 'pt' | 'en' | 'es' = 'pt') => {
   const analysis = useMemo((): ATSScore => {
     const feedback: ATSFeedback[] = [];
     let score = 0;
@@ -84,23 +84,23 @@ export const useATSAnalysis = (resumeData: ResumeData, language: 'pt' | 'en' = '
   return analysis;
 };
 
-const analyzePersonalInfo = (personal: ResumeData['personal'], feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
+const analyzePersonalInfo = (personal: ResumeData['personal'], feedback: ATSFeedback[], language: 'pt' | 'en' | 'es'): number => {
   let score = 0;
 
   // Nome (obrigatório) - 5 pontos
   if (personal.name && personal.name.trim().length > 0) {
     score += 5;
     feedback.push({
-      section: language === 'pt' ? 'Informações Pessoais' : 'Personal Information',
-      status: 'good',
-      message: language === 'pt' ? 'Nome presente' : 'Name provided',
+  section: language === 'pt' ? 'Informações Pessoais' : language === 'es' ? 'Información Personal' : 'Personal Information',
+  status: 'good',
+  message: language === 'pt' ? 'Nome presente' : language === 'es' ? 'Nombre proporcionado' : 'Name provided',
       points: 5
     });
   } else {
     feedback.push({
-      section: language === 'pt' ? 'Informações Pessoais' : 'Personal Information',
-      status: 'error',
-      message: language === 'pt' ? 'Nome é obrigatório' : 'Name is required',
+  section: language === 'pt' ? 'Informações Pessoais' : language === 'es' ? 'Información Personal' : 'Personal Information',
+  status: 'error',
+  message: language === 'pt' ? 'Nome é obrigatório' : language === 'es' ? 'El nombre es obligatorio' : 'Name is required',
       points: 0
     });
   }
@@ -109,16 +109,16 @@ const analyzePersonalInfo = (personal: ResumeData['personal'], feedback: ATSFeed
   if (personal.email && validateEmail(personal.email)) {
     score += 5;
     feedback.push({
-      section: language === 'pt' ? 'Informações Pessoais' : 'Personal Information',
-      status: 'good',
-      message: language === 'pt' ? 'Email válido' : 'Valid email',
+  section: language === 'pt' ? 'Informações Pessoais' : language === 'es' ? 'Información Personal' : 'Personal Information',
+  status: 'good',
+  message: language === 'pt' ? 'Email válido' : language === 'es' ? 'Correo válido' : 'Valid email',
       points: 5
     });
   } else {
     feedback.push({
-      section: language === 'pt' ? 'Informações Pessoais' : 'Personal Information',
-      status: 'error',
-      message: language === 'pt' ? 'Email válido é obrigatório' : 'Valid email is required',
+  section: language === 'pt' ? 'Informações Pessoais' : language === 'es' ? 'Información Personal' : 'Personal Information',
+  status: 'error',
+  message: language === 'pt' ? 'Email válido é obrigatório' : language === 'es' ? 'Se requiere un correo válido' : 'Valid email is required',
       points: 0
     });
   }
@@ -127,16 +127,16 @@ const analyzePersonalInfo = (personal: ResumeData['personal'], feedback: ATSFeed
   if (personal.phone && validatePhone(personal.phone)) {
     score += 5;
     feedback.push({
-      section: language === 'pt' ? 'Informações Pessoais' : 'Personal Information',
-      status: 'good',
-      message: language === 'pt' ? 'Telefone válido' : 'Valid phone',
+  section: language === 'pt' ? 'Informações Pessoais' : language === 'es' ? 'Información Personal' : 'Personal Information',
+  status: 'good',
+  message: language === 'pt' ? 'Telefone válido' : language === 'es' ? 'Teléfono válido' : 'Valid phone',
       points: 5
     });
   } else {
     feedback.push({
-      section: language === 'pt' ? 'Informações Pessoais' : 'Personal Information',
-      status: 'error',
-      message: language === 'pt' ? 'Telefone válido é obrigatório' : 'Valid phone is required',
+  section: language === 'pt' ? 'Informações Pessoais' : language === 'es' ? 'Información Personal' : 'Personal Information',
+  status: 'error',
+  message: language === 'pt' ? 'Telefone válido é obrigatório' : language === 'es' ? 'Se requiere un teléfono válido' : 'Valid phone is required',
       points: 0
     });
   }
@@ -145,9 +145,9 @@ const analyzePersonalInfo = (personal: ResumeData['personal'], feedback: ATSFeed
   if (personal.linkedin && validateLinkedIn(personal.linkedin)) {
     score += 3;
     feedback.push({
-      section: language === 'pt' ? 'Informações Pessoais' : 'Personal Information',
-      status: 'good',
-      message: language === 'pt' ? 'LinkedIn presente' : 'LinkedIn provided',
+    section: language === 'pt' ? 'Informações Pessoais' : language === 'es' ? 'Información Personal' : 'Personal Information',
+    status: 'good',
+    message: language === 'pt' ? 'LinkedIn presente' : language === 'es' ? 'LinkedIn proporcionado' : 'LinkedIn provided',
       points: 3
     });
   }
@@ -156,9 +156,9 @@ const analyzePersonalInfo = (personal: ResumeData['personal'], feedback: ATSFeed
   if (personal.github && validateGitHub(personal.github)) {
     score += 2;
     feedback.push({
-      section: language === 'pt' ? 'Informações Pessoais' : 'Personal Information',
-      status: 'good',
-      message: language === 'pt' ? 'GitHub presente' : 'GitHub provided',
+    section: language === 'pt' ? 'Informações Pessoais' : language === 'es' ? 'Información Personal' : 'Personal Information',
+    status: 'good',
+    message: language === 'pt' ? 'GitHub presente' : language === 'es' ? 'GitHub proporcionado' : 'GitHub provided',
       points: 2
     });
   }
@@ -166,14 +166,14 @@ const analyzePersonalInfo = (personal: ResumeData['personal'], feedback: ATSFeed
   return score;
 };
 
-const analyzeSummary = (summary: string, feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
+const analyzeSummary = (summary: string, feedback: ATSFeedback[], language: 'pt' | 'en' | 'es'): number => {
   let score = 0;
 
   if (!summary || summary.trim().length === 0) {
     feedback.push({
-      section: language === 'pt' ? 'Resumo Profissional' : 'Professional Summary',
+      section: language === 'pt' ? 'Resumo Profissional' : language === 'es' ? 'Resumen Profesional' : 'Professional Summary',
       status: 'error',
-      message: language === 'pt' ? 'Resumo profissional é obrigatório' : 'Professional summary is required',
+      message: language === 'pt' ? 'Resumo profissional é obrigatório' : language === 'es' ? 'Resumen profesional es obligatorio' : 'Professional summary is required',
       points: 0
     });
     return 0;
@@ -181,18 +181,18 @@ const analyzeSummary = (summary: string, feedback: ATSFeedback[], language: 'pt'
 
   const validation = validateDescriptionLength(summary);
   
-  if (validation.score === 'good') {
+    if (validation.score === 'good') {
     score += 15;
     feedback.push({
-      section: language === 'pt' ? 'Resumo Profissional' : 'Professional Summary',
+      section: language === 'pt' ? 'Resumo Profissional' : language === 'es' ? 'Resumen Profesional' : 'Professional Summary',
       status: 'good',
       message: validation.message,
       points: 15
     });
-  } else if (validation.score === 'fair') {
+    } else if (validation.score === 'fair') {
     score += 10;
     feedback.push({
-      section: language === 'pt' ? 'Resumo Profissional' : 'Professional Summary',
+      section: language === 'pt' ? 'Resumo Profissional' : language === 'es' ? 'Resumen Profesional' : 'Professional Summary',
       status: 'warning',
       message: validation.message,
       points: 10
@@ -210,7 +210,7 @@ const analyzeSummary = (summary: string, feedback: ATSFeedback[], language: 'pt'
   return score;
 };
 
-const analyzeExperience = (experience: ResumeData['experience'], feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
+const analyzeExperience = (experience: ResumeData['experience'], feedback: ATSFeedback[], language: 'pt' | 'en' | 'es'): number => {
   let score = 0;
 
   if (!experience || experience.length === 0) {
@@ -237,25 +237,25 @@ const analyzeExperience = (experience: ResumeData['experience'], feedback: ATSFe
   score += Math.min(descriptionsScore, 15); // Máximo 15 pontos para descrições
 
   feedback.push({
-    section: language === 'pt' ? 'Experiência Profissional' : 'Work Experience',
+    section: language === 'pt' ? 'Experiência Profissional' : language === 'es' ? 'Experiencia Laboral' : 'Work Experience',
     status: score >= 20 ? 'good' : 'warning',
     message: language === 'pt' 
       ? `${experience.length} experiência(s) adicionada(s)` 
-      : `${experience.length} work experience(s) added`,
+      : language === 'es' ? `${experience.length} experiencia(s) agregada(s)` : `${experience.length} work experience(s) added`,
     points: score
   });
 
   return score;
 };
 
-const analyzeEducation = (education: ResumeData['education'], feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
+const analyzeEducation = (education: ResumeData['education'], feedback: ATSFeedback[], language: 'pt' | 'en' | 'es'): number => {
   let score = 0;
 
   if (!education || education.length === 0) {
     feedback.push({
-      section: language === 'pt' ? 'Formação Acadêmica' : 'Education',
+      section: language === 'pt' ? 'Formação Acadêmica' : language === 'es' ? 'Formación Académica' : 'Education',
       status: 'warning',
-      message: language === 'pt' ? 'Recomendado adicionar formação acadêmica' : 'Recommended to add education',
+      message: language === 'pt' ? 'Recomendado adicionar formação acadêmica' : language === 'es' ? 'Se recomienda agregar formación académica' : 'Recommended to add education',
       points: 0
     });
     return 0;
@@ -264,25 +264,25 @@ const analyzeEducation = (education: ResumeData['education'], feedback: ATSFeedb
   score += Math.min(education.length * 7, 15); // 7 pontos por educação, máximo 15
 
   feedback.push({
-    section: language === 'pt' ? 'Formação Acadêmica' : 'Education',
+    section: language === 'pt' ? 'Formação Acadêmica' : language === 'es' ? 'Formación Académica' : 'Education',
     status: 'good',
     message: language === 'pt' 
       ? `${education.length} formação(ões) adicionada(s)` 
-      : `${education.length} education(s) added`,
+      : language === 'es' ? `${education.length} formación(es) agregada(s)` : `${education.length} education(s) added`,
     points: score
   });
 
   return score;
 };
 
-const analyzeSkills = (skills: ResumeData['skills'], feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
+const analyzeSkills = (skills: ResumeData['skills'], feedback: ATSFeedback[], language: 'pt' | 'en' | 'es'): number => {
   let score = 0;
 
   if (!skills || skills.length === 0) {
     feedback.push({
-      section: language === 'pt' ? 'Habilidades' : 'Skills',
+      section: language === 'pt' ? 'Habilidades' : language === 'es' ? 'Habilidades' : 'Skills',
       status: 'error',
-      message: language === 'pt' ? 'Habilidades são obrigatórias para ATS' : 'Skills are required for ATS',
+      message: language === 'pt' ? 'Habilidades são obrigatórias para ATS' : language === 'es' ? 'Las habilidades son obligatorias para ATS' : 'Skills are required for ATS',
       points: 0
     });
     return 0;
@@ -291,17 +291,17 @@ const analyzeSkills = (skills: ResumeData['skills'], feedback: ATSFeedback[], la
   if (skills.length >= 5) {
     score += 15;
     feedback.push({
-      section: language === 'pt' ? 'Habilidades' : 'Skills',
+      section: language === 'pt' ? 'Habilidades' : language === 'es' ? 'Habilidades' : 'Skills',
       status: 'good',
-      message: language === 'pt' ? 'Boa quantidade de habilidades' : 'Good amount of skills',
+      message: language === 'pt' ? 'Boa quantidade de habilidades' : language === 'es' ? 'Buena cantidad de habilidades' : 'Good amount of skills',
       points: 15
     });
   } else {
     score += skills.length * 3;
     feedback.push({
-      section: language === 'pt' ? 'Habilidades' : 'Skills',
+      section: language === 'pt' ? 'Habilidades' : language === 'es' ? 'Habilidades' : 'Skills',
       status: 'warning',
-      message: language === 'pt' ? 'Adicione mais habilidades (mín. 5)' : 'Add more skills (min. 5)',
+      message: language === 'pt' ? 'Adicione mais habilidades (mín. 5)' : language === 'es' ? 'Agrega más habilidades (mín. 5)' : 'Add more skills (min. 5)',
       points: score
     });
   }
@@ -309,7 +309,7 @@ const analyzeSkills = (skills: ResumeData['skills'], feedback: ATSFeedback[], la
   return score;
 };
 
-const analyzeKeywords = (resumeData: ResumeData, feedback: ATSFeedback[], language: 'pt' | 'en'): number => {
+const analyzeKeywords = (resumeData: ResumeData, feedback: ATSFeedback[], language: 'pt' | 'en' | 'es'): number => {
   let score = 0;
 
   // Combina todo o texto do currículo
@@ -325,31 +325,31 @@ const analyzeKeywords = (resumeData: ResumeData, feedback: ATSFeedback[], langua
   if (keywordCount >= 10) {
     score += 10;
     feedback.push({
-      section: language === 'pt' ? 'Palavras-chave ATS' : 'ATS Keywords',
+      section: language === 'pt' ? 'Palavras-chave ATS' : language === 'es' ? 'Palabras clave ATS' : 'ATS Keywords',
       status: 'good',
       message: language === 'pt' 
         ? `Excelente! ${keywordCount} palavras-chave encontradas` 
-        : `Excellent! ${keywordCount} keywords found`,
+        : language === 'es' ? `¡Excelente! ${keywordCount} palabras clave encontradas` : `Excellent! ${keywordCount} keywords found`,
       points: 10
     });
   } else if (keywordCount >= 5) {
     score += 7;
     feedback.push({
-      section: language === 'pt' ? 'Palavras-chave ATS' : 'ATS Keywords',
+      section: language === 'pt' ? 'Palavras-chave ATS' : language === 'es' ? 'Palabras clave ATS' : 'ATS Keywords',
       status: 'warning',
       message: language === 'pt' 
         ? `Bom! ${keywordCount} palavras-chave encontradas` 
-        : `Good! ${keywordCount} keywords found`,
+        : language === 'es' ? `¡Bien! ${keywordCount} palabras clave encontradas` : `Good! ${keywordCount} keywords found`,
       points: 7
     });
   } else {
     score += 3;
     feedback.push({
-      section: language === 'pt' ? 'Palavras-chave ATS' : 'ATS Keywords',
+      section: language === 'pt' ? 'Palavras-chave ATS' : language === 'es' ? 'Palabras clave ATS' : 'ATS Keywords',
       status: 'warning',
       message: language === 'pt' 
         ? `Poucas palavras-chave (${keywordCount}). Adicione mais termos técnicos` 
-        : `Few keywords (${keywordCount}). Add more technical terms`,
+        : language === 'es' ? `Pocas palabras clave (${keywordCount}). Añade más términos técnicos` : `Few keywords (${keywordCount}). Add more technical terms`,
       points: 3
     });
   }
@@ -357,7 +357,7 @@ const analyzeKeywords = (resumeData: ResumeData, feedback: ATSFeedback[], langua
   return score;
 };
 
-const generateRecommendations = (feedback: ATSFeedback[], language: 'pt' | 'en'): string[] => {
+const generateRecommendations = (feedback: ATSFeedback[], language: 'pt' | 'en' | 'es'): string[] => {
   const recommendations: string[] = [];
   
   const errorItems = feedback.filter(item => item.status === 'error');
@@ -374,6 +374,17 @@ const generateRecommendations = (feedback: ATSFeedback[], language: 'pt' | 'en')
     recommendations.push('Mantenha formatação simples e evite elementos gráficos complexos');
     recommendations.push('Use fontes padrão como Arial ou Helvetica');
     recommendations.push('Salve sempre em formato PDF para preservar a formatação');
+  } else if (language === 'es') {
+    if (errorItems.length > 0) {
+      recommendations.push('Corrige los errores críticos primero para mejorar la compatibilidad con ATS');
+    }
+    if (warningItems.length > 0) {
+      recommendations.push('Considera las mejoras sugeridas para optimizar aún más tu CV');
+    }
+    recommendations.push('Usa palabras clave relevantes para tu campo');
+    recommendations.push('Mantén un formato sencillo y evita gráficos complejos');
+    recommendations.push('Usa fuentes estándar como Arial o Helvetica');
+    recommendations.push('Guarda siempre en formato PDF para preservar el formato');
   } else {
     if (errorItems.length > 0) {
       recommendations.push('Fix critical errors first to improve ATS compatibility');

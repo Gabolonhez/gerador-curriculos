@@ -53,6 +53,7 @@ interface TranslationStrings {
 interface Translations {
   pt: TranslationStrings;
   en: TranslationStrings;
+  es: TranslationStrings;
 }
 
 const translations: Translations = {
@@ -96,6 +97,28 @@ const translations: Translations = {
       website: 'www.mywebsite.com',
       linkedin: 'linkedin.com/in/johnsmith',
       github: 'github.com/johnsmith'
+    }
+  }
+  ,
+  es: {
+    title: 'Información Personal',
+    fullName: 'Nombre Completo',
+    desiredPosition: 'Puesto Deseado (opcional)',
+    email: 'Correo',
+    phone: 'Teléfono',
+    address: 'Dirección',
+    website: 'Sitio Web (opcional)',
+    linkedin: 'LinkedIn (opcional)',
+    github: 'GitHub (opcional)',
+    placeholders: {
+      name: 'Juan Pérez',
+      desiredPosition: 'Desarrollador Full Stack',
+      email: 'juan.perez@email.com',
+      phone: '+34 600 000 000',
+      address: 'Madrid, España',
+      website: 'www.misitio.com',
+      linkedin: 'linkedin.com/in/juanperez',
+      github: 'github.com/juanperez'
     }
   }
 };
@@ -245,6 +268,15 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       linkedin: "Keep your profile updated - many recruiters check",
       github: "Important for technical roles - showcase your projects",
       website: "Online portfolio impresses recruiters"
+    }
+    ,
+    es: {
+      name: "Usa tu nombre completo tal como aparece en documentos oficiales",
+      email: "Usa un correo profesional para mejor impresión",
+      phone: "Incluye código de área y país para facilitar el contacto",
+      linkedin: "Mantén tu perfil actualizado - muchos reclutadores lo revisan",
+      github: "Importante para roles técnicos - muestra tus proyectos",
+      website: "Un portafolio online impresiona a los reclutadores"
     }
   };
 
