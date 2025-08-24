@@ -60,9 +60,22 @@ const ATSAnalysis: React.FC<ATSAnalysisProps> = ({ resumeData, language }) => {
       needsImprovement: 'Needs Improvement',
       points: 'points'
     }
+    ,
+    es: {
+      title: 'Análisis ATS',
+      subtitle: 'Compatibilidad con Sistemas de Seguimiento de Candidatos',
+      infoText: 'Rellena información completa y precisa. Los sistemas ATS analizan cada campo para clasificar tu CV.',
+      score: 'Puntuación ATS',
+      feedback: 'Comentarios Detallados',
+      recommendations: 'Recomendaciones',
+      excellent: 'Excelente',
+      good: 'Bueno',
+      needsImprovement: 'Necesita Mejorar',
+      points: 'puntos'
+    }
   };
 
-  const t = translations[language];
+  const t = translations[language as keyof typeof translations];
 
   const getScoreDescription = (percentage: number) => {
     if (percentage >= 80) return t.excellent;

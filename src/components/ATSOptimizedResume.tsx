@@ -15,88 +15,12 @@ interface ATSOptimizedResumeProps {
   language: LanguageCode;
 }
 
-const translations = {
-  pt: {
-    professionalSummary: 'Resumo Profissional',
-    workExperience: 'Experiência Profissional',
-    education: 'Formação Acadêmica',
-    technicalSkills: 'Competências Técnicas',
-    languages: 'Idiomas',
-    certifications: 'Certificações e Cursos',
-    present: 'Presente',
-    duration: 'Duração',
-    contact: 'Contato',
-    skills: 'Habilidades',
-    email: 'Email',
-    phone: 'Telefone',
-    address: 'Endereço',
-    checkAt: 'Verificar em',
-    degreeIn: 'em',
-    proficiencyLevels: {
-      basic: 'Básico',
-      intermediate: 'Intermediário',
-      advanced: 'Avançado',
-      fluent: 'Fluente',
-      native: 'Nativo'
-    },
-    skillLevels: {
-      basic: 'Básico',
-      intermediate: 'Intermediário',
-      advanced: 'Avançado',
-      expert: 'Especialista'
-    },
-    degreeOptions: {
-      highSchool: 'Ensino Médio',
-      technical: 'Técnico',
-      bachelor: 'Graduação',
-      postgraduate: 'Pós-Graduação',
-      master: 'Mestrado',
-      doctorate: 'Doutorado'
-    }
-  },
-  en: {
-    professionalSummary: 'Professional Summary',
-    workExperience: 'Work Experience',
-    education: 'Education',
-    technicalSkills: 'Technical Skills',
-    languages: 'Languages',
-    certifications: 'Certifications & Courses',
-    present: 'Present',
-    duration: 'Duration',
-    contact: 'Contact',
-    skills: 'Skills',
-    email: 'Email',
-    phone: 'Phone number',
-    address: 'Address',
-    checkAt: 'Check',
-    degreeIn: 'in',
-    proficiencyLevels: {
-      basic: 'Basic',
-      intermediate: 'Intermediate',
-      advanced: 'Advanced',
-      fluent: 'Fluent',
-      native: 'Native'
-    },
-    skillLevels: {
-      basic: 'Basic',
-      intermediate: 'Intermediate',
-      advanced: 'Advanced',
-      expert: 'Expert'
-    },
-    degreeOptions: {
-      highSchool: 'High School',
-      technical: 'Technical',
-      bachelor: 'Graduation',
-      postgraduate: 'Postgraduate',
-      master: 'Master',
-      doctorate: 'Doctorate'
-    }
-  }
-};
+import resumeTranslations from '../translations/resumeTranslations';
 
 const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language }) => {
   const { personal, summary, experience, education, skills, languages: languageSkills, certifications } = data;
-  const t = translations[language];
+  // Map project language codes to resumeTranslations keys (resumeTranslations includes 'es')
+  const t = resumeTranslations[language as keyof typeof resumeTranslations];
 
   return (
     <div className="ats-resume">

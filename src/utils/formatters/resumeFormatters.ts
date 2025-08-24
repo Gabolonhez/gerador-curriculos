@@ -18,7 +18,7 @@ export const formatPhoneNumber = (phone: string): string => {
   return phone; // Retorna original se não conseguir formatar
 };
 
-export const formatDate = (dateString: string, language: 'pt' | 'en' = 'pt'): string => {
+export const formatDate = (dateString: string, language: 'pt' | 'en' | 'es' = 'pt'): string => {
   if (!dateString) return '';
   
   // Se o formato é YYYY-MM (input type="month"), precisamos ajustar
@@ -29,6 +29,11 @@ export const formatDate = (dateString: string, language: 'pt' | 'en' = 'pt'): st
     
     if (language === 'pt') {
       return date.toLocaleDateString('pt-BR', {
+        year: 'numeric',
+        month: 'long'
+      });
+    } else if (language === 'es') {
+      return date.toLocaleDateString('es-ES', {
         year: 'numeric',
         month: 'long'
       });
@@ -60,12 +65,14 @@ export const formatDateRange = (
   startDate: string, 
   endDate: string, 
   current: boolean, 
-  language: 'pt' | 'en' = 'pt'
+  language: 'pt' | 'en' | 'es' = 'pt'
 ): string => {
   const start = formatDate(startDate, language);
   
   if (current) {
-    return `${start} - ${language === 'pt' ? 'Presente' : 'Present'}`;
+    if (language === 'pt') return `${start} - Presente`;
+    if (language === 'es') return `${start} - Presente`;
+    return `${start} - Present`;
   }
   
   const end = formatDate(endDate, language);
@@ -76,7 +83,7 @@ export const calculateDuration = (
   startDate: string, 
   endDate: string, 
   current: boolean,
-  language: 'pt' | 'en' = 'pt'
+  language: 'pt' | 'en' | 'es' = 'pt'
 ): string => {
   const start = new Date(startDate);
   const end = current ? new Date() : new Date(endDate);
@@ -92,6 +99,14 @@ export const calculateDuration = (
       return `${years} ${years === 1 ? 'ano' : 'anos'}`;
     } else {
       return `${years} ${years === 1 ? 'ano' : 'anos'} e ${remainingMonths} ${remainingMonths === 1 ? 'mês' : 'meses'}`;
+    }
+  } else if (language === 'es') {
+    if (years === 0) {
+      return `${remainingMonths} ${remainingMonths === 1 ? 'mes' : 'meses'}`;
+    } else if (remainingMonths === 0) {
+      return `${years} ${years === 1 ? 'año' : 'años'}`;
+    } else {
+      return `${years} ${years === 1 ? 'año' : 'años'} y ${remainingMonths} ${remainingMonths === 1 ? 'mes' : 'meses'}`;
     }
   } else {
     if (years === 0) {

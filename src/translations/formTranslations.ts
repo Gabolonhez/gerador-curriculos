@@ -1,4 +1,4 @@
-export type LanguageCode = 'pt' | 'en';
+export type LanguageCode = 'pt' | 'en' | 'es';
 
 interface DegreeOptions {
   highSchool: string;
@@ -94,6 +94,7 @@ interface FormTranslations {
 interface Translations {
   pt: FormTranslations;
   en: FormTranslations;
+  es: FormTranslations;
 }
 
 export const formTranslations: Translations = {
@@ -265,5 +266,90 @@ export const formTranslations: Translations = {
     certificationUrl: 'Certificate URL (optional)',
     urlPlaceholder: 'https://www.credential.net/...',
     certificationDescription: 'Brief description of what was learned or the certification scope...'
+  }
+  ,
+  es: {
+    // Personal Info
+    personalInfo: 'Información Personal',
+    name: 'Nombre Completo',
+    desiredPosition: 'Puesto Deseado',
+    email: 'Correo',
+    phone: 'Teléfono',
+    address: 'Dirección',
+    website: 'Sitio Web',
+    linkedin: 'LinkedIn',
+    github: 'GitHub',
+
+    // Professional Summary
+    summary: 'Resumen Profesional',
+    summaryPlaceholder: 'Escribe un breve resumen sobre ti, tus cualidades, intereses y objetivos profesionales...',
+
+    // Experience
+    addExperience: 'Agregar Experiencia',
+    experience: 'Experiencia',
+    company: 'Empresa',
+    position: 'Puesto',
+    startDate: 'Fecha de Inicio',
+    endDate: 'Fecha de Fin',
+    current: 'Actual',
+    description: 'Descripción',
+    jobDescription: 'Describe tus principales responsabilidades y logros...',
+    remove: 'Eliminar',
+
+    // Education
+    addEducation: 'Agregar Formación',
+    education: 'Formación',
+    institution: 'Institución',
+    degree: 'Título',
+    field: 'Campo',
+    educationDescription: 'Información adicional sobre tu formación...',
+    inProgress: 'En curso',
+    degreeOptions: {
+      highSchool: 'Bachillerato',
+      technical: 'Técnico',
+      bachelor: 'Licenciatura',
+      postgraduate: 'Posgrado',
+      master: 'Máster',
+      doctorate: 'Doctorado'
+    },
+
+    // Skills
+    addSkill: 'Agregar Habilidad',
+    skill: 'Habilidad',
+    skillPlaceholder: 'HTML, CSS, JavaScript...',
+    level: 'Nivel',
+    skillLevels: {
+      basic: 'Básico',
+      intermediate: 'Intermedio',
+      advanced: 'Avanzado',
+      expert: 'Experto'
+    },
+    removeSkill: 'Eliminar Habilidad',
+
+    // Languages
+    addLanguage: 'Agregar Idioma',
+    language: 'Idioma',
+    languagePlaceholder: 'Inglés, Español, Portugués...',
+    proficiency: 'Competencia',
+    proficiencyLevels: {
+      basic: 'Básico',
+      intermediate: 'Intermedio',
+      advanced: 'Avanzado',
+      fluent: 'Fluido',
+      native: 'Nativo'
+    },
+    removeLanguage: 'Eliminar Idioma',
+
+    // Certifications
+    addCertification: 'Agregar Certificación/Curso',
+    certification: 'Certificación',
+    certificationName: 'Nombre de la Certificación/Curso',
+    certificationPlaceholder: 'AWS Certified Developer',
+    issuer: 'Institución/Emisor',
+    issuerPlaceholder: 'Amazon Web Services',
+    date: 'Fecha de Emisión',
+    certificationUrl: 'URL del Certificado (opcional)',
+    urlPlaceholder: 'https://www.credential.net/...',
+    certificationDescription: 'Breve descripción de lo aprendido o el alcance de la certificación...'
   }
 }; 
