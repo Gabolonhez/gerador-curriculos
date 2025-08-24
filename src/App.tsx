@@ -356,10 +356,12 @@ const App: React.FC = () => {
                   </div>
                 )}
               </div>  
+              <Button onClick={handleExportPDF}>
+                <SaveIcon className="w-4 h-4 mr-2" /> {t.exportPdf}
+              </Button>
             </div>
           </div>
         </main>
-
         {/* Footer */}
         <footer className="bg-white border-t mt-auto w-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -370,7 +372,7 @@ const App: React.FC = () => {
               <p className="flex items-center justify-center space-x-2 flex-wrap">
                 <span>{t.madeBy}</span>
                 <a 
-                  href="https://github.com/gabolonhez"
+                  href="https://gabolonhez.github.io/Portfolio/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:text-blue-800 font-medium"
