@@ -1,5 +1,4 @@
-import React from 'react';
-import { TemplateKey } from '../../components/ResumePreview';
+import { TemplateKey } from '../TemplateTypes';
 import ThumbnailMap from './TemplateThumbnailsData';
 
 export default function TemplateThumbnails({ keyName }: { keyName: TemplateKey }) {

@@ -69,7 +69,7 @@ const ATSCompact: React.FC<Props> = ({ data, language }) => {
         <main className="ats-compact-right" aria-label="Resumo e Experiência">
           {summary && (
             <section className="ats-compact-block">
-              <h3 className="ats-subtitle">{t.profile}</h3>
+              <h3 className="ats-subtitle">{t.professionalSummary}</h3>
               <p>{summary}</p>
             </section>
           )}
