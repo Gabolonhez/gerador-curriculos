@@ -398,6 +398,153 @@ h1.ats-name {
   }
   
   /* Garante que cores sejam preservadas */
+
+/* ===== VARIAÇÕES DE TEMPLATE: COMPACT E SIMPLE ===== */
+.ats-compact .ats-compact-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  align-items: center;
+}
+.ats-compact .ats-contact-inline {
+  font-size: 10pt;
+  color: #333333;
+  white-space: nowrap;
+  margin-bottom: 0.2em;
+}
+.ats-compact-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin-top: 0.4em;
+}
+.ats-compact-skill {
+  background: transparent;
+  border: none;
+  padding: 0.2em 0.4em;
+  font-size: 10pt;
+}
+.ats-compact-experience-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.4em 0 0 0;
+}
+.ats-compact-experience-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 0.25em 0;
+  border-bottom: 1px dashed #eee;
+}
+.ats-compact-experience-item .ats-job-title {
+  font-weight: bold;
+}
+.ats-compact-experience-item .ats-company-inline {
+  color: #333333;
+}
+
+.ats-simple-skills .ats-simple-skill-item {
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+}
+.ats-simple .ats-section-title {
+  color: #1f2937;
+}
+
+/* ATSCompact two-column layout */
+.ats-compact .ats-compact-header {
+  text-align: left;
+  margin-bottom: 0.5em;
+}
+.ats-compact .ats-compact-grid {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  gap: 1.2em;
+  align-items: start;
+}
+.ats-compact .ats-compact-left {
+  padding-right: 0.5em;
+}
+.ats-compact .ats-compact-right {
+  padding-left: 0.5em;
+}
+.ats-compact .ats-compact-section-title {
+  border: none;
+  font-size: 12pt;
+  margin-bottom: 0.4em;
+  text-transform: uppercase;
+}
+.ats-compact .ats-compact-skill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.ats-compact .ats-compact-skill-list li {
+  margin-bottom: 0.3em;
+}
+.ats-compact .ats-compact-exp {
+  margin-bottom: 0.8em;
+}
+.ats-compact .ats-compact-exp-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+}
+.ats-compact .ats-compact-exp-company {
+  color: #333333;
+  font-size: 10pt;
+}
+.ats-compact .ats-compact-exp-desc {
+  margin-top: 0.4em;
+  font-size: 10pt;
+}
+
+@media (max-width: 768px) {
+  .ats-compact .ats-compact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Minimal template styling (Essencial) */
+.ats-minimal {
+  font-family: 'Arial', sans-serif;
+}
+.ats-minimal-header {
+  text-align: left;
+  margin-bottom: 1em;
+}
+.ats-minimal-name {
+  font-size: 20pt;
+  font-weight: 700;
+  margin: 0 0 0.2em 0;
+}
+.ats-minimal-contact {
+  color: #2b6cb0;
+  font-size: 10pt;
+  display: flex;
+  gap: 0.6em;
+  flex-wrap: wrap;
+}
+.ats-minimal-contact-item {
+  margin-right: 0.6em;
+}
+.ats-minimal-section .ats-minimal-title,
+.ats-minimal-section .ats-minimal-title {
+  font-size: 12pt;
+  color: #1f2d3d;
+  margin-bottom: 0.4em;
+}
+.ats-minimal-exp {
+  margin-bottom: 0.8em;
+}
+.ats-minimal-exp-header .ats-minimal-company {
+  font-size: 10pt;
+  color: #34495e;
+}
+.ats-minimal-section ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;

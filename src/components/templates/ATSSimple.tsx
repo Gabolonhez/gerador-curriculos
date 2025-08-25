@@ -1,7 +1,7 @@
 import React from 'react';
 import { LanguageCode } from '../../translations/formTranslations';
 import { ResumeData } from '../../types/resume';
-import { formatPhoneNumber, formatDateRange, calculateDuration } from '../../utils/formatters/resumeFormatters';
+import { formatPhoneNumber, formatDateRange } from '../../utils/formatters/resumeFormatters';
 import resumeTranslations from '../../translations/resumeTranslations';
 
 interface Props {
@@ -10,74 +10,82 @@ interface Props {
 }
 
 const ATSSimple: React.FC<Props> = ({ data, language }) => {
-  const { personal, summary, experience, education, skills, languages: languageSkills } = data;
+  const { personal, summary, experience, education, skills, languages, certifications } = data;
   const t = resumeTranslations[language as keyof typeof resumeTranslations];
 
   return (
-    <div className="ats-resume ats-simple">
-      <header className="ats-header">
-        <h1 className="ats-name">{personal.name}</h1>
-        {personal.desiredPosition && <div className="ats-desired-position">{personal.desiredPosition}</div>}
-        <div className="ats-contact-info">
-          {personal.email && <div className="ats-contact-item"><strong>{t.email}:</strong> {personal.email}</div>}
-          {personal.phone && <div className="ats-contact-item"><strong>{t.phone}:</strong> {formatPhoneNumber(personal.phone)}</div>}
+    <div className="ats-resume ats-simple ats-minimal">
+      <header className="ats-minimal-header">
+        <h1 className="ats-minimal-name">{personal.name}</h1>
+        <div className="ats-minimal-contact">
+          {personal.address && <span className="ats-minimal-contact-item">{personal.address}</span>}
+          {personal.phone && <span className="ats-minimal-contact-item">{formatPhoneNumber(personal.phone)}</span>}
+          {personal.email && <span className="ats-minimal-contact-item">{personal.email}</span>}
+          {personal.linkedin && <span className="ats-minimal-contact-item">{personal.linkedin}</span>}
         </div>
       </header>
 
       {summary && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.professionalSummary}</h2>
+        <section className="ats-section ats-minimal-section">
+          <h2 className="ats-minimal-title">{t.professionalSummary}</h2>
           <p>{summary}</p>
         </section>
       )}
 
-      {skills && skills.length > 0 && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.technicalSkills}</h2>
-          <div className="ats-skills-grid">
-            {skills.map((s, idx) => (
-              <div key={s.id || idx} className="ats-skill-item">
-                <span className="ats-skill-name">{s.name}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
       {experience && experience.length > 0 && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.workExperience}</h2>
+        <section className="ats-section ats-minimal-section">
+          <h2 className="ats-minimal-title">{t.workExperience}</h2>
           {experience.map((exp, idx) => (
-            <div key={exp.id || idx} className="ats-experience-item">
-              <div className="ats-experience-header">
-                <strong>{exp.position}</strong> — {exp.company}
-                <div className="ats-date-info">{formatDateRange(exp.startDate, exp.endDate, exp.current, language)} ({calculateDuration(exp.startDate, exp.endDate, exp.current, language)})</div>
+            <div key={exp.id || idx} className="ats-minimal-exp">
+              <div className="ats-minimal-exp-header">
+                <div className="ats-minimal-exp-left">
+                  <strong>{exp.position}</strong>
+                  <div className="ats-minimal-company">{exp.company} — {formatDateRange(exp.startDate, exp.endDate, exp.current, language)}</div>
+                </div>
               </div>
-              {exp.description && <div className="ats-description"><p>{exp.description}</p></div>}
+              {exp.description && <div className="ats-minimal-exp-desc"><p>{exp.description}</p></div>}
             </div>
           ))}
         </section>
       )}
 
-      {education && education.length > 0 && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.education}</h2>
-          {education.map((edu, idx) => (
-            <div key={edu.id || idx} className="ats-education-item">
-              <div className="ats-education-header">{t.degreeOptions[edu.degree as keyof typeof t.degreeOptions] || edu.degree} {t.degreeIn} {edu.field} — {edu.institution}</div>
-            </div>
-          ))}
-        </section>
-      )}
-
-      {languageSkills && languageSkills.length > 0 && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.languages}</h2>
-          <div className="ats-languages">
-            {languageSkills.map((l, idx) => (
-              <div key={l.id || idx} className="ats-language-item">{l.name} — {t.proficiencyLevels[l.level as keyof typeof t.proficiencyLevels]}</div>
+  {education && education.length > 0 && (
+        <section className="ats-section ats-minimal-section">
+          <h2 className="ats-minimal-title">{t.education}</h2>
+          <ul>
+            {education.map((edu, idx) => (
+              <li key={edu.id || idx}>{t.degreeOptions[edu.degree as keyof typeof t.degreeOptions] || edu.degree} — {edu.institution} ({edu.startDate} - {edu.endDate})</li>
             ))}
-          </div>
+          </ul>
+        </section>
+      )}
+
+      {skills && skills.length > 0 && (
+        <section className="ats-section ats-minimal-section">
+          <h2 className="ats-minimal-title">{t.technicalSkills}</h2>
+          <ul>
+            {skills.map((s, idx) => <li key={s.id || idx}>{s.name}</li>)}
+          </ul>
+        </section>
+      )}
+
+      {certifications && certifications.length > 0 && (
+        <section className="ats-section ats-minimal-section">
+          <h2 className="ats-minimal-title">{t.certifications}</h2>
+          <ul>
+            {certifications.map((c, idx) => (
+              <li key={c.id || idx}>{c.name} — {c.issuer}{c.date ? ` (${c.date})` : ''}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+  {languages && languages.length > 0 && (
+        <section className="ats-section ats-minimal-section">
+          <h2 className="ats-minimal-title">{t.languages}</h2>
+          <ul>
+    {languages.map((l, idx) => (<li key={l.id || idx}>{l.name} — {t.proficiencyLevels[l.level as keyof typeof t.proficiencyLevels]}</li>))}
+          </ul>
         </section>
       )}
     </div>
