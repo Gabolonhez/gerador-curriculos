@@ -198,7 +198,8 @@ h1.ats-name {
   font-weight: bold;
   color: #000000;
   margin: 0;
-  text-transform: capitalize;
+  /* Preserve user-provided casing for job titles */
+  text-transform: none !important;
 }
 
 .ats-company {

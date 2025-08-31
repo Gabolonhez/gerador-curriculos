@@ -20,16 +20,16 @@ const ATSCompact: React.FC<Props> = ({ data, language }) => {
       </header>
 
       <div className="ats-compact-grid">
-    <aside className="ats-compact-left" aria-label="Informações">
+        <aside className="ats-compact-left" aria-label="Informações">
           <section className="ats-compact-block">
             <h2 className="ats-section-title ats-compact-section-title">{t.contact}</h2>
             <div className="ats-contact-col">
               {personal.email && <div>{t.email}: {personal.email}</div>}
               {personal.phone && <div>{t.phone}: {formatPhoneNumber(personal.phone)}</div>}
               {personal.address && <div>{personal.address}</div>}
-      {personal.website && <div>{personal.website}</div>}
-      {personal.linkedin && <div>{personal.linkedin}</div>}
-      {personal.github && <div>{personal.github}</div>}
+              {personal.website && <div>{personal.website}</div>}
+              {personal.linkedin && <div>{personal.linkedin}</div>}
+              {personal.github && <div>{personal.github}</div>}
             </div>
           </section>
 
