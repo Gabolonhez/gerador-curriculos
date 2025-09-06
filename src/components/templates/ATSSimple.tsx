@@ -17,11 +17,23 @@ const ATSSimple: React.FC<Props> = ({ data, language }) => {
     <div className="ats-resume ats-simple ats-minimal">
       <header className="ats-minimal-header">
         <h1 className="ats-minimal-name">{personal.name}</h1>
-        <div className="ats-minimal-contact">
+        <div className="ats-minimal-contact" aria-label="contact">
           {personal.address && <span className="ats-minimal-contact-item">{personal.address}</span>}
-          {personal.phone && <span className="ats-minimal-contact-item">{formatPhoneNumber(personal.phone)}</span>}
-          {personal.email && <span className="ats-minimal-contact-item">{personal.email}</span>}
-          {personal.linkedin && <span className="ats-minimal-contact-item">{personal.linkedin}</span>}
+          {personal.phone && (
+            <span className="ats-minimal-contact-item">
+              <a href={`tel:${personal.phone}`}>{formatPhoneNumber(personal.phone)}</a>
+            </span>
+          )}
+          {personal.email && (
+            <span className="ats-minimal-contact-item">
+              <a href={`mailto:${personal.email}`}>{personal.email}</a>
+            </span>
+          )}
+          {personal.linkedin && (
+            <span className="ats-minimal-contact-item">
+              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer">{personal.linkedin}</a>
+            </span>
+          )}
         </div>
       </header>
 
@@ -39,11 +51,21 @@ const ATSSimple: React.FC<Props> = ({ data, language }) => {
             <div key={exp.id || idx} className="ats-minimal-exp">
               <div className="ats-minimal-exp-header">
                 <div className="ats-minimal-exp-left">
-                  <strong>{exp.position}</strong>
+                  <strong className="ats-job-title">{exp.position}</strong>
                   <div className="ats-minimal-company">{exp.company} — {formatDateRange(exp.startDate, exp.endDate, exp.current, language)}</div>
                 </div>
               </div>
-              {exp.description && <div className="ats-minimal-exp-desc"><p>{exp.description}</p></div>}
+              {exp.description && (
+                <div className="ats-minimal-exp-desc">
+                  {exp.description.includes('\n') ? (
+                    <ul>
+                      {exp.description.split('\n').map((line, i) => line.trim() ? <li key={i}>{line.trim()}</li> : null)}
+                    </ul>
+                  ) : (
+                    <p>{exp.description}</p>
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </section>
@@ -54,7 +76,11 @@ const ATSSimple: React.FC<Props> = ({ data, language }) => {
           <h2 className="ats-minimal-title">{t.education}</h2>
           <ul>
             {education.map((edu, idx) => (
-              <li key={edu.id || idx}>{t.degreeOptions[edu.degree as keyof typeof t.degreeOptions] || edu.degree} — {edu.institution} ({edu.startDate} - {edu.endDate})</li>
+              <li key={edu.id || idx}>
+                <strong>{t.degreeOptions[edu.degree as keyof typeof t.degreeOptions] || edu.degree}</strong>
+                {edu.field ? ` — ${edu.field}` : ''} — {edu.institution}
+                {edu.startDate || edu.endDate ? ` (${edu.startDate || '—'} - ${edu.current ? t.present : edu.endDate || '—'})` : ''}
+              </li>
             ))}
           </ul>
         </section>
@@ -74,7 +100,7 @@ const ATSSimple: React.FC<Props> = ({ data, language }) => {
           <h2 className="ats-minimal-title">{t.certifications}</h2>
           <ul>
             {certifications.map((c, idx) => (
-              <li key={c.id || idx}>{c.name} — {c.issuer}{c.date ? ` (${c.date})` : ''}</li>
+              <li key={c.id || idx}><strong>{c.name}</strong> — {c.issuer}{c.date ? ` (${c.date})` : ''}</li>
             ))}
           </ul>
         </section>
@@ -84,7 +110,9 @@ const ATSSimple: React.FC<Props> = ({ data, language }) => {
         <section className="ats-section ats-minimal-section">
           <h2 className="ats-minimal-title">{t.languages}</h2>
           <ul>
-    {languages.map((l, idx) => (<li key={l.id || idx}>{l.name} — {t.proficiencyLevels[l.level as keyof typeof t.proficiencyLevels]}</li>))}
+            {languages.map((l, idx) => (
+              <li key={l.id || idx}>{l.name} — {t.proficiencyLevels[l.level as keyof typeof t.proficiencyLevels]}</li>
+            ))}
           </ul>
         </section>
       )}

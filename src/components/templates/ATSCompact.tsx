@@ -1,7 +1,7 @@
 import React from 'react';
 import { LanguageCode } from '../../translations/formTranslations';
 import { ResumeData } from '../../types/resume';
-import { formatPhoneNumber } from '../../utils/formatters/resumeFormatters';
+import { formatPhoneNumber, formatDateRange } from '../../utils/formatters/resumeFormatters';
 import resumeTranslations from '../../translations/resumeTranslations';
 
 interface Props { data: ResumeData; language: LanguageCode }
@@ -16,6 +16,11 @@ const ATSCompact: React.FC<Props> = ({ data, language }) => {
         <div>
           <h1 className="ats-name">{personal.name}</h1>
           {personal.desiredPosition && <div className="ats-desired-position">{personal.desiredPosition}</div>}
+        </div>
+        <div className="ats-compact-contact" aria-label="contact">
+          {personal.email && <div><a href={`mailto:${personal.email}`}>{personal.email}</a></div>}
+          {personal.phone && <div><a href={`tel:${personal.phone}`}>{formatPhoneNumber(personal.phone)}</a></div>}
+          {personal.linkedin && <div><a href={personal.linkedin} target="_blank" rel="noopener noreferrer">{personal.linkedin}</a></div>}
         </div>
       </header>
 
@@ -81,12 +86,22 @@ const ATSCompact: React.FC<Props> = ({ data, language }) => {
                 <article key={exp.id} className="ats-compact-exp">
                   <div className="ats-compact-exp-header">
                     <div>
-                      <strong>{exp.position}</strong>
-                      <div className="ats-compact-exp-company">{exp.company}</div>
+                      <strong className="ats-job-title">{exp.position}</strong>
+                      <div className="ats-compact-exp-company">{exp.company} — {formatDateRange(exp.startDate, exp.endDate, exp.current, language)}</div>
                     </div>
-                    <div className="ats-compact-exp-dates">{exp.startDate} — {exp.current ? t.present : exp.endDate}</div>
+                        <div className="ats-compact-exp-dates">{formatDateRange(exp.startDate, exp.endDate, exp.current, language)}</div>
                   </div>
-                  {exp.description && <div className="ats-compact-exp-desc">{exp.description}</div>}
+                      {exp.description && (
+                        <div className="ats-compact-exp-desc">
+                          {exp.description.includes('\n') ? (
+                            <ul>
+                              {exp.description.split('\n').map((ln, i) => ln.trim() ? <li key={i}>{ln.trim()}</li> : null)}
+                            </ul>
+                          ) : (
+                            <p>{exp.description}</p>
+                          )}
+                        </div>
+                      )}
                 </article>
               ))}
             </section>
@@ -97,7 +112,11 @@ const ATSCompact: React.FC<Props> = ({ data, language }) => {
               <h3 className="ats-subtitle">{t.education}</h3>
               <ul className="ats-compact-skill-list">
                 {education.map((edu, idx) => (
-                  <li key={edu.id || idx}>{t.degreeOptions[edu.degree as keyof typeof t.degreeOptions] || edu.degree} — {edu.field} — {edu.institution} ({edu.startDate} - {edu.endDate})</li>
+                  <li key={edu.id || idx}>
+                    <strong>{t.degreeOptions[edu.degree as keyof typeof t.degreeOptions] || edu.degree}</strong>
+                    {edu.field ? ` — ${edu.field}` : ''} — {edu.institution}
+                    {edu.startDate || edu.endDate ? ` (${edu.startDate || '—'} - ${edu.current ? t.present : edu.endDate || '—'})` : ''}
+                  </li>
                 ))}
               </ul>
             </section>

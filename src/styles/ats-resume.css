@@ -578,7 +578,8 @@ h1.ats-name {
   
   /* Exceção para títulos de trabalho */
   .ats-job-title {
-    text-transform: capitalize !important;
+    /* preserve original casing for job titles */
+    text-transform: none !important;
   }
 }
 
@@ -901,4 +902,48 @@ h1.ats-name {
     -webkit-user-select: text;
     user-select: text;
   }
+}
+
+/* ===== PRINT / PDF OPTIMIZATIONS (compact & minimal only) ===== */
+@media print {
+  /* Ensure a white background and exact color rendering */
+  body, .ats-resume { background: #ffffff !important; color: #111111 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  /* Target only the compact and minimal templates */
+  .ats-compact, .ats-minimal {
+    font-family: 'Times New Roman', Georgia, serif !important;
+    font-size: 10pt !important;
+    line-height: 1.18 !important;
+    padding: 0.5in !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* Headings and name sizing tuned for print */
+  .ats-minimal-name { font-size: 16pt !important; }
+  h1.ats-name { font-size: 16pt !important; }
+  .ats-compact .ats-compact-section-title, .ats-minimal-section .ats-minimal-title { font-size: 11pt !important; margin-bottom: 0.3em !important; }
+
+  /* Tighten grid gaps for better use of space on page */
+  .ats-compact .ats-compact-grid { gap: 0.6em !important; grid-template-columns: 32% 68% !important; }
+
+  /* Experience and lists formatting */
+  .ats-compact .ats-compact-exp-desc, .ats-minimal-exp-desc { font-size: 10pt !important; margin-top: 0.2em !important; }
+  .ats-compact .ats-compact-skill-list li, .ats-minimal-section ul li { margin-bottom: 0.2em !important; }
+
+  /* Avoid inside-page breaks for small logical blocks */
+  .ats-section, .ats-compact-exp, .ats-minimal-exp, .ats-compact-block, .ats-minimal-section { page-break-inside: avoid !important; }
+
+  /* Allow headings to wrap in print (avoid ellipsis) */
+  .ats-resume h1, .ats-resume h2, .ats-resume h3 { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; }
+
+  /* Remove interactive and hover visual effects */
+  .ats-resume *:hover, .ats-resume *:active { background: transparent !important; transform: none !important; }
+
+  /* Contact items smaller and tighter on print */
+  .ats-minimal-contact { gap: 0.4em !important; font-size: 9pt !important; }
+
+  /* Utility class the app can add when forcing a page break */
+  .page-break { page-break-after: always !important; }
 }

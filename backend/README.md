@@ -26,16 +26,16 @@ Firebase notes
 - Do NOT commit your Firebase service account JSON to the repository. If you already committed one, rotate the key immediately in the Firebase Console and remove it from the repo history.
 
 - Supported ways to provide credentials (priority order used by the backend):
-	1) `FIREBASE_SERVICE_ACCOUNT_JSON` — put the full JSON contents in this env var (recommended for CI / secrets managers)
-	2) `FIREBASE_SERVICE_ACCOUNT` — absolute path to a local JSON file (development)
-	3) Application Default Credentials — `gcloud auth application-default login` or platform-provided credentials (preferred on GCP)
+
+  1.  `FIREBASE_SERVICE_ACCOUNT_JSON` — put the full JSON contents in this env var (recommended for CI / secrets managers)
+  2.  `FIREBASE_SERVICE_ACCOUNT` — absolute path to a local JSON file (development)
+  3.  Application Default Credentials — `gcloud auth application-default login` or platform-provided credentials (preferred on GCP)
 
 - The server will initialize `firebase-admin` using the first available method above and will attempt to access Firestore and Storage.
 
 Storage notes / fallback
 
 - If you don't have Cloud Storage enabled or credentials available, the server saves generated PDFs to `backend_storage/orders/{orderId}.pdf` and `GET /api/download/:orderId` returns the local file path (served by the server) when available.
-
 
 Quick test (after npm install and .env):
 
