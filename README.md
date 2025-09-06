@@ -29,3 +29,15 @@ https://gerador-curriculos.vercel.app/
 
 1. Run `npm install`
 2. Run `npm run dev`
+
+## 🔐 Segurança - Firebase service account
+
+- Do NOT commit your Firebase service account JSON to the repository.
+- If you accidentally committed a key, rotate it in the Firebase Console and remove it from the repo history.
+- To remove a local file from git index without deleting it from disk:
+
+```powershell
+git rm --cached path\to\your\service-account.json
+git commit -m "chore: remove firebase service account from repo"
+```
+
