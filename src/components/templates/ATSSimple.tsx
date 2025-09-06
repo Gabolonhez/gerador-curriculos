@@ -29,11 +29,16 @@ const ATSSimple: React.FC<Props> = ({ data, language }) => {
               <a href={`mailto:${personal.email}`}>{personal.email}</a>
             </span>
           )}
-          {personal.linkedin && (
-            <span className="ats-minimal-contact-item">
-              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer">{personal.linkedin}</a>
-            </span>
-          )}
+            {personal.linkedin && (
+              <span className="ats-minimal-contact-item">
+                <a href={personal.linkedin} target="_blank" rel="noopener noreferrer">{personal.linkedin}</a>
+              </span>
+            )}
+            {personal.portfolio && (
+              <span className="ats-minimal-contact-item">
+                <a href={personal.portfolio.startsWith('http') ? personal.portfolio : `https://${personal.portfolio}`} target="_blank" rel="noopener noreferrer">{personal.portfolio}</a>
+              </span>
+            )}
         </div>
       </header>
 

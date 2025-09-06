@@ -25,7 +25,7 @@ interface ValidationState {
   address: { isValid: boolean; message: string };
   linkedin: { isValid: boolean; message: string };
   github: { isValid: boolean; message: string };
-  website: { isValid: boolean; message: string };
+  portfolio: { isValid: boolean; message: string };
 }
 
 interface TranslationStrings {
@@ -35,7 +35,7 @@ interface TranslationStrings {
   email: string;
   phone: string;
   address: string;
-  website: string;
+  portfolio: string;
   linkedin: string;
   github: string;
   placeholders: {
@@ -44,7 +44,7 @@ interface TranslationStrings {
     email: string;
     phone: string;
     address: string;
-    website: string;
+  portfolio: string;
     linkedin: string;
     github: string;
   };
@@ -64,7 +64,7 @@ const translations: Translations = {
     email: 'Email',
     phone: 'Telefone',
     address: 'Endereço',
-    website: 'Portfólio (opcional)',
+  portfolio: 'Portfólio (opcional)',
     linkedin: 'LinkedIn (opcional)',
     github: 'GitHub (opcional)',
     placeholders: {
@@ -73,7 +73,7 @@ const translations: Translations = {
       email: 'joao.silva@email.com',
       phone: '(11) 98765-4321',
       address: 'São Paulo, SP',
-      website: 'www.meusite.com.br',
+  portfolio: 'www.meusite.com.br',
       linkedin: 'linkedin.com/in/joaosilva',
       github: 'github.com/joaosilva'
     }
@@ -85,7 +85,7 @@ const translations: Translations = {
     email: 'Email',
     phone: 'Phone',
     address: 'Address',
-    website: 'Portfolio (optional)',
+  portfolio: 'Portfolio (optional)',
     linkedin: 'LinkedIn (optional)',
     github: 'GitHub (optional)',
     placeholders: {
@@ -94,7 +94,7 @@ const translations: Translations = {
       email: 'john.smith@email.com',
       phone: '+1 (555) 123-4567',
       address: 'New York, NY',
-      website: 'www.mywebsite.com',
+  portfolio: 'www.mywebsite.com',
       linkedin: 'linkedin.com/in/johnsmith',
       github: 'github.com/johnsmith'
     }
@@ -107,7 +107,7 @@ const translations: Translations = {
     email: 'Correo',
     phone: 'Teléfono',
     address: 'Dirección',
-    website: 'Sitio Web (opcional)',
+  portfolio: 'Portafolio (opcional)',
     linkedin: 'LinkedIn (opcional)',
     github: 'GitHub (opcional)',
     placeholders: {
@@ -116,7 +116,7 @@ const translations: Translations = {
       email: 'juan.perez@email.com',
       phone: '+34 600 000 000',
       address: 'Madrid, España',
-      website: 'www.misitio.com',
+  portfolio: 'www.misitio.com',
       linkedin: 'linkedin.com/in/juanperez',
       github: 'github.com/juanperez'
     }
@@ -139,7 +139,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
     address: { isValid: true, message: '' },
     linkedin: { isValid: true, message: '' },
     github: { isValid: true, message: '' },
-    website: { isValid: true, message: '' }
+  portfolio: { isValid: true, message: '' }
   });
 
   const handleChange = (field: keyof PersonalInfo, value: string) => {
@@ -192,7 +192,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
         isValid = validateGitHub(value);
         message = !isValid ? (language === 'pt' ? 'GitHub inválido' : 'Invalid GitHub') : '';
         break;
-      case 'website':
+      case 'portfolio':
         isValid = validateURL(value);
         message = !isValid ? (language === 'pt' ? 'URL inválida' : 'Invalid URL') : '';
         break;
@@ -259,7 +259,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       phone: "Inclua DDD e país para facilitar contato",
       linkedin: "Mantenha seu perfil atualizado - muitos recrutadores verificam",
       github: "Importante para vagas técnicas - mostre seus projetos",
-      website: "Portfolio online impressiona recrutadores"
+  portfolio: "Portfolio online impressiona recrutadores"
     },
     en: {
       name: "Use your full name as it appears on official documents",
@@ -267,7 +267,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       phone: "Include area code and country for easy contact",
       linkedin: "Keep your profile updated - many recruiters check",
       github: "Important for technical roles - showcase your projects",
-      website: "Online portfolio impresses recruiters"
+  portfolio: "Online portfolio impresses recruiters"
     }
     ,
     es: {
@@ -276,7 +276,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       phone: "Incluye código de área y país para facilitar el contacto",
       linkedin: "Mantén tu perfil actualizado - muchos reclutadores lo revisan",
       github: "Importante para roles técnicos - muestra tus proyectos",
-      website: "Un portafolio online impresiona a los reclutadores"
+  portfolio: "Un portafolio online impresiona a los reclutadores"
     }
   };
 
@@ -344,15 +344,15 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           )}
         </div>
 
-        {/* Website */}
+        {/* Portfolio */}
         {renderFieldWithValidation(
-          'website',
+          'portfolio',
           'url',
           <Globe className="h-5 w-5 text-gray-400" />,
-          t.website,
-          t.placeholders.website,
+          t.portfolio,
+          t.placeholders.portfolio,
           false,
-          hints.website
+          hints.portfolio
         )}
 
         {/* LinkedIn */}

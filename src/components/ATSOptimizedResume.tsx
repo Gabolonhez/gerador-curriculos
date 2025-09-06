@@ -57,7 +57,7 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
           </div>
 
           {/* Linha 2: LinkedIn, GitHub, Website */}
-          {(personal.linkedin || personal.github || personal.website) && (
+          {(personal.linkedin || personal.github || personal.portfolio) && (
             <div className="ats-contact-row">
               {personal.linkedin && (
                 <div className="ats-contact-item">
@@ -87,16 +87,16 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
                 </div>
               )}
               
-              {personal.website && (
+              {personal.portfolio && (
                 <div className="ats-contact-item">
-                  <span className="ats-label">Website:</span>
+                  <span className="ats-label">{t.website}:</span>
                   <a 
-                    href={personal.website.startsWith('http') ? personal.website : `https://${personal.website}`} 
+                    href={personal.portfolio.startsWith('http') ? personal.portfolio : `https://${personal.portfolio}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="ats-value ats-link"
                   >
-                    {formatURL(personal.website)}
+                    {formatURL(personal.portfolio)}
                   </a>
                 </div>
               )}

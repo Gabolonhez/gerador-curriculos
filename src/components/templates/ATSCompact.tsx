@@ -32,7 +32,7 @@ const ATSCompact: React.FC<Props> = ({ data, language }) => {
               {personal.email && <div>{t.email}: {personal.email}</div>}
               {personal.phone && <div>{t.phone}: {formatPhoneNumber(personal.phone)}</div>}
               {personal.address && <div>{personal.address}</div>}
-              {personal.website && <div>{personal.website}</div>}
+              {personal.portfolio && <div><span className="ats-label">{t.website}:</span> <a href={personal.portfolio.startsWith('http') ? personal.portfolio : `https://${personal.portfolio}`} target="_blank" rel="noopener noreferrer">{personal.portfolio}</a></div>}
               {personal.linkedin && <div>{personal.linkedin}</div>}
               {personal.github && <div>{personal.github}</div>}
             </div>

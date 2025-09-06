@@ -32,7 +32,7 @@ interface FormTranslations {
   email: string;
   phone: string;
   address: string;
-  website: string;
+  portfolio: string;
   linkedin: string;
   github: string;
 
@@ -106,7 +106,7 @@ export const formTranslations: Translations = {
     email: 'E-mail',
     phone: 'Telefone',
     address: 'Endereço',
-    website: 'Portfólio',
+  portfolio: 'Portfólio',
     linkedin: 'LinkedIn',
     github: 'GitHub',
 
@@ -191,7 +191,7 @@ export const formTranslations: Translations = {
     email: 'Email',
     phone: 'Phone',
     address: 'Address',
-    website: 'Portfolio',
+  portfolio: 'Portfolio',
     linkedin: 'LinkedIn',
     github: 'GitHub',
 
@@ -276,7 +276,7 @@ export const formTranslations: Translations = {
     email: 'Correo',
     phone: 'Teléfono',
     address: 'Dirección',
-    website: 'Portfolio',
+  portfolio: 'Portfolio',
     linkedin: 'LinkedIn',
     github: 'GitHub',
 
