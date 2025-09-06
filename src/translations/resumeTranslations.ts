@@ -39,6 +39,7 @@ interface ResumeTranslations {
   phone: string;
   address: string;
   checkAt: string;
+  website: string;
   degreeIn: string;
   proficiencyLevels: ProficiencyLevels;
   skillLevels: SkillLevels;
@@ -61,6 +62,7 @@ export const resumeTranslations: Record<ResumeLanguageCode, ResumeTranslations> 
     phone: 'Telefone',
     address: 'Endereço',
     checkAt: 'Verificar em',
+  website: 'Portfólio',
     degreeIn: 'em',
     proficiencyLevels: {
       basic: 'Básico',
@@ -99,6 +101,7 @@ export const resumeTranslations: Record<ResumeLanguageCode, ResumeTranslations> 
     phone: 'Phone number',
     address: 'Address',
     checkAt: 'Check',
+  website: 'Portfolio',
     degreeIn: 'in',
     proficiencyLevels: {
       basic: 'Basic',
@@ -137,6 +140,7 @@ export const resumeTranslations: Record<ResumeLanguageCode, ResumeTranslations> 
     phone: 'Teléfono',
     address: 'Dirección',
     checkAt: 'Verificar en',
+  website: 'Portfolio',
     degreeIn: 'en',
     proficiencyLevels: {
       basic: 'Básico',

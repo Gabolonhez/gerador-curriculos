@@ -9,7 +9,7 @@ const initialResumeData: ResumeData = {
     email: '',
     phone: '',
     address: '',
-    website: '',
+  portfolio: '',
     linkedin: '',
     github: ''
   },
