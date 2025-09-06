@@ -64,7 +64,7 @@ const translations: Translations = {
     email: 'Email',
     phone: 'Telefone',
     address: 'Endereço',
-    website: 'Website (opcional)',
+    website: 'Portfólio (opcional)',
     linkedin: 'LinkedIn (opcional)',
     github: 'GitHub (opcional)',
     placeholders: {
@@ -85,7 +85,7 @@ const translations: Translations = {
     email: 'Email',
     phone: 'Phone',
     address: 'Address',
-    website: 'Website (optional)',
+    website: 'Portfolio (optional)',
     linkedin: 'LinkedIn (optional)',
     github: 'GitHub (optional)',
     placeholders: {

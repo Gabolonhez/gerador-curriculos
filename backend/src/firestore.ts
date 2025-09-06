@@ -5,19 +5,38 @@
 import admin from 'firebase-admin';
 import { OrderRecord } from './types';
 import fs from 'fs';
+import path from 'path';
 
 function initFirebase() {
   if (admin.apps.length > 0) return admin.app();
+  // Priority:
+  // 1) FIREBASE_SERVICE_ACCOUNT_JSON (full JSON content in env) - good for CI / secrets
+  // 2) FIREBASE_SERVICE_ACCOUNT (path to local JSON file) - dev local
+  // 3) applicationDefault() (ADC via gcloud or platform) - fallback
 
-  const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT || '';
-  if (!serviceAccountPath || !fs.existsSync(serviceAccountPath)) {
-    throw new Error('FIREBASE_SERVICE_ACCOUNT is not set or file not found');
+  const saJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON || '';
+  const saPath = process.env.FIREBASE_SERVICE_ACCOUNT || '';
+
+  if (saJson) {
+    const serviceAccount = JSON.parse(saJson);
+    return admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      storageBucket: process.env.PDF_BUCKET || `${serviceAccount.project_id}.appspot.com`,
+    });
   }
 
-  const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf-8'));
+  if (saPath && fs.existsSync(saPath)) {
+    const serviceAccount = JSON.parse(fs.readFileSync(saPath, 'utf-8'));
+    return admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      storageBucket: process.env.PDF_BUCKET || `${serviceAccount.project_id}.appspot.com`,
+    });
+  }
+
+  // No explicit service account found — use Application Default Credentials (gcloud auth application-default login,
+  // or platform-provided credentials when running on GCP). Storage bucket may be undefined in this mode.
   return admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    storageBucket: process.env.PDF_BUCKET || `${serviceAccount.project_id}.appspot.com`
+    credential: admin.credential.applicationDefault(),
   });
 }
 
@@ -38,6 +57,19 @@ export async function getOrderRecord(id: string): Promise<OrderRecord | null> {
 }
 
 export async function uploadPdfBuffer(orderId: string, buffer: Buffer): Promise<string> {
+  const saJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON || '';
+  const saPath = process.env.FIREBASE_SERVICE_ACCOUNT || '';
+  const hasServiceAccount = Boolean(saJson) || (saPath && fs.existsSync(saPath));
+
+  if (!hasServiceAccount) {
+    // Local fallback: write to backend_storage/orders/{orderId}.pdf and return file:// path
+    const storageDir = path.resolve(__dirname, '../../backend_storage/orders');
+    fs.mkdirSync(storageDir, { recursive: true });
+    const filePath = path.join(storageDir, `${orderId}.pdf`);
+    fs.writeFileSync(filePath, buffer);
+    return `file://${filePath}`;
+  }
+
   const app = initFirebase();
   const bucket = app.storage().bucket();
   const filePath = `orders/${orderId}.pdf`;
@@ -48,9 +80,16 @@ export async function uploadPdfBuffer(orderId: string, buffer: Buffer): Promise<
 }
 
 export async function getSignedUrl(orderId: string, expiresSeconds = 3600): Promise<string> {
-  // If PDF_BUCKET not configured, fail fast with a helpful error.
-  const bucketName = process.env.PDF_BUCKET;
-  if (!bucketName) throw new Error('Storage not configured (PDF_BUCKET missing)');
+  const saJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON || '';
+  const saPath = process.env.FIREBASE_SERVICE_ACCOUNT || '';
+  const hasServiceAccount = Boolean(saJson) || (saPath && fs.existsSync(saPath));
+
+  if (!hasServiceAccount) {
+    // Local fallback: return file:// path if the file exists
+    const filePath = path.resolve(__dirname, '../../backend_storage/orders', `${orderId}.pdf`);
+    if (!fs.existsSync(filePath)) throw new Error('PDF not found locally');
+    return `file://${filePath}`;
+  }
 
   try {
     const app = initFirebase();

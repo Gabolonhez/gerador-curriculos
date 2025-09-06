@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 gerador-curriculos-firebase-adminsdk-fbsvc-03cfb95235.json
+backend/*firebase-adminsdk*.json
+# Local backend environment
+backend/.env

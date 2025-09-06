@@ -106,7 +106,7 @@ export const formTranslations: Translations = {
     email: 'E-mail',
     phone: 'Telefone',
     address: 'Endereço',
-    website: 'Site',
+    website: 'Portfólio',
     linkedin: 'LinkedIn',
     github: 'GitHub',
 
@@ -191,7 +191,7 @@ export const formTranslations: Translations = {
     email: 'Email',
     phone: 'Phone',
     address: 'Address',
-    website: 'Website',
+    website: 'Portfolio',
     linkedin: 'LinkedIn',
     github: 'GitHub',
 
@@ -276,7 +276,7 @@ export const formTranslations: Translations = {
     email: 'Correo',
     phone: 'Teléfono',
     address: 'Dirección',
-    website: 'Sitio Web',
+    website: 'Portfolio',
     linkedin: 'LinkedIn',
     github: 'GitHub',
 
