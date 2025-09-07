@@ -398,6 +398,197 @@ h1.ats-name {
     page-break-inside: avoid !important;
   }
   
+
+/* ===== DOIS COLUNAS (ATS-FRIENDLY) ===== */
+
+.ats-twocolumn {
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  grid-template-areas:
+    "header header"
+    "sidebar main";
+  gap: 1.2rem;
+  align-items: start;
+  grid-auto-rows: auto;
+}
+
+.ats-twocolumn-header {
+  grid-area: header;
+  text-align: center;
+  margin-bottom: 0.6rem;
+}
+
+.ats-twocolumn-header .ats-name {
+  margin: 0;
+  font-size: 18pt;
+  letter-spacing: 0.6px;
+}
+
+.ats-twocolumn-header .ats-role {
+  font-size: 11pt;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.ats-twocolumn-sidebar {
+  grid-area: sidebar;
+  background: transparent;
+  padding: 0.6rem 0.8rem 0.6rem 0.6rem;
+  border-right: 1px solid #e9e9e9;
+  min-height: 1px; /* allow border to show */
+}
+
+.ats-twocolumn-main {
+  grid-area: main;
+  padding: 0.6rem 0.6rem;
+  padding-left: 1.2rem;
+}
+
+.ats-twocolumn .ats-personal {
+  border-bottom: 1px solid #e6e6e6;
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+/* Tighter, consistent section spacing */
+.ats-twocolumn .ats-section {
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.2rem;
+}
+
+.ats-twocolumn .ats-section h4 {
+  margin-bottom: 0.45rem;
+  font-size: 11pt;
+  color: #111;
+}
+
+.ats-twocolumn .ats-list li {
+  margin-left: 0.25rem;
+}
+
+/* Subtle separator line under header */
+.ats-twocolumn-header::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: #e9e9e9;
+  margin-top: 0.8rem;
+}
+
+/* Make sidebar labels bold and aligned */
+.ats-twocolumn .ats-contact strong,
+.ats-twocolumn .ats-label {
+  display: inline-block;
+  width: 6.5rem;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Ensure main column content aligns to top and stays readable */
+.ats-twocolumn-main {
+  display: block;
+}
+
+.ats-twocolumn .ats-name {
+  font-size: 16pt;
+  text-align: left;
+  margin-bottom: 0.2rem;
+}
+
+.ats-twocolumn .ats-role {
+  font-size: 11pt;
+  color: #444;
+  margin-bottom: 0.6rem;
+}
+
+.ats-twocolumn .ats-contact div {
+  font-size: 10pt;
+  margin-bottom: 0.25rem;
+}
+
+.ats-twocolumn .ats-section h4,
+.ats-twocolumn .ats-section .ats-section-title {
+  font-size: 11pt;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  color: #111;
+}
+
+.ats-twocolumn .ats-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ats-twocolumn .ats-list li {
+  font-size: 10pt;
+  margin-bottom: 0.45rem;
+}
+
+.ats-twocolumn .ats-experience-item {
+  margin-bottom: 1rem;
+}
+
+.ats-twocolumn .ats-exp-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.ats-twocolumn .ats-job-title {
+  font-size: 11pt;
+  font-weight: 700;
+}
+
+.ats-twocolumn .ats-company {
+  font-size: 10pt;
+  color: #333;
+  margin-bottom: 0.2rem;
+}
+
+.ats-twocolumn .ats-exp-meta {
+  font-size: 9.5pt;
+  color: #666;
+  margin-bottom: 0.4rem;
+}
+
+.ats-twocolumn .ats-exp-desc p,
+.ats-twocolumn .ats-exp-desc li {
+  font-size: 10pt;
+  margin: 0 0 0.4rem 0;
+}
+
+/* Ensure simple semantic markup for ATS: plain lists, no complex grids inside content */
+.ats-twocolumn ul {
+  list-style: disc; /* keep simple bullet points for readability */
+  margin-left: 1rem;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 900px) {
+  .ats-twocolumn {
+    grid-template-columns: 1fr;
+  }
+  .ats-twocolumn-sidebar {
+    order: 2;
+  }
+  .ats-twocolumn-main {
+    order: 1;
+  }
+}
+
+@media print {
+  /* Collapse to single column for PDF friendliness */
+  .ats-twocolumn {
+    grid-template-columns: 1fr !important;
+    gap: 0.4rem !important;
+  }
+  .ats-twocolumn-sidebar {
+    padding: 0 !important;
+  }
+  .ats-twocolumn-main {
+    padding: 0 !important;
+  }
+}
   /* Garante que cores sejam preservadas */
 
 /* ===== VARIAÇÕES DE TEMPLATE: COMPACT E SIMPLE ===== */
