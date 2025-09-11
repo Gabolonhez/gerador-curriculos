@@ -16,13 +16,13 @@ interface ResumePreviewProps {
 const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language, templateKey = 'optimized' }) => {
   const Comp = templates[templateKey];
   const [modalOpen, setModalOpen] = useState(false);
-  const { createOrder, paymentUrl, orderId, pollStatus, download } = usePDFPayment();
+  const {paymentUrl, orderId, pollStatus, download } = usePDFPayment();
 
-  const onDownloadClick = async () => {
-    // create order
-    await createOrder(data);
-    setModalOpen(true);
-  };
+  // const onDownloadClick = async () => {
+  //   // create order
+  //   await createOrder(data);
+  //   setModalOpen(true);
+  // };
 
   const onOpenPayment = () => {
     if (!paymentUrl || !orderId) return;
