@@ -38,9 +38,6 @@ const ResumePreview: React.FC<ResumePreviewProps> = ({ data, language, templateK
   return (
     <div>
       <div id="resume-preview"><Comp data={data} language={language} /></div>
-      <div className="mt-4">
-        <button className="px-4 py-2 bg-blue-600 text-white rounded" onClick={onDownloadClick}>Baixar PDF</button>
-      </div>
       <PaymentModal open={modalOpen} onClose={() => setModalOpen(false)} paymentUrl={paymentUrl} onOpenPayment={onOpenPayment} />
     </div>
   );
