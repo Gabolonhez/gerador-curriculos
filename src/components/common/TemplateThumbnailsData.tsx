@@ -48,6 +48,16 @@ export const ThumbnailMap: Record<TemplateKey, JSX.Element> = {
       </div>
     </div>
   )
+  ,
+  professional: (
+    <div className={`${base}`} aria-hidden>
+      <div className="h-3 bg-slate-900 rounded w-full mb-2" />
+      <div className="h-2 bg-slate-400 rounded w-full mb-1" />
+      <div className="h-2 bg-slate-300 rounded w-4/5 mb-1" />
+      <div className="h-2 bg-slate-300 rounded w-3/4 mb-1" />
+      <div className="mt-auto text-[10px] text-slate-500">Professional · Classic</div>
+    </div>
+  )
 };
 
 export default ThumbnailMap;

@@ -403,45 +403,119 @@ h1.ats-name {
 
 .ats-twocolumn {
   display: grid;
-  grid-template-columns: 30% 1fr;
+  /* slightly wider sidebar, closer to the reference layout */
+  grid-template-columns: 34% 1fr;
   grid-template-areas:
     "header header"
     "sidebar main";
-  gap: 1.2rem;
+  gap: 1rem;
   align-items: start;
   grid-auto-rows: auto;
 }
 
+/* Header is split so the name occupies the left (sidebar) column and the separator starts at the main column */
 .ats-twocolumn-header {
   grid-area: header;
-  text-align: center;
   margin-bottom: 0.6rem;
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  align-items: center;
 }
 
 .ats-twocolumn-header .ats-name {
   margin: 0;
-  font-size: 18pt;
-  letter-spacing: 0.6px;
+  /* stacked, two-line name similar to the print */
+  font-size: 26pt;
+  line-height: 0.95;
+  letter-spacing: 1px;
+  grid-column: 1;
+  text-align: left !important;
+  font-weight: 800;
+  display: inline-block;
+  white-space: normal;
+  word-break: break-word;
+  padding-right: 0.25rem;
 }
 
 .ats-twocolumn-header .ats-role {
   font-size: 11pt;
   color: #666;
   margin-top: 0.25rem;
+  grid-column: 1;
+  opacity: 0.9;
 }
 
 .ats-twocolumn-sidebar {
   grid-area: sidebar;
   background: transparent;
-  padding: 0.6rem 0.8rem 0.6rem 0.6rem;
-  border-right: 1px solid #e9e9e9;
+  padding: 0.4rem 1rem 0.6rem 0.6rem;
+  border-right: 1px solid #e6e6e6; /* visible divider between sidebar and main */
   min-height: 1px; /* allow border to show */
+  align-self: start; /* ensure sidebar content starts at the top */
 }
-
 .ats-twocolumn-main {
   grid-area: main;
-  padding: 0.6rem 0.6rem;
-  padding-left: 1.2rem;
+  padding: 0.6rem 0.8rem 0.6rem 1rem;
+  align-self: start;
+}
+
+/* Main section headings: larger, heavier and with subtle divider */
+.ats-twocolumn .ats-section h4 {
+  font-size: 13pt;
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #e9e9e9;
+}
+
+/* Sidebar small caps titles */
+.ats-twocolumn .ats-section-title {
+  font-size: 9pt;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #222;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.8px;
+}
+/* the separator under the header should start at the main column so it appears to the right of the sidebar */
+.ats-twocolumn-header::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: #e9e9e9;
+  margin-top: 0.8rem;
+  grid-column: 2 / -1;
+  width: 100%;
+}
+
+/* Compact uppercase titles in the left sidebar to match the print style */
+.ats-twocolumn .ats-section-title {
+  font-size: 9.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 0.35rem 0;
+  padding-bottom: 0.25rem;
+  letter-spacing: 0.6px;
+}
+
+.ats-twocolumn .ats-contact-item,
+.ats-twocolumn .ats-language-item {
+  font-size: 10pt;
+  margin-bottom: 0.35rem;
+}
+
+/* Right-align dates/meta in experience entries to mirror the print */
+.ats-twocolumn .ats-exp-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ats-twocolumn .ats-exp-meta {
+  text-align: right;
+  min-width: 9rem;
+  font-size: 10pt;
+  color: #666;
 }
 
 .ats-twocolumn .ats-personal {
@@ -467,19 +541,13 @@ h1.ats-name {
 }
 
 /* Subtle separator line under header */
-.ats-twocolumn-header::after {
-  content: '';
-  display: block;
-  height: 1px;
-  background: #e9e9e9;
-  margin-top: 0.8rem;
-}
+/* (duplicate removed) */
 
 /* Make sidebar labels bold and aligned */
 .ats-twocolumn .ats-contact strong,
 .ats-twocolumn .ats-label {
   display: inline-block;
-  width: 6.5rem;
+  width: 6.2rem;
   font-weight: 700;
   color: #222;
 }
@@ -487,6 +555,52 @@ h1.ats-name {
 /* Ensure main column content aligns to top and stays readable */
 .ats-twocolumn-main {
   display: block;
+}
+
+/* ===== PROFESSIONAL (single-column classic) ===== */
+.ats-professional {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Times New Roman', Georgia, serif;
+  color: #111;
+}
+
+.ats-professional .prof-header {
+  text-align: center;
+  margin-bottom: 0.6rem;
+}
+
+.ats-professional .prof-name {
+  font-size: 18pt;
+  font-weight: 700;
+  margin: 0;
+}
+
+.ats-professional .prof-subline {
+  font-size: 10pt;
+  color: #333;
+  margin-top: 0.25rem;
+}
+
+.ats-professional .prof-section {
+  margin-bottom: 1rem;
+}
+
+.ats-professional h3 {
+  font-size: 11pt;
+  margin: 0 0 0.3rem 0;
+  font-weight: 700;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.2rem;
+}
+
+.ats-professional ul { margin: 0 0 0 1rem; }
+.ats-professional .prof-skills { font-size: 10pt; margin-top: 0.25rem; }
+.ats-professional .prof-exp { margin-bottom: 0.6rem; }
+.ats-professional .prof-exp-title { font-style: italic; color: #333; margin-bottom: 0.2rem; }
+
+@media print {
+  .ats-professional { max-width: none; margin: 0; }
 }
 
 .ats-twocolumn .ats-name {
@@ -650,8 +764,9 @@ h1.ats-name {
 }
 .ats-compact .ats-compact-grid {
   display: grid;
-  grid-template-columns: 30% 70%;
-  gap: 1.2em;
+  /* single column for compact template — stacked layout */
+  grid-template-columns: 1fr;
+  gap: 1rem;
   align-items: start;
 }
 .ats-compact .ats-compact-left {
