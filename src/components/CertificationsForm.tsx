@@ -1,5 +1,5 @@
-import React from 'react';
-import { PlusIcon, TrashIcon } from 'lucide-react';
+import React, { useState } from 'react';
+import { PlusIcon, TrashIcon, GripVertical } from 'lucide-react';
 import { LanguageCode, formTranslations } from '../translations/formTranslations';
 
 interface Certification {
@@ -19,6 +19,14 @@ interface CertificationsFormProps {
 
 const CertificationsForm: React.FC<CertificationsFormProps> = ({ data, updateData, language }) => {
   const t = formTranslations[language];
+  const [draggingId, setDraggingId] = useState<string | null>(null);
+
+  const move = <T,>(arr: T[], from: number, to: number) => {
+    const copy = arr.slice();
+    const [item] = copy.splice(from, 1);
+    copy.splice(to, 0, item);
+    return copy;
+  };
 
   const addCertification = () => {
     const newCertification: Certification = {
@@ -52,10 +60,45 @@ const CertificationsForm: React.FC<CertificationsFormProps> = ({ data, updateDat
 
   return (
     <div className="space-y-6">
-      {data.map(cert => (
-        <div key={cert.id} className="p-4 border rounded-lg bg-gray-50">
+      <div role="list" className="space-y-3">
+        {data.map(cert => (
+          <div
+            key={cert.id}
+            className={`p-4 border rounded-lg bg-gray-50 ${draggingId === cert.id ? 'opacity-60' : ''}`}
+            draggable
+            onDragStart={e => {
+              e.dataTransfer.effectAllowed = 'move';
+              e.dataTransfer.setData('text/plain', cert.id);
+              setDraggingId(cert.id);
+            }}
+            onDragOver={e => {
+              e.preventDefault();
+              e.dataTransfer.dropEffect = 'move';
+            }}
+            onDrop={e => {
+              e.preventDefault();
+              const sourceId = e.dataTransfer.getData('text/plain');
+              if (!sourceId || sourceId === cert.id) {
+                setDraggingId(null);
+                return;
+              }
+              const from = data.findIndex(c => c.id === sourceId);
+              const to = data.findIndex(c => c.id === cert.id);
+              if (from >= 0 && to >= 0 && from !== to) {
+                updateData(move(data, from, to));
+              }
+              setDraggingId(null);
+            }}
+            onDragEnd={() => setDraggingId(null)}
+            role="listitem"
+            tabIndex={0}
+            aria-label={`${t.certification} item`}
+          >
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-medium">{t.certification}</h3>
+            <div className="flex items-center">
+              <GripVertical className="h-5 w-5 mr-2 text-gray-400" aria-hidden />
+              <h3 className="font-medium">{t.certification}</h3>
+            </div>
             <button
               onClick={() => removeCertification(cert.id)}
               className="cursor-pointer text-red-500 hover:text-red-700"
@@ -126,7 +169,8 @@ const CertificationsForm: React.FC<CertificationsFormProps> = ({ data, updateDat
             </div>
           </div>
         </div>
-      ))}
+        ))}
+      </div>
       <button
         type="button"
         onClick={addCertification}
