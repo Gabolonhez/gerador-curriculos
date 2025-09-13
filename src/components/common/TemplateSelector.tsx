@@ -12,27 +12,30 @@ const labels: Record<LanguageCode, Record<TemplateKey, string> & { selectorLabel
   pt: {
     selectorLabel: 'Modelo',
     optimized: 'Precisão (ATS)',
+    professional: 'Profissional',
     compact: 'Resumo (Compacto)',
-  simple: 'Essencial (Minimal)',
-  twocolumn: 'Duas colunas',
+    simple: 'Essencial (Minimal)',
+    twocolumn: 'Duas colunas',
   },
   en: {
     selectorLabel: 'Template',
     optimized: 'Precision (ATS)',
+    professional: 'Professional',
     compact: 'Resume (Compact)',
-  simple: 'Essential (Minimal)',
-  twocolumn: 'Two Column',
+    simple: 'Essential (Minimal)',
+    twocolumn: 'Two Column',
   },
   es: {
     selectorLabel: 'Plantilla',
     optimized: 'Precisión (ATS)',
+    professional: 'Profesional',
     compact: 'Resumen (Compacto)',
-  simple: 'Esencial (Minimal)',
-  twocolumn: 'Dos columnas',
+    simple: 'Esencial (Minimal)',
+    twocolumn: 'Dos columnas',
   },
 };
 
-const options: TemplateKey[] = ['optimized', 'compact', 'simple', 'twocolumn'];
+const options: TemplateKey[] = ['optimized','professional', 'compact', 'simple', 'twocolumn', ];
 
 const TemplateSelector: React.FC<Props> = ({ value, onChange, language }) => {
   const l = labels[language] || labels.en;

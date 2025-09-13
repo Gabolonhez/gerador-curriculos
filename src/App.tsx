@@ -134,10 +134,11 @@ const App: React.FC = () => {
   const [previewMode, setPreviewMode] = React.useState<'preview' | 'analysis'>('preview');
   // Template selection (persisted)
   const TEMPLATE_STORAGE_KEY = 'resume-generator-template';
-  const [templateKey, setTemplateKey] = React.useState<'optimized' | 'compact' | 'simple' | 'twocolumn'>(() => {
+  const [templateKey, setTemplateKey] = React.useState<'optimized' | 'compact' | 'simple' | 'twocolumn' | 'professional'>(() => {
     try {
       const v = localStorage.getItem(TEMPLATE_STORAGE_KEY);
-  if (v === 'compact' || v === 'simple' || v === 'optimized' || v === 'twocolumn') return v as 'optimized' | 'compact' | 'simple' | 'twocolumn';
+      if (v === 'compact' || v === 'simple' || v === 'optimized' || v === 'twocolumn' || v === 'professional')
+        return v as 'optimized' | 'compact' | 'simple' | 'twocolumn' | 'professional';
     } catch (e) {
       console.warn('Could not read template from localStorage', e);
     }
