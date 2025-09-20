@@ -100,9 +100,14 @@ const CertificationsForm: React.FC<CertificationsFormProps> = ({ data, updateDat
               <h3 className="font-medium">{t.certification}</h3>
             </div>
             <button
-              onClick={() => removeCertification(cert.id)}
+              onMouseDown={e => e.stopPropagation()}
+              onClick={e => {
+                e.stopPropagation();
+                removeCertification(cert.id);
+              }}
               className="cursor-pointer text-red-500 hover:text-red-700"
-              disabled={data.length <= 1}
+              aria-label={t.remove}
+              title={t.remove}
             >
               <TrashIcon className="h-5 w-5" />
             </button>

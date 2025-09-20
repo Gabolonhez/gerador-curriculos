@@ -105,9 +105,12 @@ const EducationForm: React.FC<EducationFormProps> = ({ data, updateData, languag
               <h3 className="font-medium">{t.education}</h3>
             </div>
             <button
-              onClick={() => removeEducation(edu.id)}
+              onMouseDown={e => e.stopPropagation()}
+              onClick={e => {
+                e.stopPropagation();
+                removeEducation(edu.id)}
+              } 
               className="cursor-pointer text-red-500 hover:text-red-700"
-              disabled={data.length <= 1}
             >
               <TrashIcon className="h-5 w-5" />
             </button>

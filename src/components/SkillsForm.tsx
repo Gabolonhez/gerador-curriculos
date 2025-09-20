@@ -31,6 +31,7 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
 
   const removeSkill = (id: string) => {
     updateData(data.filter(skill => skill.id !== id));
+   
   };
 
   const handleChange = (id: string, field: keyof Skill, value: string) => {
@@ -89,9 +90,12 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
               <h3 className="font-medium">{t.skill}</h3>
             </div>
             <button
-              onClick={() => removeSkill(skill.id)}
+              onMouseDown={e => e.stopPropagation()}
+              onClick={e => {
+                e.stopPropagation();
+                removeSkill(skill.id);
+              }}
               className="cursor-pointer text-red-500 hover:text-red-700"
-              disabled={data.length <= 1}
               aria-label={t.removeSkill}
             >
               <TrashIcon className="h-5 w-5" />

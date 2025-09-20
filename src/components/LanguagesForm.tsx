@@ -89,9 +89,12 @@ const LanguagesForm: React.FC<LanguagesFormProps> = ({ data, updateData, languag
               <h3 className="font-medium">{t.language}</h3>
             </div>
             <button
-              onClick={() => removeLanguage(lang.id)}
+              onMouseDown={e => e.stopPropagation()}
+              onClick={e => {
+                e.stopPropagation();
+                removeLanguage(lang.id)}
+              } 
               className="cursor-pointer text-red-500 hover:text-red-700"
-              disabled={data.length <= 1}
               aria-label={t.removeLanguage}
             >
               <TrashIcon className="h-5 w-5" />
