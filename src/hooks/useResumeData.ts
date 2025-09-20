@@ -18,7 +18,8 @@ const initialResumeData: ResumeData = {
   education: [],
   skills: [],
   languages: [],
-  certifications: []
+  certifications: [],
+  sectionOrder: ['summary', 'skills', 'experience', 'education', 'languages', 'certifications']
 };
 
 // Função para carregar dados do localStorage
@@ -37,7 +38,8 @@ const loadDataFromStorage = (): ResumeData => {
           education: Array.isArray(parsedData.education) ? parsedData.education : [],
           skills: Array.isArray(parsedData.skills) ? parsedData.skills : [],
           languages: Array.isArray(parsedData.languages) ? parsedData.languages : [],
-          certifications: Array.isArray(parsedData.certifications) ? parsedData.certifications : []
+          certifications: Array.isArray(parsedData.certifications) ? parsedData.certifications : [],
+          sectionOrder: Array.isArray(parsedData.sectionOrder) ? parsedData.sectionOrder : initialResumeData.sectionOrder
         };
       }
     }
@@ -80,6 +82,17 @@ export const useResumeData = () => {
     });
   }, []);
 
+  const updateSectionOrder = useCallback((order: ResumeData['sectionOrder']) => {
+    setResumeData(prev => {
+      const newData = {
+        ...prev,
+        sectionOrder: order
+      } as ResumeData;
+      saveDataToStorage(newData);
+      return newData;
+    });
+  }, []);
+
   const resetResumeData = useCallback(() => {
     setResumeData(initialResumeData);
     // Limpar dados do localStorage
@@ -114,6 +127,7 @@ export const useResumeData = () => {
   return {
     resumeData,
     updateResumeData,
+    updateSectionOrder,
     resetResumeData,
     exportData,
     importData
