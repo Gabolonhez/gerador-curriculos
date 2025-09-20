@@ -103,9 +103,12 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({ data, updateData, langu
               <h3 className="font-medium">{t.experience}</h3>
             </div>
             <button
-              onClick={() => removeExperience(exp.id)}
+              onMouseDown={e => e.stopPropagation()}
+              onClick={e => {
+                e.stopPropagation();
+                removeExperience(exp.id)
+              }}
               className="cursor-pointer text-red-500 hover:text-red-700"
-              disabled={data.length <= 1}
             >
               <TrashIcon className="h-5 w-5" />
             </button>
