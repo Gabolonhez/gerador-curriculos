@@ -111,6 +111,8 @@ const EducationForm: React.FC<EducationFormProps> = ({ data, updateData, languag
                 removeEducation(edu.id)}
               } 
               className="cursor-pointer text-red-500 hover:text-red-700"
+              aria-label={t.remove}
+              title={t.remove}
             >
               <TrashIcon className="h-5 w-5" />
             </button>

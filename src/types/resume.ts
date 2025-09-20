@@ -59,6 +59,15 @@ export interface ResumeData {
   skills: Skill[];
   languages: Language[];
   certifications: Certification[];
+  // Order in which sections should render in the preview
+  sectionOrder?: Array<
+    | 'summary'
+    | 'experience'
+    | 'education'
+    | 'skills'
+    | 'languages'
+    | 'certifications'
+  >;
 }
 
 export type TabType = 

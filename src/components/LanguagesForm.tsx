@@ -99,6 +99,7 @@ const LanguagesForm: React.FC<LanguagesFormProps> = ({ data, updateData, languag
             >
               <TrashIcon className="h-5 w-5" />
             </button>
+          
           </div>
           <div className="grid grid-cols-1 gap-4">
             <div>

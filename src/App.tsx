@@ -1,4 +1,5 @@
 import React from 'react';
+import { ResumeData } from './types/resume';
 import { SaveIcon, ArrowRight, ArrowLeft, TrashIcon } from 'lucide-react';
 import PersonalInfoForm from './components/PersonalInfoForm';
 import ProfessionalSummaryForm from './components/ProfessionalSummaryForm';
@@ -17,6 +18,7 @@ import { useResumeData } from './hooks/useResumeData';
 import { useTabNavigation } from './hooks/useTabNavigation';
 import { useLanguage } from './hooks/useLanguage';
 import { usePDFExport } from './hooks/usePDFExport';
+import SectionOrderModal from './components/SectionOrderModal';
 import { PersonalInfo, Experience, Education, Skill, Language, Certification } from './types/resume';
 import './styles/resume.css';
 
@@ -30,6 +32,7 @@ interface TranslationStrings {
   skills: string;
   languages: string;
   certifications: string;
+  orderSections: string;
   preview: string;
   atsAnalysis: string;
   previous: string;
@@ -42,6 +45,7 @@ interface TranslationStrings {
   clearDataConfirm: string;
   dataSaved: string;
   dataCleared: string;
+  done: string;
 }
 
 interface Translations {
@@ -61,6 +65,7 @@ const translations: Translations = {
     skills: 'Habilidades',
     languages: 'Idiomas',
     certifications: 'Certificações/Cursos',
+  orderSections: 'Ordenar seções',
     preview: 'Pré-visualização',
     atsAnalysis: 'Análise ATS',
     previous: 'Anterior',
@@ -72,7 +77,8 @@ const translations: Translations = {
     clearData: 'Limpar Dados',
     clearDataConfirm: 'Tem certeza que deseja limpar todos os dados salvos? Esta ação não pode ser desfeita.',
     dataSaved: 'Dados salvos automaticamente',
-    dataCleared: 'Dados limpos com sucesso'
+    dataCleared: 'Dados limpos com sucesso',
+    done: 'Concluído'
   },
   en: {
     title: 'Resume Generator',
@@ -84,6 +90,7 @@ const translations: Translations = {
     skills: 'Skills',
     languages: 'Languages',
     certifications: 'Certifications/Courses',
+  orderSections: 'Order sections',
     preview: 'Preview',
     atsAnalysis: 'ATS Analysis',
     previous: 'Previous',
@@ -95,7 +102,8 @@ const translations: Translations = {
     clearData: 'Clear Data',
     clearDataConfirm: 'Are you sure you want to clear all saved data? This action cannot be undone.',
     dataSaved: 'Data saved automatically',
-    dataCleared: 'Data cleared successfully'
+    dataCleared: 'Data cleared successfully',
+    done: 'Done'
   }
   ,
   es: {
@@ -108,6 +116,7 @@ const translations: Translations = {
     skills: 'Habilidades',
     languages: 'Idiomas',
     certifications: 'Certificaciones/Cursos',
+  orderSections: 'Ordenar secciones',
     preview: 'Previsualización',
     atsAnalysis: 'Análisis ATS',
     previous: 'Anterior',
@@ -119,19 +128,31 @@ const translations: Translations = {
     clearData: 'Borrar Datos',
     clearDataConfirm: '¿Seguro que deseas borrar todos los datos guardados? Esta acción no se puede deshacer.',
     dataSaved: 'Datos guardados automáticamente',
-    dataCleared: 'Datos borrados con éxito'
+    dataCleared: 'Datos borrados con éxito',
+    done: 'Hecho'
   }
 };
 
 const App: React.FC = () => {
   // Usando os hooks customizados
-  const { resumeData, updateResumeData, resetResumeData } = useResumeData();
+  interface ResumeHookReturn {
+    resumeData: ResumeData;
+    updateResumeData: <T extends keyof ResumeData>(section: T, data: ResumeData[T]) => void;
+    updateSectionOrder?: (order: ResumeData['sectionOrder']) => void;
+    resetResumeData: () => void;
+    exportData?: () => string;
+    importData?: (json: string) => boolean;
+  }
+
+  const resumeHook = useResumeData() as ResumeHookReturn;
+  const { resumeData, updateResumeData, resetResumeData, updateSectionOrder } = resumeHook;
   const { activeTab, setActiveTab, handleNextPage, handlePreviousPage, canGoNext, canGoPrevious } = useTabNavigation();
   const { currentLanguage, setLanguage } = useLanguage();
   const { exportToPDF } = usePDFExport({ language: currentLanguage });
 
   // Estado para alternar entre preview e análise ATS
   const [previewMode, setPreviewMode] = React.useState<'preview' | 'analysis'>('preview');
+  const [showSectionModal, setShowSectionModal] = React.useState(false);
   // Template selection (persisted)
   const TEMPLATE_STORAGE_KEY = 'resume-generator-template';
   const [templateKey, setTemplateKey] = React.useState<'optimized' | 'compact' | 'simple' | 'twocolumn' | 'professional'>(() => {
@@ -321,6 +342,15 @@ const App: React.FC = () => {
                   <h2 className="text-lg font-medium">
                     {previewMode === 'preview' ? t.preview : t.atsAnalysis}
                   </h2>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      type="button"
+                      className="px-2 py-1 text-sm bg-gray-100 rounded"
+                      onClick={() => setShowSectionModal(true)}
+                    >
+                      {t.orderSections}
+                    </button>
+                  </div>
                   <div className="flex rounded-lg bg-gray-100 p-1">
                     <button
                       onClick={() => setPreviewMode('preview')}
@@ -350,6 +380,15 @@ const App: React.FC = () => {
                     className="border rounded-lg p-4 sm:p-6 overflow-auto resume-preview"
                   >
                     <ResumePreview data={resumeData} language={currentLanguage} templateKey={templateKey} />
+                    <SectionOrderModal
+                      open={showSectionModal}
+                      onClose={() => setShowSectionModal(false)}
+                      title={t.orderSections}
+                      order={(resumeData && resumeData.sectionOrder) || ['summary','skills','experience','education','languages','certifications']}
+                      onChange={(order) => updateSectionOrder && updateSectionOrder(order as ResumeData['sectionOrder'])}
+                      language={currentLanguage}
+                      doneLabel={t.done}
+                    />
                   </div>
                 ) : (
                   <div className="overflow-auto">

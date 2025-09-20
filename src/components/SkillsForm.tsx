@@ -97,6 +97,7 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
               }}
               className="cursor-pointer text-red-500 hover:text-red-700"
               aria-label={t.removeSkill}
+              title={t.removeSkill}
             >
               <TrashIcon className="h-5 w-5" />
             </button>

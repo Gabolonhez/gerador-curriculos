@@ -18,9 +18,113 @@ interface ATSOptimizedResumeProps {
 import resumeTranslations from '../translations/resumeTranslations';
 
 const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language }) => {
-  const { personal, summary, experience, education, skills, languages: languageSkills, certifications } = data;
+  const { personal, summary, experience, education, skills, languages: languageSkills, certifications, sectionOrder } = data;
   // Map project language codes to resumeTranslations keys (resumeTranslations includes 'es')
   const t = resumeTranslations[language as keyof typeof resumeTranslations];
+
+  // Render sections according to `sectionOrder` when provided, otherwise fallback to default sequence
+  const order = sectionOrder && sectionOrder.length > 0 ? sectionOrder : ['summary', 'skills', 'experience', 'education', 'languages', 'certifications'];
+
+  const renderSection = (key: string) => {
+    switch (key) {
+      case 'summary':
+        return summary ? (
+          <section key="summary" className="ats-section">
+            <h2 className="ats-section-title">{t.professionalSummary}</h2>
+            <div className="ats-summary"><p>{summary}</p></div>
+          </section>
+        ) : null;
+      case 'skills':
+        return skills && skills.length > 0 ? (
+          <section key="skills" className="ats-section">
+            <h2 className="ats-section-title">{t.technicalSkills}</h2>
+            <div className="ats-skills-grid">
+              {skills.map((skill, index) => (
+                <div key={skill.id || index} className="ats-skill-item">
+                  <span className="ats-skill-name">{skill.name}</span>
+                  <span className="ats-skill-level">{t.skillLevels[skill.level as keyof typeof t.skillLevels]}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null;
+      case 'experience':
+        return experience && experience.length > 0 ? (
+          <section key="experience" className="ats-section">
+            <h2 className="ats-section-title">{t.workExperience}</h2>
+            {experience.map((exp, index) => (
+              <div key={exp.id || index} className="ats-experience-item">
+                <div className="ats-experience-header">
+                  <h3 className="ats-job-title">{exp.position}</h3>
+                  <h4 className="ats-company">{exp.company}</h4>
+                  <div className="ats-date-info">
+                    <span className="ats-dates">{formatDateRange(exp.startDate, exp.endDate, exp.current, language)}</span>
+                    <span className="ats-duration">({calculateDuration(exp.startDate, exp.endDate, exp.current, language)})</span>
+                  </div>
+                </div>
+                {exp.description && <div className="ats-description"><p>{exp.description}</p></div>}
+              </div>
+            ))}
+          </section>
+        ) : null;
+      case 'education':
+        return education && education.length > 0 ? (
+          <section key="education" className="ats-section">
+            <h2 className="ats-section-title">{t.education}</h2>
+            {education.map((edu, index) => (
+              <div key={edu.id || index} className="ats-education-item">
+                <div className="ats-education-header">
+                  <h3 className="ats-degree">{t.degreeOptions[edu.degree as keyof typeof t.degreeOptions] || edu.degree} {t.degreeIn} {edu.field}</h3>
+                  <h4 className="ats-institution">{edu.institution}</h4>
+                  <div className="ats-date-info"><span className="ats-dates">{formatDateRange(edu.startDate, edu.endDate, edu.current, language)}</span></div>
+                </div>
+                {edu.description && <div className="ats-description"><p>{edu.description}</p></div>}
+              </div>
+            ))}
+          </section>
+        ) : null;
+      case 'languages':
+        return languageSkills && languageSkills.length > 0 ? (
+          <section key="languages" className="ats-section">
+            <h2 className="ats-section-title">{t.languages}</h2>
+            <div className="ats-languages">
+              {languageSkills.map((lang, index) => (
+                <div key={lang.id || index} className="ats-language-item">
+                  <span className="ats-language-name">{lang.name}</span>
+                  <span className="ats-language-level">{t.proficiencyLevels[lang.level as keyof typeof t.proficiencyLevels]}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null;
+      case 'certifications':
+        return certifications && certifications.length > 0 ? (
+          <section key="certifications" className="ats-section">
+            <h2 className="ats-section-title">{t.certifications}</h2>
+            {certifications.map((cert, index) => (
+              <div key={cert.id || index} className="ats-certification-item">
+                <div className="ats-certification-header">
+                  <h3 className="ats-cert-name">{cert.name}</h3>
+                  <h4 className="ats-cert-issuer">{cert.issuer}</h4>
+                  {cert.date && (
+                    <span className="ats-cert-date">{new Date(cert.date).toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US', { year: 'numeric', month: 'long' })}</span>
+                  )}
+                </div>
+                {cert.description && <div className="ats-description"><p>{cert.description}</p></div>}
+                {cert.url && (
+                  <div className="ats-cert-url"><span>{t.checkAt}: </span><a href={cert.url.startsWith('http') ? cert.url : `https://${cert.url}`} target="_blank" rel="noopener noreferrer" className="ats-link">{formatURL(cert.url)}</a></div>
+                )}
+              </div>
+            ))}
+          </section>
+        ) : null;
+      default:
+        return null;
+    }
+  };
+
+  // Render all sections in configured order
+  const sections = order.map(k => renderSection(k)).filter(Boolean);
 
   return (
     <div className="ats-resume">
@@ -105,139 +209,7 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
         </div>
       </header>
 
-      {/* Resumo Profissional */}
-      {summary && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.professionalSummary}</h2>
-          <div className="ats-summary">
-            <p>{summary}</p>
-          </div>
-        </section>
-      )}
-
-      {/* Competências Técnicas - Prioridade alta para ATS */}
-      {skills && skills.length > 0 && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.technicalSkills}</h2>
-          <div className="ats-skills-grid">
-            {skills.map((skill, index) => (
-              <div key={skill.id || index} className="ats-skill-item">
-                <span className="ats-skill-name">{skill.name}</span>
-                <span className="ats-skill-level">{t.skillLevels[skill.level as keyof typeof t.skillLevels]}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Experiência Profissional */}
-      {experience && experience.length > 0 && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.workExperience}</h2>
-          {experience.map((exp, index) => (
-            <div key={exp.id || index} className="ats-experience-item">
-              <div className="ats-experience-header">
-                <h3 className="ats-job-title">{exp.position}</h3>
-                <h4 className="ats-company">{exp.company}</h4>
-                <div className="ats-date-info">
-                  <span className="ats-dates">
-                    {formatDateRange(exp.startDate, exp.endDate, exp.current, language)}
-                  </span>
-                  <span className="ats-duration">
-                    ({calculateDuration(exp.startDate, exp.endDate, exp.current, language)})
-                  </span>
-                </div>
-              </div>
-              {exp.description && (
-                <div className="ats-description">
-                  <p>{exp.description}</p>
-                </div>
-              )}
-            </div>
-          ))}
-        </section>
-      )}
-
-      {/* Formação Acadêmica */}
-      {education && education.length > 0 && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.education}</h2>
-          {education.map((edu, index) => (
-            <div key={edu.id || index} className="ats-education-item">
-              <div className="ats-education-header">
-                <h3 className="ats-degree">{t.degreeOptions[edu.degree as keyof typeof t.degreeOptions] || edu.degree} {t.degreeIn} {edu.field}</h3>
-                <h4 className="ats-institution">{edu.institution}</h4>
-                <div className="ats-date-info">
-                  <span className="ats-dates">
-                    {formatDateRange(edu.startDate, edu.endDate, edu.current, language)}
-                  </span>
-                </div>
-              </div>
-              {edu.description && (
-                <div className="ats-description">
-                  <p>{edu.description}</p>
-                </div>
-              )}
-            </div>
-          ))}
-        </section>
-      )}
-
-      {/* Idiomas */}
-      {languageSkills && languageSkills.length > 0 && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.languages}</h2>
-          <div className="ats-languages">
-            {languageSkills.map((lang, index) => (
-              <div key={lang.id || index} className="ats-language-item">
-                <span className="ats-language-name">{lang.name}</span>
-                <span className="ats-language-level">{t.proficiencyLevels[lang.level as keyof typeof t.proficiencyLevels]}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Certificações */}
-      {certifications && certifications.length > 0 && (
-        <section className="ats-section">
-          <h2 className="ats-section-title">{t.certifications}</h2>
-          {certifications.map((cert, index) => (
-            <div key={cert.id || index} className="ats-certification-item">
-              <div className="ats-certification-header">
-                <h3 className="ats-cert-name">{cert.name}</h3>
-                <h4 className="ats-cert-issuer">{cert.issuer}</h4>
-                {cert.date && (
-                  <span className="ats-cert-date">
-                    {new Date(cert.date).toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US', {
-                      year: 'numeric',
-                      month: 'long'
-                    })}
-                  </span>
-                )}
-              </div>
-              {cert.description && (
-                <div className="ats-description">
-                  <p>{cert.description}</p>
-                </div>
-              )}
-              {cert.url && (
-                <div className="ats-cert-url">
-                  <span>{t.checkAt}: </span>
-                  <a 
-                    href={cert.url.startsWith('http') ? cert.url : `https://${cert.url}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="ats-link"
-                  >
-                    {formatURL(cert.url)}
-                  </a>
-                </div>
-              )}
-            </div>
-          ))}
-        </section>
-      )}
+      {sections}
     </div>
   );
 };
