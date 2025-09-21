@@ -24,7 +24,7 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
     const newSkill: Skill = {
       id: Date.now().toString(),
       name: '',
-      level: 'basic'
+      level: ''
     };
     updateData([...data, newSkill]);
   };
@@ -121,10 +121,11 @@ const SkillsForm: React.FC<SkillsFormProps> = ({ data, updateData, language }) =
               </label>
               <select
                 id={`skill-level-${skill.id}`}
-                value={skill.level}
+                value={skill.level || ''}
                 onChange={e => handleChange(skill.id, 'level', e.target.value)}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
               >
+                <option value="">{/* empty - no level selected */}</option>
                 <option value="basic">{t.skillLevels.basic}</option>
                 <option value="intermediate">{t.skillLevels.intermediate}</option>
                 <option value="advanced">{t.skillLevels.advanced}</option>
