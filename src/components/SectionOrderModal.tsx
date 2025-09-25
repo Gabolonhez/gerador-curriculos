@@ -80,6 +80,8 @@ const SectionOrderModal: React.FC<Props> = ({ open, onClose, order, onChange, ti
                   return labels.languages;
                 case 'certifications':
                   return labels.certifications;
+                case 'projects':
+                  return labels.projects;
                 default:
                   return key;
               }

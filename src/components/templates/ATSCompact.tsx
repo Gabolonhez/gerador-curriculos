@@ -7,7 +7,7 @@ import resumeTranslations from '../../translations/resumeTranslations';
 interface Props { data: ResumeData; language: LanguageCode }
 
 const ATSCompact: React.FC<Props> = ({ data, language }) => {
-  const { personal, skills, experience, education, languages, certifications, summary } = data;
+  const { personal, skills, experience, education, languages, certifications, projects, summary } = data;
   const t = resumeTranslations[language as keyof typeof resumeTranslations];
 
   return (
@@ -119,6 +119,41 @@ const ATSCompact: React.FC<Props> = ({ data, language }) => {
                   </li>
                 ))}
               </ul>
+            </section>
+          )}
+
+          {projects && projects.length > 0 && (
+            <section className="ats-compact-block">
+              <h3 className="ats-subtitle">{t.projects}</h3>
+              {projects.map((project) => (
+                <article key={project.id} className="ats-compact-exp">
+                  <div className="ats-compact-exp-header">
+                    <div>
+                      <strong className="ats-job-title">{project.name}</strong>
+                      <div className="ats-compact-exp-company">{formatDateRange(project.startDate, project.endDate, project.current, language)}</div>
+                      {project.technologies && (
+                        <div className="ats-compact-technologies"><strong>{t.technologies}:</strong> {project.technologies}</div>
+                      )}
+                    </div>
+                  </div>
+                  {project.description && (
+                    <div className="ats-compact-exp-desc">
+                      {project.description.includes('\n') ? (
+                        <ul>
+                          {project.description.split('\n').map((ln, i) => ln.trim() ? <li key={i}>{ln.trim()}</li> : null)}
+                        </ul>
+                      ) : (
+                        <p>{project.description}</p>
+                      )}
+                    </div>
+                  )}
+                  {project.link && (
+                    <div className="ats-compact-project-link">
+                      <a href={project.link.startsWith('http') ? project.link : `https://${project.link}`} target="_blank" rel="noopener noreferrer">{project.link}</a>
+                    </div>
+                  )}
+                </article>
+              ))}
             </section>
           )}
         </main>

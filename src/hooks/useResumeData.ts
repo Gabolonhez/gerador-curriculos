@@ -19,7 +19,8 @@ const initialResumeData: ResumeData = {
   skills: [],
   languages: [],
   certifications: [],
-  sectionOrder: ['summary', 'skills', 'experience', 'education', 'languages', 'certifications']
+  projects: [],
+  sectionOrder: ['summary', 'skills', 'experience', 'education', 'languages', 'certifications', 'projects']
 };
 
 // Função para carregar dados do localStorage
@@ -39,6 +40,7 @@ const loadDataFromStorage = (): ResumeData => {
           skills: Array.isArray(parsedData.skills) ? parsedData.skills : [],
           languages: Array.isArray(parsedData.languages) ? parsedData.languages : [],
           certifications: Array.isArray(parsedData.certifications) ? parsedData.certifications : [],
+          projects: Array.isArray(parsedData.projects) ? parsedData.projects : [],
           sectionOrder: Array.isArray(parsedData.sectionOrder) ? parsedData.sectionOrder : initialResumeData.sectionOrder
         };
       }

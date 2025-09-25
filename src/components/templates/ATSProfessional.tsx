@@ -10,7 +10,7 @@ type Props = { data: ResumeData; language: LanguageCode };
 
 const ATSProfessional: React.FC<Props> = ({ data, language }) => {
   const t = resumeTranslations[language as keyof typeof resumeTranslations];
-  const { personal, summary, skills = [], experience = [], education = [], certifications = [] } = data;
+  const { personal, summary, skills = [], experience = [], education = [], certifications = [], projects = [] } = data;
 
   const joinSkills = () => skills.map(s => s.name).join(', ');
 
@@ -78,6 +78,23 @@ const ATSProfessional: React.FC<Props> = ({ data, language }) => {
           <ul>
             {certifications.map((c) => <li key={c.id}>{c.name}{c.issuer ? ` — ${c.issuer}` : ''}</li>)}
           </ul>
+        </section>
+      )}
+
+      {projects.length > 0 && (
+        <section className="prof-section">
+          <h3>{t.projects}</h3>
+          {projects.map((project) => (
+            <div key={project.id} className="prof-project">
+              <div className="prof-project-header">
+                <strong>{project.name}</strong>
+                <span className="prof-date">{formatDateRange(project.startDate, project.endDate, project.current, language)}</span>
+              </div>
+              {project.description && <div className="prof-desc">{project.description}</div>}
+              {project.technologies && <div className="prof-tech"><strong>{t.technologies}:</strong> {project.technologies}</div>}
+              {project.link && <div className="prof-link"><a href={project.link.startsWith('http') ? project.link : `https://${project.link}`} target="_blank" rel="noopener noreferrer">{project.link}</a></div>}
+            </div>
+          ))}
         </section>
       )}
     </div>

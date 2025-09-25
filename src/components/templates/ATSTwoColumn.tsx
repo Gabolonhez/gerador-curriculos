@@ -10,7 +10,7 @@ type Props = { data: ResumeData; language: LanguageCode };
 const ATSTwoColumn: React.FC<Props> = ({ data, language }) => {
   const t = resumeTranslations[language as keyof typeof resumeTranslations];
 
-  const { personal, experience = [], education = [], skills = [], certifications = [], languages = [], summary } = data;
+  const { personal, experience = [], education = [], skills = [], certifications = [], languages = [], projects = [], summary } = data;
 
   const normalizeUrl = (u?: string) => {
     if (!u) return undefined;
@@ -133,6 +133,23 @@ const ATSTwoColumn: React.FC<Props> = ({ data, language }) => {
                 <li key={c.id || i}>{c.name}{c.issuer ? ` — ${c.issuer}` : ''}{c.date ? ` (${c.date})` : ''}</li>
               ))}
             </ul>
+          </div>
+        )}
+
+        {projects.length > 0 && (
+          <div className="ats-section">
+            <h4>{t.projects}</h4>
+            {projects.map((project, i) => (
+              <div key={project.id || i} className="ats-project-item">
+                <div className="ats-project-header">
+                  <div className="ats-project-name">{project.name}</div>
+                  <div className="ats-project-meta">{formatDateRange(project.startDate, project.endDate, project.current, language)}</div>
+                </div>
+                {project.description && <div className="ats-project-desc">{project.description}</div>}
+                {project.technologies && <div className="ats-project-tech"><span className="ats-label">{t.technologies}: </span>{project.technologies}</div>}
+                {project.link && <div className="ats-project-link"><a href={normalizeUrl(project.link)} target="_blank" rel="noopener noreferrer">{project.link}</a></div>}
+              </div>
+            ))}
           </div>
         )}
       </main>

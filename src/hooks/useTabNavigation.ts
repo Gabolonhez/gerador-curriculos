@@ -8,7 +8,8 @@ const TAB_ORDER: TabType[] = [
   'formacao-academica',
   'habilidades-tecnicas',
   'idiomas',
-  'certificacoes-cursos'
+  'certificacoes-cursos',
+  'projetos'
 ];
 
 export const TAB_CONFIG = [
@@ -18,7 +19,8 @@ export const TAB_CONFIG = [
   { id: 'formacao-academica' as TabType, key: 'education' },
   { id: 'habilidades-tecnicas' as TabType, key: 'skills' },
   { id: 'idiomas' as TabType, key: 'languages' },
-  { id: 'certificacoes-cursos' as TabType, key: 'certifications' }
+  { id: 'certificacoes-cursos' as TabType, key: 'certifications' },
+  { id: 'projetos' as TabType, key: 'projects' }
 ];
 
 export const useTabNavigation = (initialTab: TabType = 'informacoes-pessoais') => {

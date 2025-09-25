@@ -8,6 +8,7 @@ import EducationForm from './components/EducationForm';
 import SkillsForm from './components/SkillsForm';
 import LanguagesForm from './components/LanguagesForm';
 import CertificationsForm from './components/CertificationsForm';
+import ProjectsForm from './components/ProjectsForm';
 import ResumePreview from './components/ResumePreview';
 import ATSAnalysis from './components/analysis/ATSAnalysis';
 import LanguageToggle from './components/common/LanguageToggle';
@@ -19,7 +20,7 @@ import { useTabNavigation } from './hooks/useTabNavigation';
 import { useLanguage } from './hooks/useLanguage';
 import { usePDFExport } from './hooks/usePDFExport';
 import SectionOrderModal from './components/SectionOrderModal';
-import { PersonalInfo, Experience, Education, Skill, Language, Certification } from './types/resume';
+import { PersonalInfo, Experience, Education, Skill, Language, Certification, Project } from './types/resume';
 import './styles/resume.css';
 
 interface TranslationStrings {
@@ -32,6 +33,7 @@ interface TranslationStrings {
   skills: string;
   languages: string;
   certifications: string;
+  projects: string;
   orderSections: string;
   preview: string;
   atsAnalysis: string;
@@ -65,6 +67,7 @@ const translations: Translations = {
     skills: 'Habilidades',
     languages: 'Idiomas',
     certifications: 'Certificações/Cursos',
+    projects: 'Projetos',
   orderSections: 'Ordenar seções',
     preview: 'Pré-visualização',
     atsAnalysis: 'Análise ATS',
@@ -90,6 +93,7 @@ const translations: Translations = {
     skills: 'Skills',
     languages: 'Languages',
     certifications: 'Certifications/Courses',
+    projects: 'Projects',
   orderSections: 'Order sections',
     preview: 'Preview',
     atsAnalysis: 'ATS Analysis',
@@ -116,6 +120,7 @@ const translations: Translations = {
     skills: 'Habilidades',
     languages: 'Idiomas',
     certifications: 'Certificaciones/Cursos',
+    projects: 'Proyectos',
   orderSections: 'Ordenar secciones',
     preview: 'Previsualización',
     atsAnalysis: 'Análisis ATS',
@@ -250,6 +255,12 @@ const App: React.FC = () => {
         return <CertificationsForm 
           data={resumeData.certifications} 
           updateData={(data: Certification[]) => updateResumeData('certifications', data)} 
+          language={currentLanguage}
+        />;
+      case 'projetos':
+        return <ProjectsForm 
+          data={resumeData.projects} 
+          updateData={(data: Project[]) => updateResumeData('projects', data)} 
           language={currentLanguage}
         />;
       default:

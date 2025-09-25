@@ -18,12 +18,12 @@ interface ATSOptimizedResumeProps {
 import resumeTranslations from '../translations/resumeTranslations';
 
 const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language }) => {
-  const { personal, summary, experience, education, skills, languages: languageSkills, certifications, sectionOrder } = data;
+  const { personal, summary, experience, education, skills, languages: languageSkills, certifications, projects, sectionOrder } = data;
   // Map project language codes to resumeTranslations keys (resumeTranslations includes 'es')
   const t = resumeTranslations[language as keyof typeof resumeTranslations];
 
   // Render sections according to `sectionOrder` when provided, otherwise fallback to default sequence
-  const order = sectionOrder && sectionOrder.length > 0 ? sectionOrder : ['summary', 'skills', 'experience', 'education', 'languages', 'certifications'];
+  const order = sectionOrder && sectionOrder.length > 0 ? sectionOrder : ['summary', 'skills', 'experience', 'education', 'languages', 'certifications', 'projects'];
 
   const renderSection = (key: string) => {
     switch (key) {
@@ -115,6 +115,36 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
                 {cert.description && <div className="ats-description"><p>{cert.description}</p></div>}
                 {cert.url && (
                   <div className="ats-cert-url"><span>{t.checkAt}: </span><a href={cert.url.startsWith('http') ? cert.url : `https://${cert.url}`} target="_blank" rel="noopener noreferrer" className="ats-link">{formatURL(cert.url)}</a></div>
+                )}
+              </div>
+            ))}
+          </section>
+        ) : null;
+      case 'projects':
+        return projects && projects.length > 0 ? (
+          <section key="projects" className="ats-section">
+            <h2 className="ats-section-title">{t.projects}</h2>
+            {projects.map((project, index) => (
+              <div key={project.id || index} className="ats-project-item">
+                <div className="ats-project-header">
+                  <h3 className="ats-project-name">{project.name}</h3>
+                  <div className="ats-date-info">
+                    <span className="ats-dates">{formatDateRange(project.startDate, project.endDate, project.current, language)}</span>
+                    <span className="ats-duration">({calculateDuration(project.startDate, project.endDate, project.current, language)})</span>
+                  </div>
+                </div>
+                {project.description && <div className="ats-description"><p>{project.description}</p></div>}
+                {project.technologies && (
+                  <div className="ats-project-technologies">
+                    <span className="ats-label">{t.technologies}: </span>
+                    <span className="ats-technologies-list">{project.technologies}</span>
+                  </div>
+                )}
+                {project.link && (
+                  <div className="ats-project-url">
+                    <span>{t.checkAt}: </span>
+                    <a href={project.link.startsWith('http') ? project.link : `https://${project.link}`} target="_blank" rel="noopener noreferrer" className="ats-link">{formatURL(project.link)}</a>
+                  </div>
                 )}
               </div>
             ))}
