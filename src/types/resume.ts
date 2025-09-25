@@ -51,6 +51,17 @@ export interface Certification {
   url?: string;
 }
 
+export interface Project {
+  id: string;
+  name: string;
+  description: string;
+  technologies: string;
+  link?: string;
+  startDate: string;
+  endDate: string;
+  current: boolean;
+}
+
 export interface ResumeData {
   personal: PersonalInfo;
   summary: string;
@@ -59,6 +70,7 @@ export interface ResumeData {
   skills: Skill[];
   languages: Language[];
   certifications: Certification[];
+  projects: Project[];
   // Order in which sections should render in the preview
   sectionOrder?: Array<
     | 'summary'
@@ -67,6 +79,7 @@ export interface ResumeData {
     | 'skills'
     | 'languages'
     | 'certifications'
+    | 'projects'
   >;
 }
 
@@ -77,4 +90,5 @@ export type TabType =
   | 'formacao-academica'
   | 'habilidades-tecnicas'
   | 'idiomas'
-  | 'certificacoes-cursos'; 
+  | 'certificacoes-cursos'
+  | 'projetos'; 

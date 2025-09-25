@@ -10,6 +10,7 @@ interface TranslationStrings {
   skills: string;
   languages: string;
   certifications: string;
+  projects: string;
 }
 
 interface NavigationProps {

@@ -89,6 +89,18 @@ interface FormTranslations {
   certificationUrl: string;
   urlPlaceholder: string;
   certificationDescription: string;
+
+  // Projects
+  addProject: string;
+  project: string;
+  projectName: string;
+  projectPlaceholder: string;
+  projectDescription: string;
+  projectDescriptionPlaceholder: string;
+  technologies: string;
+  technologiesPlaceholder: string;
+  projectLink: string;
+  projectLinkPlaceholder: string;
 }
 
 interface Translations {
@@ -181,7 +193,19 @@ export const formTranslations: Translations = {
     date: 'Data de Emissão',
     certificationUrl: 'URL do Certificado (opcional)',
     urlPlaceholder: 'https://www.credential.net/...',
-    certificationDescription: 'Breve descrição do que foi aprendido ou do escopo da certificação...'
+    certificationDescription: 'Breve descrição do que foi aprendido ou do escopo da certificação...',
+
+    // Projects
+    addProject: 'Adicionar Projeto',
+    project: 'Projeto',
+    projectName: 'Nome do Projeto',
+    projectPlaceholder: 'Sistema de Gestão de Vendas',
+    projectDescription: 'Descrição do Projeto',
+    projectDescriptionPlaceholder: 'Descreva o projeto, seu objetivo e principais funcionalidades...',
+    technologies: 'Tecnologias Utilizadas',
+    technologiesPlaceholder: 'React, Node.js, PostgreSQL...',
+    projectLink: 'Link do Projeto (opcional)',
+    projectLinkPlaceholder: 'https://github.com/usuario/projeto'
   },
   en: {
     // Personal Info
@@ -265,7 +289,19 @@ export const formTranslations: Translations = {
     date: 'Issue Date',
     certificationUrl: 'Certificate URL (optional)',
     urlPlaceholder: 'https://www.credential.net/...',
-    certificationDescription: 'Brief description of what was learned or the certification scope...'
+    certificationDescription: 'Brief description of what was learned or the certification scope...',
+
+    // Projects
+    addProject: 'Add Project',
+    project: 'Project',
+    projectName: 'Project Name',
+    projectPlaceholder: 'Sales Management System',
+    projectDescription: 'Project Description',
+    projectDescriptionPlaceholder: 'Describe the project, its objective and main functionalities...',
+    technologies: 'Technologies Used',
+    technologiesPlaceholder: 'React, Node.js, PostgreSQL...',
+    projectLink: 'Project Link (optional)',
+    projectLinkPlaceholder: 'https://github.com/username/project'
   }
   ,
   es: {
@@ -350,6 +386,18 @@ export const formTranslations: Translations = {
     date: 'Fecha de Emisión',
     certificationUrl: 'URL del Certificado (opcional)',
     urlPlaceholder: 'https://www.credential.net/...',
-    certificationDescription: 'Breve descripción de lo aprendido o el alcance de la certificación...'
+    certificationDescription: 'Breve descripción de lo aprendido o el alcance de la certificación...',
+
+    // Projects
+    addProject: 'Agregar Proyecto',
+    project: 'Proyecto',
+    projectName: 'Nombre del Proyecto',
+    projectPlaceholder: 'Sistema de Gestión de Ventas',
+    projectDescription: 'Descripción del Proyecto',
+    projectDescriptionPlaceholder: 'Describe el proyecto, su objetivo y principales funcionalidades...',
+    technologies: 'Tecnologías Utilizadas',
+    technologiesPlaceholder: 'React, Node.js, PostgreSQL...',
+    projectLink: 'Enlace del Proyecto (opcional)',
+    projectLinkPlaceholder: 'https://github.com/usuario/proyecto'
   }
 }; 

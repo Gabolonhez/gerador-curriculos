@@ -10,7 +10,7 @@ interface Props {
 }
 
 const ATSSimple: React.FC<Props> = ({ data, language }) => {
-  const { personal, summary, experience, education, skills, languages, certifications } = data;
+  const { personal, summary, experience, education, skills, languages, certifications, projects } = data;
   const t = resumeTranslations[language as keyof typeof resumeTranslations];
 
   return (
@@ -119,6 +119,27 @@ const ATSSimple: React.FC<Props> = ({ data, language }) => {
               <li key={l.id || idx}>{l.name} — {t.proficiencyLevels[l.level as keyof typeof t.proficiencyLevels]}</li>
             ))}
           </ul>
+        </section>
+      )}
+
+      {projects && projects.length > 0 && (
+        <section className="ats-section ats-minimal-section">
+          <h2 className="ats-minimal-title">{t.projects}</h2>
+          {projects.map((project, idx) => (
+            <div key={project.id || idx} className="ats-minimal-project">
+              <h3><strong>{project.name}</strong></h3>
+              <div className="ats-minimal-dates">{formatDateRange(project.startDate, project.endDate, project.current, language)}</div>
+              {project.technologies && (
+                <div><strong>{t.technologies}:</strong> {project.technologies}</div>
+              )}
+              {project.description && <p>{project.description}</p>}
+              {project.link && (
+                <div>
+                  <a href={project.link.startsWith('http') ? project.link : `https://${project.link}`} target="_blank" rel="noopener noreferrer">{project.link}</a>
+                </div>
+              )}
+            </div>
+          ))}
         </section>
       )}
     </div>

@@ -31,6 +31,8 @@ interface ResumeTranslations {
   technicalSkills: string;
   languages: string;
   certifications: string;
+  projects: string;
+  technologies: string;
   present: string;
   duration: string;
   contact: string;
@@ -54,6 +56,8 @@ export const resumeTranslations: Record<ResumeLanguageCode, ResumeTranslations> 
     technicalSkills: 'Competências Técnicas',
     languages: 'Idiomas',
     certifications: 'Certificações e Cursos',
+    projects: 'Projetos',
+    technologies: 'Tecnologias',
     present: 'Presente',
     duration: 'Duração',
     contact: 'Contato',
@@ -93,6 +97,8 @@ export const resumeTranslations: Record<ResumeLanguageCode, ResumeTranslations> 
     technicalSkills: 'Technical Skills',
     languages: 'Languages',
     certifications: 'Certifications & Courses',
+    projects: 'Projects',
+    technologies: 'Technologies',
     present: 'Present',
     duration: 'Duration',
     contact: 'Contact',
@@ -132,6 +138,8 @@ export const resumeTranslations: Record<ResumeLanguageCode, ResumeTranslations> 
     technicalSkills: 'Habilidades Técnicas',
     languages: 'Idiomas',
     certifications: 'Certificaciones y Cursos',
+    projects: 'Proyectos',
+    technologies: 'Tecnologías',
     present: 'Presente',
     duration: 'Duración',
     contact: 'Contacto',
