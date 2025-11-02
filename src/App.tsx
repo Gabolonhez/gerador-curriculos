@@ -277,39 +277,58 @@ const App: React.FC = () => {
       <div className="flex flex-col min-h-screen">
         {/* Header */}
         <header className="bg-white shadow-sm sticky top-0 z-50 w-full">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row justify-between items-center py-4 sm:h-16 space-y-4 sm:space-y-0">
-              <div className="flex items-center space-x-4">
-                <h1 className="text-2xl font-semibold text-gray-900">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div className="flex flex-col sm:flex-row justify-between items-center py-3 sm:py-4 space-y-3 sm:space-y-0">
+              {/* Title Section */}
+              <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto justify-center sm:justify-start">
+                <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">
                   {t.title}
                 </h1>
                 {showSavedIndicator && (
-                  <div className="flex items-center text-green-600 text-sm animate-fade-in">
+                  <div className="hidden sm:flex items-center text-green-600 text-sm animate-fade-in">
                     <SaveIcon className="w-4 h-4 mr-1" />
                     {t.dataSaved}
                   </div>
                 )}
               </div>
-              <div className="flex items-center space-x-4">
+              
+              {/* Actions Section */}
+              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center">
+                {/* Clear Data Button */}
                 <Button 
                   onClick={handleClearData}
                   variant="secondary"
-                  className="text-red-600 hover:text-red-800"
+                  size="sm"
+                  className="text-red-600 hover:text-red-800 flex-shrink-0"
+                  title={t.clearData}
                 >
-                  <TrashIcon className="w-4 h-4 mr-2" />
-                  {t.clearData}
-                </Button>    
+                  <TrashIcon className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">{t.clearData}</span>
+                </Button>
+                
+                {/* Language Toggle */}
                 <LanguageToggle 
                   currentLanguage={currentLanguage}
                   onLanguageChange={setLanguage}
                 />
-                <Button onClick={handleExportPDF}>
-                  <SaveIcon className="w-4 h-4 mr-2" /> {t.exportPdf}
+                
+                {/* Export PDF Button */}
+                <Button 
+                  onClick={handleExportPDF}
+                  size="sm"
+                  className="flex-shrink-0"
+                  title={t.exportPdf}
+                >
+                  <SaveIcon className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden lg:inline">{t.exportPdf}</span>
+                  <span className="hidden sm:inline lg:hidden">PDF</span>
                 </Button>
               </div>
             </div>
           </div>
-          <div className="flex justify-self-center pb-3">
+          
+          {/* Template Selector */}
+          <div className="flex justify-center pb-3 px-3">
             <TemplateSelector value={templateKey} onChange={setTemplateKey} language={currentLanguage} />
           </div>
         </header>
