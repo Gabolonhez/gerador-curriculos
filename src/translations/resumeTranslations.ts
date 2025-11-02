@@ -135,7 +135,7 @@ export const resumeTranslations: Record<ResumeLanguageCode, ResumeTranslations> 
     professionalSummary: 'Resumen Profesional',
     workExperience: 'Experiencia Laboral',
     education: 'Formación Académica',
-    technicalSkills: 'Habilidades Técnicas',
+    technicalSkills: 'Habilidades',
     languages: 'Idiomas',
     certifications: 'Certificados',
     projects: 'Proyectos',
