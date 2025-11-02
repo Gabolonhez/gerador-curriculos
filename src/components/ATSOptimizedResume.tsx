@@ -128,10 +128,6 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
               <div key={project.id || index} className="ats-project-item">
                 <div className="ats-project-header">
                   <h3 className="ats-project-name">{project.name}</h3>
-                  <div className="ats-date-info">
-                    <span className="ats-dates">{formatDateRange(project.startDate, project.endDate, project.current, language)}</span>
-                    <span className="ats-duration">({calculateDuration(project.startDate, project.endDate, project.current, language)})</span>
-                  </div>
                 </div>
                 {project.description && <div className="ats-description"><p>{project.description}</p></div>}
                 {project.technologies && (

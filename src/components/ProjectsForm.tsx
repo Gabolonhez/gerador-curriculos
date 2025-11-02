@@ -152,50 +152,7 @@ const ProjectsForm: React.FC<ProjectsFormProps> = ({ data, updateData, language 
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
                   placeholder={t.technologiesPlaceholder}
                 />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {t.startDate}
-                  </label>
-                  <input
-                    type="month"
-                    value={project.startDate}
-                    onChange={e => handleChange(project.id, 'startDate', e.target.value)}
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
-                    aria-label={t.startDate}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {project.current ? t.current : t.endDate}
-                  </label>
-                  <div className="space-y-2">
-                    <input
-                      type="month"
-                      value={project.current ? '' : project.endDate}
-                      onChange={e => handleChange(project.id, 'endDate', e.target.value)}
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
-                      disabled={project.current}
-                      aria-label={project.current ? t.current : t.endDate}
-                    />
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={project.current}
-                        onChange={e => {
-                          handleChange(project.id, 'current', e.target.checked);
-                          if (e.target.checked) {
-                            handleChange(project.id, 'endDate', '');
-                          }
-                        }}
-                        className="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                      />
-                      <span className="ml-2 text-sm text-gray-700">{t.current}</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
+              </div>   
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   {t.projectLink}
