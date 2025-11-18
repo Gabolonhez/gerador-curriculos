@@ -125,7 +125,10 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
           <section key="projects" className="ats-section">
             <h2 className="ats-section-title">{t.projects}</h2>
             {projects.map((project, index) => (
-              <div key={project.id || index} className="ats-project-item">
+              <div
+                key={project.id || index}
+                className={`ats-project-item${index !== projects.length - 1 ? ' mb-4' : ''}`}
+              >
                 <div className="ats-project-header">
                   <h3 className="ats-project-name">{project.name}</h3>
                 </div>
