@@ -1,4 +1,3 @@
-import ATSCompact from './ATSCompact';
 import ATSSimple from './ATSSimple';
 import ATSOptimized from '../ATSOptimizedResume';
 import ATSTwoColumn from './ATSTwoColumn';
@@ -11,7 +10,6 @@ export type TemplateComponent = React.ComponentType<{ data: ResumeData; language
 
 export const templates: Record<TemplateKey, TemplateComponent> = {
   optimized: ATSOptimized,
-  compact: ATSCompact,
   simple: ATSSimple,
   twocolumn: ATSTwoColumn,
   professional: ATSProfessional,

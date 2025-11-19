@@ -245,24 +245,27 @@ h1.ats-name {
   margin-bottom: 0.5em;
 }
 
-.ats-degree {
+.ats-twocolumn-header {
+  display: grid;
+  grid-template-columns: 34% 1fr;
   font-size: 12pt;
   font-weight: bold;
   color: #000000;
+}
+
+.ats-twocolumn-header .ats-name {
   margin: 0;
-}
-
-.ats-institution {
-  font-size: 11pt;
-  font-weight: bold;
-  color: #333333;
-  margin: 0.2em 0;
-}
-
-/* ===== CERTIFICAÇÕES ===== */
-.ats-certification-item {
-  margin-bottom: 1.2em;
-  page-break-inside: avoid;
+  /* stacked, two-line name similar to the print */
+  font-size: 32pt;
+  line-height: 0.95;
+  letter-spacing: 1px;
+  grid-column: 1;
+  text-align: left !important;
+  font-weight: 800;
+  display: inline-block;
+  white-space: normal;
+  word-break: break-word;
+  padding-right: 0.25rem;
 }
 
 .ats-certification-header {
@@ -403,12 +406,12 @@ h1.ats-name {
 
 .ats-twocolumn {
   display: grid;
-  /* slightly wider sidebar, closer to the reference layout */
+  /* use a slightly wider sidebar to match the requested design */
   grid-template-columns: 34% 1fr;
   grid-template-areas:
     "header header"
     "sidebar main";
-  gap: 1rem;
+  gap: 1.2rem;
   align-items: start;
   grid-auto-rows: auto;
 }
@@ -418,14 +421,14 @@ h1.ats-name {
   grid-area: header;
   margin-bottom: 0.6rem;
   display: grid;
-  grid-template-columns: 30% 1fr;
+  grid-template-columns: 34% 1fr;
   align-items: center;
 }
 
 .ats-twocolumn-header .ats-name {
   margin: 0;
   /* stacked, two-line name similar to the print */
-  font-size: 26pt;
+  font-size: 20pt;
   line-height: 0.95;
   letter-spacing: 1px;
   grid-column: 1;
@@ -448,14 +451,16 @@ h1.ats-name {
 .ats-twocolumn-sidebar {
   grid-area: sidebar;
   background: transparent;
-  padding: 0.4rem 1rem 0.6rem 0.6rem;
+  /* use symmetric horizontal padding so left/right outer gutters match */
+  padding: 0.6rem 1.5rem;
   border-right: 1px solid #e6e6e6; /* visible divider between sidebar and main */
   min-height: 1px; /* allow border to show */
   align-self: start; /* ensure sidebar content starts at the top */
 }
 .ats-twocolumn-main {
   grid-area: main;
-  padding: 0.6rem 0.8rem 0.6rem 1rem;
+  /* match horizontal padding with sidebar to keep outer gutters equal */
+  padding: 0.6rem 1.5rem;
   align-self: start;
 }
 
@@ -645,7 +650,10 @@ h1.ats-name {
 
 .ats-twocolumn .ats-exp-header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .ats-twocolumn .ats-job-title {
@@ -669,6 +677,50 @@ h1.ats-name {
 .ats-twocolumn .ats-exp-desc li {
   font-size: 10pt;
   margin: 0 0 0.4rem 0;
+}
+
+/* PROJECTS styling (two-column and optimized templates) */
+.ats-project-item {
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ats-project-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+}
+
+.ats-project-name {
+  font-weight: 700;
+  font-size: 11pt;
+  color: #111;
+}
+
+.ats-project-meta {
+  font-size: 10pt;
+  color: #666;
+  min-width: 8rem;
+  text-align: right;
+}
+
+.ats-project-desc {
+  margin-top: 0.4rem;
+  font-size: 10pt;
+  line-height: 1.4;
+}
+
+.ats-project-tech {
+  margin-top: 0.35rem;
+  font-size: 10pt;
+}
+
+.ats-project-link {
+  margin-top: 0.3rem;
+  font-size: 10pt;
 }
 
 /* Ensure simple semantic markup for ATS: plain lists, no complex grids inside content */
@@ -704,113 +756,6 @@ h1.ats-name {
   }
 }
   /* Garante que cores sejam preservadas */
-
-/* ===== VARIAÇÕES DE TEMPLATE: COMPACT E SIMPLE ===== */
-.ats-compact .ats-compact-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 1em;
-  align-items: center;
-}
-.ats-compact .ats-contact-inline {
-  font-size: 10pt;
-  color: #333333;
-  white-space: nowrap;
-  margin-bottom: 0.2em;
-}
-.ats-compact-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em;
-  margin-top: 0.4em;
-}
-.ats-compact-skill {
-  background: transparent;
-  border: none;
-  padding: 0.2em 0.4em;
-  font-size: 10pt;
-}
-.ats-compact-experience-list {
-  list-style: none;
-  padding: 0;
-  margin: 0.4em 0 0 0;
-}
-.ats-compact-experience-item {
-  display: flex;
-  justify-content: space-between;
-  gap: 1em;
-  padding: 0.25em 0;
-  border-bottom: 1px dashed #eee;
-}
-.ats-compact-experience-item .ats-job-title {
-  font-weight: bold;
-}
-.ats-compact-experience-item .ats-company-inline {
-  color: #333333;
-}
-
-.ats-simple-skills .ats-simple-skill-item {
-  background-color: #f1f5f9;
-  border: 1px solid #e2e8f0;
-}
-.ats-simple .ats-section-title {
-  color: #1f2937;
-}
-
-/* ATSCompact two-column layout */
-.ats-compact .ats-compact-header {
-  text-align: left;
-  margin-bottom: 0.5em;
-}
-.ats-compact .ats-compact-grid {
-  display: grid;
-  /* single column for compact template — stacked layout */
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  align-items: start;
-}
-.ats-compact .ats-compact-left {
-  padding-right: 0.5em;
-}
-.ats-compact .ats-compact-right {
-  padding-left: 0.5em;
-}
-.ats-compact .ats-compact-section-title {
-  border: none;
-  font-size: 12pt;
-  margin-bottom: 0.4em;
-  text-transform: uppercase;
-}
-.ats-compact .ats-compact-skill-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.ats-compact .ats-compact-skill-list li {
-  margin-bottom: 0.3em;
-}
-.ats-compact .ats-compact-exp {
-  margin-bottom: 0.8em;
-}
-.ats-compact .ats-compact-exp-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1em;
-}
-.ats-compact .ats-compact-exp-company {
-  color: #333333;
-  font-size: 10pt;
-}
-.ats-compact .ats-compact-exp-desc {
-  margin-top: 0.4em;
-  font-size: 10pt;
-}
-
-@media (max-width: 768px) {
-  .ats-compact .ats-compact-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* Minimal template styling (Essencial) */
 .ats-minimal {
@@ -1215,8 +1160,8 @@ h1.ats-name {
   /* Ensure a white background and exact color rendering */
   body, .ats-resume { background: #ffffff !important; color: #111111 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 
-  /* Target only the compact and minimal templates */
-  .ats-compact, .ats-minimal {
+  /* Target only the minimal template for print adjustments */
+  .ats-minimal {
     font-family: 'Times New Roman', Georgia, serif !important;
     font-size: 10pt !important;
     line-height: 1.18 !important;
@@ -1229,17 +1174,14 @@ h1.ats-name {
   /* Headings and name sizing tuned for print */
   .ats-minimal-name { font-size: 16pt !important; }
   h1.ats-name { font-size: 16pt !important; }
-  .ats-compact .ats-compact-section-title, .ats-minimal-section .ats-minimal-title { font-size: 11pt !important; margin-bottom: 0.3em !important; }
-
-  /* Tighten grid gaps for better use of space on page */
-  .ats-compact .ats-compact-grid { gap: 0.6em !important; grid-template-columns: 32% 68% !important; }
+  .ats-minimal-section .ats-minimal-title { font-size: 11pt !important; margin-bottom: 0.3em !important; }
 
   /* Experience and lists formatting */
-  .ats-compact .ats-compact-exp-desc, .ats-minimal-exp-desc { font-size: 10pt !important; margin-top: 0.2em !important; }
-  .ats-compact .ats-compact-skill-list li, .ats-minimal-section ul li { margin-bottom: 0.2em !important; }
+  .ats-minimal-exp-desc { font-size: 10pt !important; margin-top: 0.2em !important; }
+  .ats-minimal-section ul li { margin-bottom: 0.2em !important; }
 
   /* Avoid inside-page breaks for small logical blocks */
-  .ats-section, .ats-compact-exp, .ats-minimal-exp, .ats-compact-block, .ats-minimal-section { page-break-inside: avoid !important; }
+  .ats-section, .ats-minimal-exp, .ats-minimal-section { page-break-inside: avoid !important; }
 
   /* Allow headings to wrap in print (avoid ellipsis) */
   .ats-resume h1, .ats-resume h2, .ats-resume h3 { white-space: normal !important; overflow: visible !important; text-overflow: clip !important; }
