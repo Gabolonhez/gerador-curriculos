@@ -8,16 +8,16 @@ describe('TemplateSelector', () => {
     const onChange = vi.fn();
     render(<TemplateSelector value={'optimized' as TemplateKey} onChange={onChange} language={'en'} />);
 
-    // should show labels for all options
+    // should show labels for several options
     expect(screen.getByText(/Precision/i)).toBeInTheDocument();
-    expect(screen.getByText(/Snapshot/i)).toBeInTheDocument();
+    expect(screen.getByText(/Professional/i)).toBeInTheDocument();
     expect(screen.getByText(/Minimal/i)).toBeInTheDocument();
 
-    // click the compact option
-    const compactLabel = screen.getByText(/Snapshot/i).closest('label');
-    expect(compactLabel).toBeTruthy();
-    if (compactLabel) fireEvent.click(compactLabel);
+    // click the professional option
+    const profLabel = screen.getByText(/Professional/i).closest('label');
+    expect(profLabel).toBeTruthy();
+    if (profLabel) fireEvent.click(profLabel);
 
-    expect(onChange).toHaveBeenCalledWith('compact');
+    expect(onChange).toHaveBeenCalledWith('professional');
   });
 });

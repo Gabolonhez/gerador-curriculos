@@ -204,6 +204,16 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
     }));
   };
 
+  // Atualiza campo com opção de sanitizar apenas números (útil para telefone)
+  const onInputChange = (field: keyof PersonalInfo, value: string, numeric = false) => {
+    const newValue = numeric ? value.replace(/\D/g, '') : value;
+    updateData({
+      ...data,
+      [field]: newValue
+    });
+    validateField(field, newValue);
+  };
+
   const renderFieldWithValidation = (
     field: keyof PersonalInfo,
     type: string,
@@ -211,7 +221,8 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
     label: string,
     placeholder: string,
     required = false,
-    helpText?: string
+    helpText?: string,
+    numeric = false
   ) => (
     <div>
       <label htmlFor={field} className="block text-sm font-medium text-gray-700 mb-1">
@@ -225,7 +236,18 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           type={type}
           id={field}
           value={data[field] || ''}
-          onChange={(e) => handleChange(field, e.target.value)}
+          inputMode={numeric ? 'numeric' : undefined}
+          pattern={numeric ? '[0-9]*' : undefined}
+          onKeyDown={numeric ? (e) => {
+            const allowedControlKeys = ['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Tab','Home','End'];
+            if (allowedControlKeys.includes(e.key)) return;
+            if (e.ctrlKey || e.metaKey) return;
+            // single character keys only
+            if (e.key.length === 1 && !/[0-9]/.test(e.key)) {
+              e.preventDefault();
+            }
+          } : undefined}
+          onChange={(e) => numeric ? onInputChange(field, e.target.value, true) : handleChange(field, e.target.value)}
           placeholder={placeholder}
           className={`pl-10 pr-10 w-full px-3 py-2 border rounded-md focus:ring-1 text-sm sm:text-base ${
             validation[field].isValid
@@ -330,7 +352,8 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           t.phone,
           t.placeholders.phone,
           false,
-          hints.phone
+          hints.phone,
+          true
         )}
 
         {/* Endereço - Full width */}

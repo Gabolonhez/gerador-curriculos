@@ -160,11 +160,11 @@ const App: React.FC = () => {
   const [showSectionModal, setShowSectionModal] = React.useState(false);
   // Template selection (persisted)
   const TEMPLATE_STORAGE_KEY = 'resume-generator-template';
-  const [templateKey, setTemplateKey] = React.useState<'optimized' | 'compact' | 'simple' | 'twocolumn' | 'professional'>(() => {
+  const [templateKey, setTemplateKey] = React.useState<'optimized' | 'simple' | 'twocolumn' | 'professional'>(() => {
     try {
       const v = localStorage.getItem(TEMPLATE_STORAGE_KEY);
-      if (v === 'compact' || v === 'simple' || v === 'optimized' || v === 'twocolumn' || v === 'professional')
-        return v as 'optimized' | 'compact' | 'simple' | 'twocolumn' | 'professional';
+      if (v === 'simple' || v === 'optimized' || v === 'twocolumn' || v === 'professional')
+        return v as 'optimized' | 'simple' | 'twocolumn' | 'professional';
     } catch (e) {
       console.warn('Could not read template from localStorage', e);
     }
