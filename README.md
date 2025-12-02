@@ -33,9 +33,3 @@ https://gerador-curriculos.vercel.app/
 
 1. Run `npm install`
 2. Run `npm run dev`
-
-
-```powershell
-git rm --cached path\to\your\service-account.json
-git commit -m "chore: remove firebase service account from repo"
-```
