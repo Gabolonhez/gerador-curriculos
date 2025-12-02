@@ -12,10 +12,12 @@ Projeto responsivo para facilitar a criação de currículos completos compatív
 - [x] : Geração de currículo em PDF.
 - [x] : Mudança de menus.
 - [x] : Interação com botões.
-- [x] : Tradução em português e inglês.
+- [x] : Tradução em português, inglês e espanhol.
 - [x] : Pré-visualização do conteúdo.
 - [x] : Análise ATS.
 - [x] : Salvamento de dados.
+- [x] : Ordenação de seções.
+- [x] : Diferentes modelos template.
 
 ## 💻 Tecnologias
 
