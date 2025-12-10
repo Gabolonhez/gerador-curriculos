@@ -1,5 +1,5 @@
 import ATSSimple from './ATSSimple';
-import ATSOptimized from '../ATSOptimizedResume';
+import ATSOptimized from './ATSOptimized';
 import ATSTwoColumn from './ATSTwoColumn';
 import ATSProfessional from './ATSProfessional';
 import type { ResumeData } from '../../types/resume';

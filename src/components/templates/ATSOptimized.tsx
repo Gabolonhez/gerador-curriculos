@@ -1,21 +1,21 @@
 import React from 'react';
-import { LanguageCode } from '../translations/formTranslations';
-import { ResumeData } from '../types/resume';
-import { 
-  formatPhoneNumber, 
-  formatDateRange, 
+import { LanguageCode } from '../../translations/formTranslations';
+import { ResumeData } from '../../types/resume';
+import {
+  formatPhoneNumber,
+  formatDateRange,
   calculateDuration,
   formatLinkedInURL,
   formatGitHubURL,
   formatURL
-} from '../utils/formatters/resumeFormatters';
+} from '../../utils/formatters/resumeFormatters';
 
 interface ATSOptimizedResumeProps {
   data: ResumeData;
   language: LanguageCode;
 }
 
-import resumeTranslations from '../translations/resumeTranslations';
+import resumeTranslations from '../../translations/resumeTranslations';
 
 const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language }) => {
   const { personal, summary, experience, education, skills, languages: languageSkills, certifications, projects, sectionOrder } = data;
@@ -165,7 +165,7 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
         {personal.desiredPosition && (
           <div className="ats-desired-position">{personal.desiredPosition}</div>
         )}
-        
+
         <div className="ats-contact-info">
           {/* Linha 1: Email, Telefone, Endereço */}
           <div className="ats-contact-row">
@@ -175,14 +175,14 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
                 <span className="ats-value">{personal.email}</span>
               </div>
             )}
-            
+
             {personal.phone && (
               <div className="ats-contact-item">
                 <span className="ats-label">{t.phone}:</span>
                 <span className="ats-value">{formatPhoneNumber(personal.phone)}</span>
               </div>
             )}
-            
+
             {personal.address && (
               <div className="ats-contact-item">
                 <span className="ats-label">{t.address}:</span>
@@ -197,9 +197,9 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
               {personal.linkedin && (
                 <div className="ats-contact-item">
                   <span className="ats-label">LinkedIn:</span>
-                  <a 
-                    href={formatLinkedInURL(personal.linkedin)} 
-                    target="_blank" 
+                  <a
+                    href={formatLinkedInURL(personal.linkedin)}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="ats-value ats-link"
                   >
@@ -207,13 +207,13 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
                   </a>
                 </div>
               )}
-              
+
               {personal.github && (
                 <div className="ats-contact-item">
                   <span className="ats-label">GitHub:</span>
-                  <a 
-                    href={formatGitHubURL(personal.github)} 
-                    target="_blank" 
+                  <a
+                    href={formatGitHubURL(personal.github)}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="ats-value ats-link"
                   >
@@ -221,13 +221,13 @@ const ATSOptimizedResume: React.FC<ATSOptimizedResumeProps> = ({ data, language 
                   </a>
                 </div>
               )}
-              
+
               {personal.portfolio && (
                 <div className="ats-contact-item">
                   <span className="ats-label">{t.website}:</span>
-                  <a 
-                    href={personal.portfolio.startsWith('http') ? personal.portfolio : `https://${personal.portfolio}`} 
-                    target="_blank" 
+                  <a
+                    href={personal.portfolio.startsWith('http') ? personal.portfolio : `https://${personal.portfolio}`}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="ats-value ats-link"
                   >

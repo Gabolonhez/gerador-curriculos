@@ -1,3 +1,5 @@
+import { LanguageCode } from '../translations/formTranslations';
+
 export interface PersonalInfo {
   name: string;
   desiredPosition?: string;
@@ -83,7 +85,7 @@ export interface ResumeData {
   >;
 }
 
-export type TabType = 
+export type TabType =
   | 'informacoes-pessoais'
   | 'resumo-profissional'
   | 'experiencia-profissional'
@@ -91,4 +93,59 @@ export type TabType =
   | 'habilidades-tecnicas'
   | 'idiomas'
   | 'certificacoes-cursos'
-  | 'projetos'; 
+  | 'projetos';
+
+export interface TranslationStrings {
+  title: string;
+  exportPdf: string;
+  personalInfo: string;
+  summary: string;
+  experience: string;
+  education: string;
+  skills: string;
+  languages: string;
+  certifications: string;
+  projects: string;
+  orderSections: string;
+  preview: string;
+  atsAnalysis: string;
+  previous: string;
+  next: string;
+  printError: string;
+  contentError: string;
+  madeBy: string;
+  allRightsReserved: string;
+  clearData: string;
+  clearDataConfirm: string;
+  dataSaved: string;
+  dataCleared: string;
+  done: string;
+}
+
+export interface Translations {
+  pt: TranslationStrings;
+  en: TranslationStrings;
+  es: TranslationStrings;
+}
+
+export interface ComponentProps {
+  language: LanguageCode;
+}
+
+export interface FormProps<T> extends ComponentProps {
+  data: T;
+  updateData: (data: T) => void;
+}
+
+export interface ResumePreviewProps extends ComponentProps {
+  data: ResumeData;
+}
+
+export interface TabNavigationProps extends ComponentProps {
+  activeTab: TabType;
+  setActiveTab: (tab: TabType) => void;
+}
+
+export interface PDFGeneratorProps extends ComponentProps {
+  resumeData: ResumeData;
+} 
