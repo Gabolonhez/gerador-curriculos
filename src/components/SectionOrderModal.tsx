@@ -58,12 +58,12 @@ const SectionOrderModal: React.FC<Props> = ({ open, onClose, order, onChange, ti
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black opacity-30" onClick={onClose} />
-      <div className="relative bg-white rounded-lg shadow-lg w-full max-w-lg p-4">
+      <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full max-w-lg p-4">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium">{title || 'Order Sections'}</h3>
-          <button onClick={onClose} className="p-1 text-gray-600" title={title || 'Close'}><X /></button>
+          <h3 className="text-lg font-medium dark:text-white">{title || 'Order Sections'}</h3>
+          <button onClick={onClose} className="p-1 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200" title={title || 'Close'}><X /></button>
         </div>
-  <div className="space-y-2" role="list" aria-label={title || 'Order Sections'}>
+        <div className="space-y-2" role="list" aria-label={title || 'Order Sections'}>
           {localOrder.map((s, i) => {
             const labels = resumeTranslations[language as keyof typeof resumeTranslations] || resumeTranslations.pt;
             const mapLabel = (key: string) => {
@@ -90,18 +90,17 @@ const SectionOrderModal: React.FC<Props> = ({ open, onClose, order, onChange, ti
             return (
               <div
                 key={s}
-                className="flex items-center justify-between border rounded px-3 py-2"
+                className="flex items-center justify-between border dark:border-gray-700 rounded px-3 py-2 bg-white dark:bg-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 draggable
                 onDragStart={(e) => handleDragStart(e, i)}
                 onDragOver={(e) => handleDragOver(e, i)}
                 onDrop={handleDrop}
                 onDragEnd={handleDragEnd}
                 role="listitem"
-                tabIndex={0}
               >
                 <div className="flex items-center space-x-3">
-                  <GripVertical className="w-4 h-4 text-gray-500 cursor-grab" />
-                  <div className="text-sm text-gray-800">{mapLabel(s)}</div>
+                  <GripVertical className="w-4 h-4 text-gray-500 dark:text-gray-400 cursor-grab" />
+                  <div className="text-sm text-gray-800 dark:text-gray-200">{mapLabel(s)}</div>
                 </div>
               </div>
             );

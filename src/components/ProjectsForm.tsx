@@ -68,7 +68,7 @@ const ProjectsForm: React.FC<ProjectsFormProps> = ({ data, updateData, language 
         {data.map(project => (
           <div
             key={project.id}
-            className={`p-4 border rounded-lg bg-gray-50 ${draggingId === project.id ? 'opacity-60' : ''}`}
+            className={`p-4 border rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700 ${draggingId === project.id ? 'opacity-60' : ''}`}
             draggable
             onDragStart={e => {
               e.dataTransfer.effectAllowed = 'move';
@@ -101,7 +101,7 @@ const ProjectsForm: React.FC<ProjectsFormProps> = ({ data, updateData, language 
             <div className="flex justify-between items-center mb-4">
               <div className="flex items-center">
                 <GripVertical className="h-5 w-5 mr-2 text-gray-400" aria-hidden />
-                <h3 className="font-medium">{t.project}</h3>
+                <h3 className="font-medium dark:text-white">{t.project}</h3>
               </div>
               <button
                 onMouseDown={e => e.stopPropagation()}
@@ -118,50 +118,50 @@ const ProjectsForm: React.FC<ProjectsFormProps> = ({ data, updateData, language 
             </div>
             <div className="grid grid-cols-1 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200">
                   {t.projectName}
                 </label>
                 <input
                   type="text"
                   value={project.name}
                   onChange={e => handleChange(project.id, 'name', e.target.value)}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder={t.projectPlaceholder}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200">
                   {t.projectDescription}
                 </label>
                 <textarea
                   value={project.description}
                   onChange={e => handleChange(project.id, 'description', e.target.value)}
                   rows={3}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder={t.projectDescriptionPlaceholder}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200">
                   {t.technologies}
                 </label>
                 <input
                   type="text"
                   value={project.technologies}
                   onChange={e => handleChange(project.id, 'technologies', e.target.value)}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder={t.technologiesPlaceholder}
                 />
-              </div>   
+              </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200">
                   {t.projectLink}
                 </label>
                 <input
                   type="url"
                   value={project.link}
                   onChange={e => handleChange(project.id, 'link', e.target.value)}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder={t.projectLinkPlaceholder}
                 />
               </div>
