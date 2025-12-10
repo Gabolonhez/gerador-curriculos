@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { User, Mail, Phone, MapPin, Globe, Linkedin, Github, AlertCircle, CheckCircle, Briefcase } from 'lucide-react';
 import { LanguageCode } from '../translations/formTranslations';
 import { PersonalInfo } from '../types/resume';
-import { 
-  validateEmail, 
-  validatePhone, 
-  validateURL, 
-  validateLinkedIn, 
+import {
+  validateEmail,
+  validatePhone,
+  validateURL,
+  validateLinkedIn,
   validateGitHub,
-  validateRequiredField 
+  validateRequiredField
 } from '../utils/validators/resumeValidators';
 
 interface PersonalInfoFormProps {
@@ -44,7 +44,7 @@ interface TranslationStrings {
     email: string;
     phone: string;
     address: string;
-  portfolio: string;
+    portfolio: string;
     linkedin: string;
     github: string;
   };
@@ -64,7 +64,7 @@ const translations: Translations = {
     email: 'Email',
     phone: 'Telefone',
     address: 'Endereço',
-  portfolio: 'Portfólio (opcional)',
+    portfolio: 'Portfólio (opcional)',
     linkedin: 'LinkedIn (opcional)',
     github: 'GitHub (opcional)',
     placeholders: {
@@ -73,7 +73,7 @@ const translations: Translations = {
       email: 'joao.silva@email.com',
       phone: '(11) 98765-4321',
       address: 'São Paulo, SP',
-  portfolio: 'www.meusite.com.br',
+      portfolio: 'www.meusite.com.br',
       linkedin: 'linkedin.com/in/joaosilva',
       github: 'github.com/joaosilva'
     }
@@ -85,7 +85,7 @@ const translations: Translations = {
     email: 'Email',
     phone: 'Phone',
     address: 'Address',
-  portfolio: 'Portfolio (optional)',
+    portfolio: 'Portfolio (optional)',
     linkedin: 'LinkedIn (optional)',
     github: 'GitHub (optional)',
     placeholders: {
@@ -94,7 +94,7 @@ const translations: Translations = {
       email: 'john.smith@email.com',
       phone: '+1 (555) 123-4567',
       address: 'New York, NY',
-  portfolio: 'www.mywebsite.com',
+      portfolio: 'www.mywebsite.com',
       linkedin: 'linkedin.com/in/johnsmith',
       github: 'github.com/johnsmith'
     }
@@ -107,7 +107,7 @@ const translations: Translations = {
     email: 'Correo',
     phone: 'Teléfono',
     address: 'Dirección',
-  portfolio: 'Portafolio (opcional)',
+    portfolio: 'Portafolio (opcional)',
     linkedin: 'LinkedIn (opcional)',
     github: 'GitHub (opcional)',
     placeholders: {
@@ -116,7 +116,7 @@ const translations: Translations = {
       email: 'juan.perez@email.com',
       phone: '+34 600 000 000',
       address: 'Madrid, España',
-  portfolio: 'www.misitio.com',
+      portfolio: 'www.misitio.com',
       linkedin: 'linkedin.com/in/juanperez',
       github: 'github.com/juanperez'
     }
@@ -129,7 +129,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   language
 }) => {
   const t = translations[language];
-  
+
   // Estado para validação em tempo real
   const [validation, setValidation] = useState<ValidationState>({
     name: { isValid: true, message: '' },
@@ -139,7 +139,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
     address: { isValid: true, message: '' },
     linkedin: { isValid: true, message: '' },
     github: { isValid: true, message: '' },
-  portfolio: { isValid: true, message: '' }
+    portfolio: { isValid: true, message: '' }
   });
 
   const handleChange = (field: keyof PersonalInfo, value: string) => {
@@ -225,7 +225,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
     numeric = false
   ) => (
     <div>
-      <label htmlFor={field} className="block text-sm font-medium text-gray-700 mb-1">
+      <label htmlFor={field} className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       <div className="relative">
@@ -239,7 +239,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           inputMode={numeric ? 'numeric' : undefined}
           pattern={numeric ? '[0-9]*' : undefined}
           onKeyDown={numeric ? (e) => {
-            const allowedControlKeys = ['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Tab','Home','End'];
+            const allowedControlKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab', 'Home', 'End'];
             if (allowedControlKeys.includes(e.key)) return;
             if (e.ctrlKey || e.metaKey) return;
             // single character keys only
@@ -249,11 +249,10 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
           } : undefined}
           onChange={(e) => numeric ? onInputChange(field, e.target.value, true) : handleChange(field, e.target.value)}
           placeholder={placeholder}
-          className={`pl-10 pr-10 w-full px-3 py-2 border rounded-md focus:ring-1 text-sm sm:text-base ${
-            validation[field].isValid
+          className={`pl-10 pr-10 w-full px-3 py-2 border rounded-md focus:ring-1 text-sm sm:text-base dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400 ${validation[field].isValid
               ? 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
               : 'border-red-300 focus:ring-red-500 focus:border-red-500'
-          }`}
+            }`}
         />
         <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
           {data[field] && (
@@ -281,7 +280,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       phone: "Inclua DDD e país para facilitar contato",
       linkedin: "Mantenha seu perfil atualizado - muitos recrutadores verificam",
       github: "Importante para vagas técnicas - mostre seus projetos",
-  portfolio: "Portfolio online impressiona recrutadores"
+      portfolio: "Portfolio online impressiona recrutadores"
     },
     en: {
       name: "Use your full name as it appears on official documents",
@@ -289,7 +288,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       phone: "Include area code and country for easy contact",
       linkedin: "Keep your profile updated - many recruiters check",
       github: "Important for technical roles - showcase your projects",
-  portfolio: "Online portfolio impresses recruiters"
+      portfolio: "Online portfolio impresses recruiters"
     }
     ,
     es: {
@@ -298,7 +297,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
       phone: "Incluye código de área y país para facilitar el contacto",
       linkedin: "Mantén tu perfil actualizado - muchos reclutadores lo revisan",
       github: "Importante para roles técnicos - muestra tus proyectos",
-  portfolio: "Un portafolio online impresiona a los reclutadores"
+      portfolio: "Un portafolio online impresiona a los reclutadores"
     }
   };
 
@@ -306,7 +305,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">{t.title}</h2>
+      <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6 dark:text-white">{t.title}</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Nome Completo - Full width */}

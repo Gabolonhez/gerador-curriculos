@@ -67,7 +67,7 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({ data, updateData, langu
         {data.map(exp => (
           <div
             key={exp.id}
-            className={`p-4 border rounded-lg bg-gray-50 ${draggingId === exp.id ? 'opacity-60' : ''}`}
+            className={`p-4 border rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700 ${draggingId === exp.id ? 'opacity-60' : ''}`}
             draggable
             onDragStart={e => {
               e.dataTransfer.effectAllowed = 'move';
@@ -97,97 +97,93 @@ const ExperienceForm: React.FC<ExperienceFormProps> = ({ data, updateData, langu
             tabIndex={0}
             aria-label={`${t.experience} item`}
           >
-          <div className="flex justify-between items-center mb-4">
-            <div className="flex items-center">
-              <GripVertical className="h-5 w-5 mr-2 text-gray-400" aria-hidden />
-              <h3 className="font-medium">{t.experience}</h3>
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center">
+                <GripVertical className="h-5 w-5 mr-2 text-gray-400" aria-hidden />
+                <h3 className="font-medium dark:text-white">{t.experience}</h3>
+              </div>
+              <button
+                onMouseDown={e => e.stopPropagation()}
+                onClick={e => {
+                  e.stopPropagation();
+                  removeExperience(exp.id)
+                }}
+                className="cursor-pointer text-red-500 hover:text-red-700"
+                aria-label={t.remove}
+                title={t.remove}
+              >
+                <TrashIcon className="h-5 w-5" />
+              </button>
             </div>
-            <button
-              onMouseDown={e => e.stopPropagation()}
-              onClick={e => {
-                e.stopPropagation();
-                removeExperience(exp.id)
-              }}
-              className="cursor-pointer text-red-500 hover:text-red-700"
-              aria-label={t.remove}
-              title={t.remove}
-            >
-              <TrashIcon className="h-5 w-5" />
-            </button>
-          </div>
-          <div className="grid grid-cols-1 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                {t.company}
-              </label>
-              <input
-                type="text"
-                value={exp.company}
-                onChange={e => handleChange(exp.id, 'company', e.target.value)}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                {t.position}
-              </label>
-              <input
-                type="text"
-                value={exp.position}
-                onChange={e => handleChange(exp.id, 'position', e.target.value)}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.startDate}
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200">
+                  {t.company}
                 </label>
                 <input
-                  type="month"
-                  value={exp.startDate}
-                  onChange={e => handleChange(exp.id, 'startDate', e.target.value)}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
+                  value={exp.company}
+                  onChange={e => handleChange(exp.id, 'company', e.target.value)}
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {t.endDate}
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200">
+                  {t.position}
                 </label>
                 <input
-                  type="month"
-                  value={exp.endDate}
-                  onChange={e => handleChange(exp.id, 'endDate', e.target.value)}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
-                  disabled={exp.current}
+                  value={exp.position}
+                  onChange={e => handleChange(exp.id, 'position', e.target.value)}
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200">
+                    {t.startDate}
+                  </label>
+                  <input
+                    value={exp.startDate}
+                    onChange={e => handleChange(exp.id, 'startDate', e.target.value)}
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200">
+                    {t.endDate}
+                  </label>
+                  <input
+                    value={exp.endDate}
+                    onChange={e => handleChange(exp.id, 'endDate', e.target.value)}
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 disabled:bg-gray-200 dark:disabled:bg-gray-800 dark:disabled:text-gray-500"
+                    disabled={exp.current}
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={exp.current}
+                    onChange={e => handleChange(exp.id, 'current', e.target.checked)}
+                    className="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 mr-2"
+                  />
+                  <span className="text-sm text-gray-700 dark:text-gray-200">{t.current}</span>
+                </label>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-200">
+                  {t.description}
+                </label>
+                <textarea
+                  value={exp.description}
+                  onChange={e => handleChange(exp.id, 'description', e.target.value)}
+                  rows={3}
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400"
+                  placeholder={t.jobDescription}
                 />
               </div>
             </div>
-            <div>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={exp.current}
-                  onChange={e => handleChange(exp.id, 'current', e.target.checked)}
-                  className="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 mr-2"
-                />
-                <span className="text-sm text-gray-700">{t.current}</span>
-              </label>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                {t.description}
-              </label>
-              <textarea
-                value={exp.description}
-                onChange={e => handleChange(exp.id, 'description', e.target.value)}
-                rows={3}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"
-                placeholder={t.jobDescription}
-              />
-            </div>
           </div>
-        </div>
         ))}
       </div>
       <button

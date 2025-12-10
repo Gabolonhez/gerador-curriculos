@@ -21,6 +21,8 @@ import { useLanguage } from './hooks/useLanguage';
 import { usePDFExport } from './hooks/usePDFExport';
 import SectionOrderModal from './components/SectionOrderModal';
 import { PersonalInfo, Experience, Education, Skill, Language, Certification, Project } from './types/resume';
+import { ThemeProvider } from './hooks/useTheme';
+import ThemeToggle from './components/common/ThemeToggle';
 import './styles/resume.css';
 
 interface TranslationStrings {
@@ -68,7 +70,7 @@ const translations: Translations = {
     languages: 'Idiomas',
     certifications: 'Certificados',
     projects: 'Projetos',
-  orderSections: 'Ordenar seções',
+    orderSections: 'Ordenar seções',
     preview: 'Pré-visualização',
     atsAnalysis: 'Análise ATS',
     previous: 'Anterior',
@@ -94,7 +96,7 @@ const translations: Translations = {
     languages: 'Languages',
     certifications: 'Certificates',
     projects: 'Projects',
-  orderSections: 'Order sections',
+    orderSections: 'Order sections',
     preview: 'Preview',
     atsAnalysis: 'ATS Analysis',
     previous: 'Previous',
@@ -121,7 +123,7 @@ const translations: Translations = {
     languages: 'Idiomas',
     certifications: 'Certificados',
     projects: 'Proyectos',
-  orderSections: 'Ordenar secciones',
+    orderSections: 'Ordenar secciones',
     preview: 'Previsualización',
     atsAnalysis: 'Análisis ATS',
     previous: 'Anterior',
@@ -178,7 +180,7 @@ const App: React.FC = () => {
       console.warn('Could not persist template to localStorage', e);
     }
   }, [templateKey]);
-  
+
   // Estado para mostrar indicador de salvamento
   const [showSavedIndicator, setShowSavedIndicator] = React.useState(false);
 
@@ -216,245 +218,248 @@ const App: React.FC = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'informacoes-pessoais':
-        return <PersonalInfoForm 
-          data={resumeData.personal} 
-          updateData={(data: PersonalInfo) => updateResumeData('personal', data)} 
+        return <PersonalInfoForm
+          data={resumeData.personal}
+          updateData={(data: PersonalInfo) => updateResumeData('personal', data)}
           language={currentLanguage}
         />;
       case 'resumo-profissional':
-        return <ProfessionalSummaryForm 
-          data={resumeData.summary} 
-          updateData={(data: string) => updateResumeData('summary', data)} 
+        return <ProfessionalSummaryForm
+          data={resumeData.summary}
+          updateData={(data: string) => updateResumeData('summary', data)}
           language={currentLanguage}
         />;
       case 'experiencia-profissional':
-        return <ExperienceForm 
-          data={resumeData.experience} 
-          updateData={(data: Experience[]) => updateResumeData('experience', data)} 
+        return <ExperienceForm
+          data={resumeData.experience}
+          updateData={(data: Experience[]) => updateResumeData('experience', data)}
           language={currentLanguage}
         />;
       case 'formacao-academica':
-        return <EducationForm 
-          data={resumeData.education} 
-          updateData={(data: Education[]) => updateResumeData('education', data)} 
+        return <EducationForm
+          data={resumeData.education}
+          updateData={(data: Education[]) => updateResumeData('education', data)}
           language={currentLanguage}
         />;
       case 'habilidades-tecnicas':
-        return <SkillsForm 
-          data={resumeData.skills} 
-          updateData={(data: Skill[]) => updateResumeData('skills', data)} 
+        return <SkillsForm
+          data={resumeData.skills}
+          updateData={(data: Skill[]) => updateResumeData('skills', data)}
           language={currentLanguage}
         />;
       case 'idiomas':
-        return <LanguagesForm 
-          data={resumeData.languages} 
-          updateData={(data: Language[]) => updateResumeData('languages', data)} 
+        return <LanguagesForm
+          data={resumeData.languages}
+          updateData={(data: Language[]) => updateResumeData('languages', data)}
           language={currentLanguage}
         />;
       case 'certificacoes-cursos':
-        return <CertificationsForm 
-          data={resumeData.certifications} 
-          updateData={(data: Certification[]) => updateResumeData('certifications', data)} 
+        return <CertificationsForm
+          data={resumeData.certifications}
+          updateData={(data: Certification[]) => updateResumeData('certifications', data)}
           language={currentLanguage}
         />;
       case 'projetos':
-        return <ProjectsForm 
-          data={resumeData.projects} 
-          updateData={(data: Project[]) => updateResumeData('projects', data)} 
+        return <ProjectsForm
+          data={resumeData.projects}
+          updateData={(data: Project[]) => updateResumeData('projects', data)}
           language={currentLanguage}
         />;
       default:
-        return <PersonalInfoForm 
-          data={resumeData.personal} 
-          updateData={(data: PersonalInfo) => updateResumeData('personal', data)} 
+        return <PersonalInfoForm
+          data={resumeData.personal}
+          updateData={(data: PersonalInfo) => updateResumeData('personal', data)}
           language={currentLanguage}
         />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="flex flex-col min-h-screen">
-        {/* Header */}
-        <header className="bg-white shadow-sm sticky top-0 z-50 w-full">
-          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row justify-between items-center py-3 sm:py-4 space-y-3 sm:space-y-0">
-              {/* Title Section */}
-              <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto justify-center sm:justify-start">
-                <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">
-                  {t.title}
-                </h1>
-                {showSavedIndicator && (
-                  <div className="hidden sm:flex items-center text-green-600 text-sm animate-fade-in">
-                    <SaveIcon className="w-4 h-4 mr-1" />
-                    {t.dataSaved}
-                  </div>
-                )}
-              </div>
-              
-              {/* Actions Section */}
-              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center">
-                {/* Clear Data Button */}
-                <Button 
-                  onClick={handleClearData}
-                  variant="secondary"
-                  size="sm"
-                  className="text-red-600 hover:text-red-800 flex-shrink-0"
-                  title={t.clearData}
-                >
-                  <TrashIcon className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">{t.clearData}</span>
-                </Button>
-                
-                {/* Language Toggle */}
-                <LanguageToggle 
-                  currentLanguage={currentLanguage}
-                  onLanguageChange={setLanguage}
-                />
-                
-                {/* Export PDF Button */}
-                <Button 
-                  onClick={handleExportPDF}
-                  size="sm"
-                  className="flex-shrink-0"
-                  title={t.exportPdf}
-                >
-                  <SaveIcon className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden lg:inline">{t.exportPdf}</span>
-                  <span className="hidden sm:inline lg:hidden">PDF</span>
-                </Button>
-              </div>
-            </div>
-          </div>
-          
-          {/* Template Selector */}
-          <div className="flex justify-center pb-3 px-3">
-            <TemplateSelector value={templateKey} onChange={setTemplateKey} language={currentLanguage} />
-          </div>
-        </header>
-        {/* Navigation */}
-        <Navigation 
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          translations={t}
-        />
-        {/* Main Content */}
-        <main className="flex-grow py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-              {/* Form Section */}
-              <div className="bg-white shadow-sm rounded-lg p-4 sm:p-6">
-                {renderTabContent()}
-                <div className="flex flex-col sm:flex-row justify-between mt-6 space-y-4 sm:space-y-0">
+    <ThemeProvider>
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
+        <div className="flex flex-col min-h-screen">
+          {/* Header */}
+          <header className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50 w-full transition-colors duration-200">
+            <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+              <div className="flex flex-col sm:flex-row justify-between items-center py-3 sm:py-4 space-y-3 sm:space-y-0">
+                {/* Title Section */}
+                <div className="flex items-center space-x-2 sm:space-x-4 w-full sm:w-auto justify-center sm:justify-start">
+                  <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white">
+                    {t.title}
+                  </h1>
+                  {showSavedIndicator && (
+                    <div className="hidden sm:flex items-center text-green-600 text-sm animate-fade-in">
+                      <SaveIcon className="w-4 h-4 mr-1" />
+                      {t.dataSaved}
+                    </div>
+                  )}
+                </div>
+
+                {/* Actions Section */}
+                <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center">
+                  {/* Clear Data Button */}
                   <Button
-                    onClick={handlePreviousPage}
-                    disabled={!canGoPrevious}
-                    variant={canGoPrevious ? 'primary' : 'secondary'}
-                    className="w-full sm:w-auto"
+                    onClick={handleClearData}
+                    variant="secondary"
+                    size="sm"
+                    className="text-red-600 hover:text-red-800 flex-shrink-0"
+                    title={t.clearData}
                   >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    {t.previous}
+                    <TrashIcon className="w-4 h-4 sm:mr-2" />
+                    <span className="hidden sm:inline">{t.clearData}</span>
                   </Button>
+
+                  {/* Theme Toggle */}
+                  <ThemeToggle />
+
+                  {/* Language Toggle */}
+                  <LanguageToggle
+                    currentLanguage={currentLanguage}
+                    onLanguageChange={setLanguage}
+                  />
+
+                  {/* Export PDF Button */}
                   <Button
-                    onClick={handleNextPage}
-                    disabled={!canGoNext}
-                    variant={canGoNext ? 'primary' : 'secondary'}
-                    className="w-full sm:w-auto"
+                    onClick={handleExportPDF}
+                    size="sm"
+                    className="flex-shrink-0"
+                    title={t.exportPdf}
                   >
-                    {t.next}
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                    <SaveIcon className="w-4 h-4 sm:mr-2" />
+                    <span className="hidden lg:inline">{t.exportPdf}</span>
+                    <span className="hidden sm:inline lg:hidden">PDF</span>
                   </Button>
                 </div>
-              </div>      
-              {/* Preview Section */}
-              <div className="bg-white shadow-sm rounded-lg p-4 sm:p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-medium">
-                    {previewMode === 'preview' ? t.preview : t.atsAnalysis}
-                  </h2>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      type="button"
-                      className="px-2 py-1 text-sm bg-gray-100 rounded"
-                      onClick={() => setShowSectionModal(true)}
+              </div>
+            </div>
+
+            {/* Template Selector */}
+            <div className="flex justify-center pb-3 px-3">
+              <TemplateSelector value={templateKey} onChange={setTemplateKey} language={currentLanguage} />
+            </div>
+          </header>
+          {/* Navigation */}
+          <Navigation
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            translations={t}
+          />
+          {/* Main Content */}
+          <main className="flex-grow py-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                {/* Form Section */}
+                <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-4 sm:p-6 transition-colors duration-200">
+                  {renderTabContent()}
+                  <div className="flex flex-col sm:flex-row justify-between mt-6 space-y-4 sm:space-y-0">
+                    <Button
+                      onClick={handlePreviousPage}
+                      disabled={!canGoPrevious}
+                      variant={canGoPrevious ? 'primary' : 'secondary'}
+                      className="w-full sm:w-auto"
                     >
-                      {t.orderSections}
-                    </button>
+                      <ArrowLeft className="w-4 h-4 mr-2" />
+                      {t.previous}
+                    </Button>
+                    <Button
+                      onClick={handleNextPage}
+                      disabled={!canGoNext}
+                      variant={canGoNext ? 'primary' : 'secondary'}
+                      className="w-full sm:w-auto"
+                    >
+                      {t.next}
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
                   </div>
-                  <div className="flex rounded-lg bg-gray-100 p-1">
-                    <button
-                      onClick={() => setPreviewMode('preview')}
-                      className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
-                        previewMode === 'preview'
-                          ? 'bg-white text-gray-900 shadow-sm'
-                          : 'text-gray-500 hover:text-gray-700'
-                      }`}
-                    >
-                      {t.preview}
-                    </button>
-                    <button
-                      onClick={() => setPreviewMode('analysis')}
-                      className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
-                        previewMode === 'analysis'
-                          ? 'bg-white text-gray-900 shadow-sm'
-                          : 'text-gray-500 hover:text-gray-700'
-                      }`}
-                    >
-                      {t.atsAnalysis}
-                    </button>
+                </div>
+                {/* Preview Section */}
+                <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-4 sm:p-6 transition-colors duration-200">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-lg font-medium dark:text-white">
+                      {previewMode === 'preview' ? t.preview : t.atsAnalysis}
+                    </h2>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        type="button"
+                        className="px-2 py-1 text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-200 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                        onClick={() => setShowSectionModal(true)}
+                      >
+                        {t.orderSections}
+                      </button>
+                    </div>
+                    <div className="flex rounded-lg bg-gray-100 dark:bg-gray-700 p-1">
+                      <button
+                        onClick={() => setPreviewMode('preview')}
+                        className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${previewMode === 'preview'
+                            ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                          }`}
+                      >
+                        {t.preview}
+                      </button>
+                      <button
+                        onClick={() => setPreviewMode('analysis')}
+                        className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${previewMode === 'analysis'
+                            ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                          }`}
+                      >
+                        {t.atsAnalysis}
+                      </button>
+                    </div>
                   </div>
-                </div>      
-                {previewMode === 'preview' ? (
-                  <div
-                    id="resume-preview"
-                    className="border rounded-lg p-4 sm:p-6 overflow-auto resume-preview"
+                  {previewMode === 'preview' ? (
+                    <div
+                      id="resume-preview"
+                      className="border rounded-lg p-4 sm:p-6 overflow-auto resume-preview"
+                    >
+                      <ResumePreview data={resumeData} language={currentLanguage} templateKey={templateKey} />
+                      <SectionOrderModal
+                        open={showSectionModal}
+                        onClose={() => setShowSectionModal(false)}
+                        title={t.orderSections}
+                        order={(resumeData && resumeData.sectionOrder) || ['summary', 'skills', 'experience', 'education', 'languages', 'certifications']}
+                        onChange={(order) => updateSectionOrder && updateSectionOrder(order as ResumeData['sectionOrder'])}
+                        language={currentLanguage}
+                        doneLabel={t.done}
+                      />
+                    </div>
+                  ) : (
+                    <div className="overflow-auto">
+                      <ATSAnalysis resumeData={resumeData} language={currentLanguage} />
+                    </div>
+                  )}
+                </div>
+                <Button onClick={handleExportPDF}>
+                  <SaveIcon className="w-4 h-4 mr-2" /> {t.exportPdf}
+                </Button>
+              </div>
+            </div>
+          </main>
+          {/* Footer */}
+          <footer className="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-auto w-full transition-colors duration-200">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="py-4 text-center text-sm text-gray-500 dark:text-gray-400 space-y-2">
+                <p>
+                  © {new Date().getFullYear()} {t.title}. {t.allRightsReserved}
+                </p>
+                <p className="flex items-center justify-center space-x-2 flex-wrap">
+                  <span>{t.madeBy}</span>
+                  <a
+                    href="https://gabolonhez.github.io/Portfolio/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
                   >
-                    <ResumePreview data={resumeData} language={currentLanguage} templateKey={templateKey} />
-                    <SectionOrderModal
-                      open={showSectionModal}
-                      onClose={() => setShowSectionModal(false)}
-                      title={t.orderSections}
-                      order={(resumeData && resumeData.sectionOrder) || ['summary','skills','experience','education','languages','certifications']}
-                      onChange={(order) => updateSectionOrder && updateSectionOrder(order as ResumeData['sectionOrder'])}
-                      language={currentLanguage}
-                      doneLabel={t.done}
-                    />
-                  </div>
-                ) : (
-                  <div className="overflow-auto">
-                    <ATSAnalysis resumeData={resumeData} language={currentLanguage} />
-                  </div>
-                )}
-              </div>  
-              <Button onClick={handleExportPDF}>
-                <SaveIcon className="w-4 h-4 mr-2" /> {t.exportPdf}
-              </Button>
+                    Gabriel Bolonhez
+                  </a>
+                </p>
+              </div>
             </div>
-          </div>
-        </main>
-        {/* Footer */}
-        <footer className="bg-white border-t mt-auto w-full">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="py-4 text-center text-sm text-gray-500 space-y-2">
-              <p>
-                © {new Date().getFullYear()} {t.title}. {t.allRightsReserved}
-              </p>
-              <p className="flex items-center justify-center space-x-2 flex-wrap">
-                <span>{t.madeBy}</span>
-                <a 
-                  href="https://gabolonhez.github.io/Portfolio/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800 font-medium"
-                >
-                  Gabriel Bolonhez
-                </a>   
-              </p>
-            </div>
-          </div>
-        </footer>
+          </footer>
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 
