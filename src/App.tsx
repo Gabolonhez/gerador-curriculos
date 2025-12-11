@@ -24,6 +24,8 @@ import { PersonalInfo, Experience, Education, Skill, Language, Certification, Pr
 import { ThemeProvider } from './hooks/useTheme';
 import ThemeToggle from './components/common/ThemeToggle';
 import './styles/resume.css';
+import PdfImportModal from './components/PdfImportModal';
+import { Upload } from 'lucide-react';
 
 interface TranslationStrings {
   title: string;
@@ -149,10 +151,11 @@ const App: React.FC = () => {
     resetResumeData: () => void;
     exportData?: () => string;
     importData?: (json: string) => boolean;
+    importPartialData?: (data: Partial<ResumeData>) => void;
   }
 
   const resumeHook = useResumeData() as ResumeHookReturn;
-  const { resumeData, updateResumeData, resetResumeData, updateSectionOrder } = resumeHook;
+  const { resumeData, updateResumeData, resetResumeData, updateSectionOrder, importPartialData } = resumeHook;
   const { activeTab, setActiveTab, handleNextPage, handlePreviousPage, canGoNext, canGoPrevious } = useTabNavigation();
   const { currentLanguage, setLanguage } = useLanguage();
   const { exportToPDF } = usePDFExport({ language: currentLanguage });
@@ -160,6 +163,7 @@ const App: React.FC = () => {
   // Estado para alternar entre preview e análise ATS
   const [previewMode, setPreviewMode] = React.useState<'preview' | 'analysis'>('preview');
   const [showSectionModal, setShowSectionModal] = React.useState(false);
+  const [showImportModal, setShowImportModal] = React.useState(false);
   // Template selection (persisted)
   const TEMPLATE_STORAGE_KEY = 'resume-generator-template';
   const [templateKey, setTemplateKey] = React.useState<'optimized' | 'simple' | 'twocolumn' | 'professional'>(() => {
@@ -213,6 +217,14 @@ const App: React.FC = () => {
   // Função para limpar dados
   const handleClearData = () => {
     resetResumeData();
+  };
+
+  const handleImportPdf = (data: Partial<ResumeData>) => {
+    if (importPartialData) {
+      importPartialData(data);
+      setShowSavedIndicator(true);
+      setTimeout(() => setShowSavedIndicator(false), 2000);
+    }
   };
 
   const renderTabContent = () => {
@@ -297,6 +309,17 @@ const App: React.FC = () => {
 
                 {/* Actions Section */}
                 <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center">
+                  {/* Import PDF Button */}
+                  <Button
+                    onClick={() => setShowImportModal(true)}
+                    variant="secondary"
+                    size="sm"
+                    className="flex-shrink-0"
+                    title="Importar PDF"
+                  >
+                    <Upload className="w-4 h-4 sm:mr-2" />
+                    <span className="hidden sm:inline">Importar PDF</span>
+                  </Button>
                   {/* Clear Data Button */}
                   <Button
                     onClick={handleClearData}
@@ -391,8 +414,8 @@ const App: React.FC = () => {
                       <button
                         onClick={() => setPreviewMode('preview')}
                         className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${previewMode === 'preview'
-                            ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                          ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                          : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
                           }`}
                       >
                         {t.preview}
@@ -400,8 +423,8 @@ const App: React.FC = () => {
                       <button
                         onClick={() => setPreviewMode('analysis')}
                         className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${previewMode === 'analysis'
-                            ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                          ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                          : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
                           }`}
                       >
                         {t.atsAnalysis}
@@ -458,6 +481,11 @@ const App: React.FC = () => {
             </div>
           </footer>
         </div>
+        <PdfImportModal
+          open={showImportModal}
+          onClose={() => setShowImportModal(false)}
+          onImport={handleImportPdf}
+        />
       </div>
     </ThemeProvider>
   );

@@ -9,7 +9,7 @@ const initialResumeData: ResumeData = {
     email: '',
     phone: '',
     address: '',
-  portfolio: '',
+    portfolio: '',
     linkedin: '',
     github: ''
   },
@@ -70,7 +70,7 @@ export const useResumeData = () => {
   }, []);
 
   const updateResumeData = useCallback(<T extends keyof ResumeData>(
-    section: T, 
+    section: T,
     data: ResumeData[T]
   ): void => {
     setResumeData(prev => {
@@ -132,6 +132,30 @@ export const useResumeData = () => {
     updateSectionOrder,
     resetResumeData,
     exportData,
-    importData
+    importData,
+    importPartialData: useCallback((data: Partial<ResumeData>) => {
+      setResumeData(prev => {
+        const newData = { ...prev };
+
+        // Merge personal info
+        if (data.personal) {
+          newData.personal = { ...newData.personal, ...data.personal };
+        }
+
+        // Merge simple string fields
+        if (data.summary) newData.summary = data.summary;
+
+        // Merge arrays (replace if new data exists)
+        if (data.experience && data.experience.length > 0) newData.experience = data.experience;
+        if (data.education && data.education.length > 0) newData.education = data.education;
+        if (data.skills && data.skills.length > 0) newData.skills = data.skills;
+        if (data.languages && data.languages.length > 0) newData.languages = data.languages;
+        if (data.certifications && data.certifications.length > 0) newData.certifications = data.certifications;
+        if (data.projects && data.projects.length > 0) newData.projects = data.projects;
+
+        saveDataToStorage(newData);
+        return newData;
+      });
+    }, [])
   };
 };
