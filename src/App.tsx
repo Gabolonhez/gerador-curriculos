@@ -197,8 +197,14 @@ const App: React.FC = () => {
       setShowSavedIndicator(false);
     }, 2000);
 
+
     return () => clearTimeout(timer);
   }, [resumeData]);
+
+  // Efeito para atualizar o título do documento
+  React.useEffect(() => {
+    document.title = t.title;
+  }, [t.title]);
 
   // Função para lidar com exportação de PDF
   const handleExportPDF = () => {
